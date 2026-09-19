@@ -1,0 +1,2255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Contribution Architecture — a companion tool to Yeah, Yeah, But… and Therefore</title>
+<meta name="description" content="A companion tool to Yeah, Yeah, But… and Therefore (Christopher I. Rider): articulate a contribution as a difference in inferences with prior work — replicate, diverge, reconcile." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Book identity — sampled from the V0.2.2 figures and the core-argument infographic */
+    --coral: #C9472F;
+    --coral-deep: #A93A25;
+    --wash: #FBEAE4;
+    --wash-2: #F6DBD3;
+    --bg: #F7F5F4;
+    --paper: #FFFFFF;
+    --ink: #1A1A1A;
+    --muted: #5A5A5E;
+    --muted-2: #6E6E73;
+    --rule: #D9D7DE;
+    --rule-2: #C5C4CB;
+    --shadow: 0 1px 0 rgba(0,0,0,.03), 0 8px 24px -18px rgba(26,26,26,.22);
+    --display: "Gelasio", Georgia, "Times New Roman", serif;
+    --serif: "Gelasio", Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.55;
+    font-feature-settings: "kern", "liga", "onum";
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  textarea, input { font-family: var(--serif); }
+
+  /* ---- Header ---- */
+  header.site {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 22px 36px 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  header.site::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--coral) 0%, var(--coral) 38%, transparent 38%);
+  }
+  .brand .eyebrow {
+    font-family: var(--display);
+    letter-spacing: .22em;
+    color: var(--coral);
+    font-size: 14px;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand .eyebrow .dot {
+    width: 8px; height: 8px; background: var(--coral); border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(201,71,47,.18);
+  }
+  .brand h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--coral);
+    margin: 0;
+    font-size: clamp(34px, 4.4vw, 52px);
+    letter-spacing: .015em;
+    line-height: .95;
+  }
+  .brand .subtitle {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+    margin: 6px 0 0;
+  }
+  .header-actions {
+    display: flex; gap: 8px; align-items: center;
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    border: 1px solid var(--rule-2);
+    background: var(--paper);
+    color: var(--coral);
+    padding: 9px 14px;
+    font-size: 13px;
+    font-family: var(--display);
+    letter-spacing: .14em;
+    border-radius: 2px;
+    transition: all .15s ease;
+  }
+  .btn:hover { background: var(--wash); border-color: var(--coral); }
+  .btn.primary {
+    background: var(--coral); color: var(--paper); border-color: var(--coral);
+  }
+  .btn.primary:hover { background: var(--coral-deep); }
+  .btn.ghost { border-color: transparent; background: transparent; color: var(--muted); }
+  .btn.ghost:hover { color: var(--coral); background: transparent; }
+  .btn.accent {
+    background: var(--coral); color: var(--paper); border-color: var(--coral);
+  }
+  .btn.accent:hover { background: var(--coral-deep); border-color: var(--coral-deep); }
+  .btn[disabled] { opacity: .35; cursor: not-allowed; }
+
+  /* ---- Layout ---- */
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 95px);
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  aside.sidebar {
+    border-right: 1px solid var(--rule);
+    padding: 32px 0 60px;
+    background: var(--bg);
+    position: sticky;
+    top: 95px;
+    height: calc(100vh - 95px);
+    overflow-y: auto;
+  }
+  .nav-title {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: .22em;
+    color: var(--muted);
+    padding: 0 28px 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 8px;
+  }
+  nav.steps { list-style: none; padding: 0; margin: 0; }
+  nav.steps button.step {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 11px 28px 11px 24px;
+    border-left: 4px solid transparent;
+    color: var(--muted);
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.3;
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  nav.steps button.step:hover { color: var(--coral); background: rgba(201,71,47,.05); }
+  nav.steps button.step.active {
+    color: var(--coral);
+    border-left-color: var(--coral);
+    background: var(--paper);
+    font-weight: 600;
+  }
+  nav.steps button.step .num {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 14px;
+    letter-spacing: .04em;
+    padding-top: 2px;
+  }
+  nav.steps button.step .marker {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--rule);
+    margin-left: 6px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  nav.steps button.step .marker.partial { background: var(--wash); border: 1px solid var(--coral); }
+  nav.steps button.step .marker.full { background: var(--coral); }
+
+  .progress-wrap {
+    padding: 22px 28px 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 16px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 5px; background: var(--rule); border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: var(--coral); transition: width .3s ease; }
+
+  /* ---- Main ---- */
+  main {
+    padding: 56px 64px 120px;
+    max-width: 880px;
+    width: 100%;
+  }
+  .step-eyebrow {
+    font-family: var(--display);
+    letter-spacing: .22em;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .step-eyebrow .pipe { color: var(--coral); margin: 0 10px; }
+  h2.step-title {
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--coral);
+    font-size: clamp(40px, 4.5vw, 56px);
+    line-height: .98;
+    margin: 0 0 18px;
+    letter-spacing: .005em;
+  }
+  .step-lede {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 64ch;
+    margin: 0 0 12px;
+  }
+  .step-lede em { color: var(--coral); font-style: italic; }
+  .step-meta {
+    display: flex; gap: 18px; align-items: center;
+    margin: 22px 0 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .example-toggle {
+    background: var(--paper);
+    border: 1px solid var(--rule-2);
+    color: var(--coral);
+    padding: 7px 12px 7px 10px;
+    font-size: 13px;
+    font-family: var(--serif);
+    border-radius: 2px;
+    display: inline-flex; align-items: center; gap: 8px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .example-toggle:hover { background: var(--wash); }
+  .example-toggle.on { background: var(--coral); color: var(--paper); border-color: var(--coral); }
+  .example-toggle .swatch {
+    display: inline-block; width: 10px; height: 10px; background: var(--coral); border-radius: 1px;
+  }
+  .example-toggle.on .swatch { background: var(--coral); }
+  .optional-badge {
+    font-family: var(--display);
+    letter-spacing: .18em;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--rule-2);
+    padding: 4px 8px;
+    border-radius: 2px;
+  }
+
+  /* ---- Field group ---- */
+  .field {
+    margin: 0 0 26px;
+  }
+  .field label {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--coral);
+    margin-bottom: 6px;
+  }
+  .field .prompt {
+    font-size: 14.5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .field textarea, .field input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.5;
+    transition: border-color .15s, box-shadow .15s;
+    resize: vertical;
+  }
+  .field textarea { min-height: 84px; }
+  .field textarea:focus, .field input[type="text"]:focus {
+    outline: none;
+    border-color: var(--coral);
+    box-shadow: 0 0 0 3px rgba(201,71,47,.16);
+  }
+  .field .example {
+    display: none;
+    margin-top: 10px;
+    padding: 12px 14px 12px 16px;
+    background: var(--wash);
+    border-left: 3px solid var(--coral);
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: #4A2A20;
+    border-radius: 0 2px 2px 0;
+  }
+  .field .example.on { display: block; }
+  .field .example .ex-label {
+    font-family: var(--display);
+    letter-spacing: .18em;
+    font-size: 11px;
+    color: #A93A25;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .field .example .ill-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  @media (max-width: 720px) { .field .example .ill-grid { grid-template-columns: 1fr; } }
+  .field .example .ill {
+    background: var(--paper);
+    border: 1px solid #EBD2CA;
+    padding: 9px 11px;
+    border-radius: 2px;
+  }
+  .field .example .ill .tag {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 10.5px;
+    color: var(--coral);
+    margin-bottom: 3px;
+    display: block;
+  }
+  .field .example .ill .body {
+    font-family: var(--serif);
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 800px) { .field-grid { grid-template-columns: 1fr; } }
+
+  /* Three-model card group */
+  .model-card {
+    border: 1px solid var(--rule-2);
+    background: var(--paper);
+    padding: 22px 24px 12px;
+    margin-bottom: 22px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .model-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 4px;
+    background: var(--coral);
+  }
+  .model-card.m2::before { background: var(--coral); }
+  .model-card.m3::before { background: linear-gradient(180deg, var(--coral) 0%, var(--coral) 50%, var(--coral) 50%, var(--coral) 100%); }
+  .model-card .card-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .model-card h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--coral);
+    font-size: 26px;
+    margin: 0;
+    letter-spacing: .02em;
+  }
+  .model-card .role-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* Stress test panel */
+  .stress-panel {
+    background: var(--paper);
+    border: 1px dashed var(--rule-2);
+    padding: 18px 22px 6px;
+    margin-top: 8px;
+    margin-bottom: 28px;
+    border-radius: 2px;
+  }
+  .stress-panel h4 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 18px;
+    letter-spacing: .08em;
+    margin: 0 0 10px;
+  }
+  .stress-panel ul { margin: 0 0 12px 18px; padding: 0; font-size: 15px; color: var(--muted); }
+  .stress-panel li { margin-bottom: 6px; line-height: 1.5; }
+  .stress-panel .legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 26px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 800px) { .stress-panel .legend-grid { grid-template-columns: 1fr; } }
+  .stress-panel .legend-row {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
+    align-items: start;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .stress-panel .legend-row .swatch {
+    width: 18px; height: 18px; border-radius: 2px; margin-top: 2px;
+  }
+  .stress-panel .legend-row .sw-main { background: var(--coral); }
+  .stress-panel .legend-row .sw-aux  { background: var(--coral); }
+  .stress-panel .legend-row .sw-alt  { background: #F2EFEE; border: 1.5px dashed #6E6E73; box-sizing: border-box; }
+  .stress-panel .legend-row .sw-obs  { background: #F4F2F1; border: 1px solid #C5C4CB; box-sizing: border-box; }
+  .stress-panel .legend-row .sw-not  { background: #FBEAE4; border: 1px solid #C9472F; box-sizing: border-box; }
+  .stress-panel .legend-row strong { color: var(--coral); }
+
+  /* Pull quote */
+  .pull-quote {
+    border-left: 5px solid var(--coral);
+    padding: 14px 22px;
+    margin: 32px 0;
+    font-style: italic;
+    color: var(--coral);
+    font-size: 22px;
+    line-height: 1.4;
+    font-family: var(--serif);
+    background: var(--paper);
+  }
+  .pull-quote cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--display);
+    letter-spacing: .18em;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  /* Intro / review specials */
+  .intro-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+  }
+  .intro-card h3 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 22px;
+    letter-spacing: .08em;
+    margin: 0 0 14px;
+  }
+  .intro-card a, .step-lede a, .field .prompt a {
+    color: var(--coral);
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 39, 76, 0.35);
+    text-underline-offset: 2px;
+  }
+  .intro-card a:hover, .step-lede a:hover, .field .prompt a:hover {
+    text-decoration-color: var(--coral);
+  }
+  .references-block {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .references-block h4 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 13px;
+    letter-spacing: .14em;
+    margin: 0 0 8px;
+  }
+  .references-block p { margin: 4px 0; }
+  .commitment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+    margin: 28px 0 8px;
+  }
+  @media (max-width: 800px) { .commitment-grid { grid-template-columns: 1fr; } }
+  .commitment {
+    padding: 18px 20px 20px;
+    border-top: 3px solid var(--coral);
+    background: var(--paper);
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .commitment .num {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .commitment h4 {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 17px;
+    color: var(--coral);
+    margin: 2px 0 4px;
+  }
+  .commitment .argbeat {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14.5px;
+    color: #A93A25;
+    margin-bottom: 8px;
+    letter-spacing: -.005em;
+  }
+  .commitment p { margin: 0; font-size: 15.5px; line-height: 1.5; }
+
+  /* Review screen */
+  .review-section { margin-bottom: 36px; }
+  .review-section h3 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 22px;
+    letter-spacing: .04em;
+    margin: 0 0 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .review-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .review-item .k {
+    font-weight: 600;
+    color: var(--coral);
+    font-size: 14.5px;
+  }
+  .review-item .v {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+  .review-item .v.empty {
+    color: var(--muted-2); font-style: italic;
+  }
+
+  /* ---- Footer nav ---- */
+  footer.fnav {
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 16px 36px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    bottom: 0;
+    z-index: 15;
+  }
+  footer.fnav .center {
+    font-family: var(--display);
+    letter-spacing: .18em;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+  }
+  footer.fnav .right { display: flex; justify-content: flex-end; gap: 8px; }
+  footer.fnav .left  { display: flex; gap: 8px; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 96px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--coral);
+    color: var(--paper);
+    padding: 10px 18px;
+    font-family: var(--display);
+    letter-spacing: .12em;
+    font-size: 13px;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .25s ease;
+    z-index: 50;
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,.3);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Modal */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(26, 26, 26, .48);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-bg.on { display: flex; }
+  .modal {
+    background: var(--paper);
+    border-radius: 2px;
+    max-width: 480px;
+    width: 100%;
+    padding: 28px 32px 24px;
+    box-shadow: 0 20px 60px -10px rgba(0,0,0,.4);
+  }
+  .modal h3 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 24px;
+    letter-spacing: .04em;
+    margin: 0 0 12px;
+  }
+  .modal p { margin: 0 0 20px; color: var(--muted); }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+  /* ---- Elster diagram ---- */
+  .diagram-wrap {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 28px 24px 22px;
+    margin: 4px 0 28px;
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+  }
+  .diagram-wrap.compact { padding: 18px 16px 14px; }
+  .diagram-wrap svg { width: 100%; height: auto; display: block; }
+  .diagram-legend {
+    display: flex; flex-wrap: wrap; gap: 18px 22px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .diagram-legend .key {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .diagram-legend .swatch {
+    width: 14px; height: 14px; border-radius: 2px; display: inline-block;
+    flex-shrink: 0;
+  }
+  .diagram-legend .sw-main   { background: var(--coral); }
+  .diagram-legend .sw-aux    { background: var(--coral); }
+  .diagram-legend .sw-alt    { background: #F2EFEE; border: 1px dashed #6E6E73; }
+  .diagram-legend .sw-obs    { background: #F4F2F1; border: 1px solid #C5C4CB; }
+  .diagram-legend .sw-not    { background: #FBEAE4; border: 1px solid #C9472F; }
+
+  /* SVG-internal styles via foreignObject HTML */
+  .dia-box {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 12px;
+    padding: 7px 11px;
+    border-radius: 2px;
+    line-height: 1.32;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .dia-box .dia-label {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 9px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    opacity: .82;
+  }
+  .dia-box .dia-text {
+    font-size: 11.5px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .dia-theory, .dia-hyp, .dia-expl {
+    background: var(--coral);
+    color: white;
+    border: 1px solid var(--coral);
+  }
+  .dia-hyp { background: var(--coral-deep); }
+  .dia-expl { background: linear-gradient(90deg, var(--coral) 0%, var(--coral) 88%, var(--coral) 88%, var(--coral) 100%); }
+  .dia-aux {
+    background: var(--coral);
+    color: #3A2018;
+    border: 1px solid #E0B6A7;
+  }
+  .dia-aux .dia-label { color: #A93A25; opacity: 1; }
+  .dia-alt {
+    background: #F2EFEE;
+    color: #4A4A4C;
+    border: 1.5px dashed #6E6E73;
+  }
+  .dia-alt .dia-label { color: #5A5A5E; opacity: 1; }
+  .dia-imp {
+    background: #F4F2F1;
+    border: 1px solid #C5C4CB;
+    color: #2C2C2E;
+  }
+  .dia-imp.dia-not-obs {
+    background: #FBEAE4;
+    border: 1px solid #C9472F;
+    color: #5A2018;
+  }
+  .dia-imp.dia-not-obs .dia-label { color: #A93A25; }
+
+  /* Customize labels panel */
+  .labels-panel {
+    margin-top: 22px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .labels-toggle {
+    width: 100%;
+    background: var(--paper);
+    border: none;
+    padding: 14px 18px;
+    text-align: left;
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 13px;
+    color: var(--coral);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .labels-toggle:hover { background: var(--wash); }
+  .labels-toggle .chev { font-size: 16px; transition: transform .2s; }
+  .labels-toggle.on .chev { transform: rotate(90deg); }
+  .labels-body {
+    display: none;
+    padding: 18px 20px 6px;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+  .labels-body.on { display: block; }
+  .labels-body h5 {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 12px;
+    color: var(--muted);
+    margin: 14px 0 6px;
+  }
+  .labels-body h5:first-child { margin-top: 0; }
+  .labels-body .lab-field { margin-bottom: 10px; }
+  .labels-body .lab-field label {
+    display: block;
+    font-size: 13px;
+    color: var(--coral);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .labels-body .lab-field input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    font-size: 14px;
+    background: var(--paper);
+  }
+  .labels-body .lab-field input:focus {
+    outline: none; border-color: var(--coral);
+    box-shadow: 0 0 0 3px rgba(201,71,47,.16);
+  }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 880px) {
+    header.site { padding: 16px 18px 12px; grid-template-columns: 1fr; gap: 12px; }
+    .header-actions { flex-wrap: wrap; }
+    .layout { grid-template-columns: 1fr; }
+    aside.sidebar { position: static; height: auto; padding: 18px 0; border-right: none; border-bottom: 1px solid var(--rule); }
+    main { padding: 32px 22px 100px; }
+    footer.fnav { padding: 12px 16px; grid-template-columns: 1fr 1fr; }
+    footer.fnav .center { display: none; }
+  }
+
+  /* Print */
+  @media print {
+    header.site, footer.fnav, aside.sidebar, .step-meta, .header-actions, .toast, .modal-bg { display: none !important; }
+    main { padding: 0; max-width: 100%; }
+    body { background: white; }
+    .review-section { page-break-inside: avoid; }
+    .field .example.on { display: block; }
+  }
+
+  /* ============================================================
+     BOOK IDENTITY — aligned to Yeah, Yeah, But... and Therefore V0.2.2
+     Coral #C9472F on #FBEAE4 wash, Gelasio (Georgia-metric) throughout,
+     ink #1A1A1A, rules #D9D7DE. No display sans: the book has none.
+     ============================================================ */
+  h1, h2, h3, h4, h5, .btn, .brand .eyebrow, .nav-title { font-family: var(--serif); }
+
+  .brand h1 {
+    color: var(--ink); font-weight: 700;
+    font-size: clamp(27px, 3.3vw, 39px);
+    letter-spacing: -.012em; line-height: 1.06;
+  }
+  .brand .subtitle { color: var(--coral); font-style: italic; font-size: 15.5px; }
+  h2.step-title {
+    color: var(--ink); font-weight: 700;
+    font-size: clamp(25px, 2.9vw, 35px);
+    letter-spacing: -.01em; line-height: 1.16;
+    margin-bottom: 16px;
+  }
+
+  /* Small letterspaced labels: Gelasio needs explicit caps where the old display face was caps by design */
+  .brand .eyebrow, .nav-title, .progress-label, .step-eyebrow, .btn, .optional-badge,
+  footer.fnav .center, .pull-quote cite, .field .example .ex-label, .toast,
+  .commitment h4, .fulltext-panel h4, .ft-title, .labels-toggle, .labels-body h5,
+  .field .example .ill .tag {
+    text-transform: uppercase; font-weight: 700;
+  }
+  .brand .eyebrow { font-size: 11.5px; letter-spacing: .155em; color: var(--coral); }
+  .nav-title, .progress-label, .step-eyebrow, footer.fnav .center { font-size: 11px; letter-spacing: .155em; }
+  .step-eyebrow { color: var(--muted-2); }
+  .step-eyebrow .pipe { color: var(--coral); }
+  .btn { font-size: 11px; letter-spacing: .12em; }
+  .optional-badge, .pull-quote cite, .field .example .ex-label { font-size: 10.5px; letter-spacing: .155em; }
+  .fulltext-panel h4, .labels-toggle, .ft-title, .labels-body h5 { font-size: 11px; letter-spacing: .14em; }
+
+  nav.steps button.step .num { font-family: var(--serif); font-weight: 700; font-size: 11.5px; color: var(--muted-2); letter-spacing: .05em; }
+  nav.steps button.step.active { color: var(--ink); }
+  nav.steps button.step.active .num { color: var(--coral); }
+
+  .field label { color: var(--ink); }
+  .intro-card h3, .review-section h3, .modal h3, .stress-panel h4, .model-card h3 {
+    font-weight: 700; letter-spacing: -.004em; color: var(--ink);
+  }
+  .intro-card h3, .review-section h3 { font-size: 20px; }
+  .model-card h3 { font-size: 20px; }
+  .stress-panel h4 { font-size: 16px; letter-spacing: 0; }
+  .modal h3 { font-size: 21px; }
+  .review-item .k { color: var(--ink); }
+
+  .commitment { border-top-color: var(--coral); }
+  .commitment .num { font-weight: 700; font-size: 25px; color: var(--coral); letter-spacing: .02em; }
+  .commitment h4 { font-size: 12.5px; letter-spacing: .16em; color: var(--ink); }
+  .commitment .argbeat { color: var(--coral); font-size: 15px; font-style: italic; }
+
+  .pull-quote {
+    background: var(--wash); border-left: 4px solid var(--coral);
+    color: var(--ink); font-size: 19.5px;
+  }
+  .step-lede em { color: var(--coral); font-style: italic; }
+  .field .example { background: var(--wash); border-left-color: var(--coral); }
+  .field .example .ex-label { color: var(--coral); }
+  .field .example .ill .tag { color: var(--coral); }
+  .toast { background: var(--ink); }
+
+  /* ---- The arc strip: the book's core-argument infographic, in miniature ---- */
+  .arc-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 14px; margin: 30px 0 6px;
+    padding: 20px 0 18px;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 800px) { .arc-strip { grid-template-columns: 1fr 1fr; } }
+  .arc-col { text-align: center; }
+  .arc-stage {
+    font-family: var(--serif); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .13em; font-size: 12px; color: var(--coral); margin-bottom: 10px;
+  }
+  .arc-dot-row { position: relative; height: 14px; margin-bottom: 10px; }
+  .arc-rule { position: absolute; left: 0; right: 0; top: 6px; height: 2px; background: var(--coral); }
+  .arc-col:first-child .arc-rule { left: 50%; }
+  .arc-col:last-child .arc-rule { right: 50%; }
+  .arc-dot {
+    position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 13px; height: 13px; border-radius: 50%; background: var(--coral);
+  }
+  .arc-beat {
+    background: var(--wash); border-radius: 6px; padding: 7px 8px;
+    font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 8px;
+  }
+  .arc-note { font-size: 13.5px; color: var(--muted); line-height: 1.4; }
+  .arc-move { font-size: 13px; color: var(--ink); font-style: italic; margin-top: 6px; }
+  .arc-caption {
+    font-size: 14.5px; color: var(--muted); font-style: italic;
+    margin: 12px 0 0; max-width: 74ch; line-height: 1.5;
+  }
+
+  /* ---- Elster diagram, rebuilt to §3.2 ---- */
+  .dia-mech {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+  }
+  .dia-mech .dia-label { color: var(--muted); opacity: 1; }
+  .dia-mech.dia-preferred { border-color: var(--coral); }
+  .dia-mech.dia-preferred .dia-label { color: var(--coral); }
+  .dia-theory {
+    background: var(--wash); border: 1px solid var(--wash-2); color: var(--ink);
+  }
+  .dia-theory .dia-label { color: var(--coral); opacity: 1; }
+  .dia-sig {
+    background: transparent; border: none; border-top: 1px dashed var(--rule-2);
+    color: var(--ink); font-style: italic; padding-top: 5px; border-radius: 0;
+  }
+  .dia-sig .dia-label { color: var(--muted-2); opacity: 1; font-style: normal; }
+  .dia-expl {
+    background: var(--wash); border: 1px solid var(--wash-2);
+    border-left: 4px solid var(--coral); color: var(--ink);
+  }
+  .dia-expl .dia-label { color: var(--coral); opacity: 1; }
+  .dia-lat {
+    background: var(--paper); border: 1px solid var(--rule-2);
+    border-left: 4px solid var(--coral); color: var(--ink);
+  }
+  .dia-lat .dia-label { color: var(--coral); opacity: 1; }
+  .diagram-legend .sw-mech { background: var(--paper); border: 1.5px solid var(--ink); }
+  .diagram-legend .sw-pref { background: var(--paper); border: 1.5px solid var(--coral); }
+  .diagram-legend .sw-theory { background: var(--wash); border: 1px solid var(--wash-2); }
+  .diagram-legend .sw-sig { background: transparent; border-top: 1px dashed var(--rule-2); border-radius: 0; height: 8px; }
+  .diagram-legend .sw-expl { background: var(--wash); border-left: 3px solid var(--coral); }
+  .stress-panel .legend-row .sw-mech { background: var(--paper); border: 1.5px solid var(--ink); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-pref { background: var(--paper); border: 1.5px solid var(--coral); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-theory { background: var(--wash); border: 1px solid var(--wash-2); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-sig { background: var(--wash-2); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-expl { background: var(--wash); border-left: 3px solid var(--coral); box-sizing: border-box; }
+  .stress-panel .legend-row strong { color: var(--ink); }
+
+
+  /* Model rails after Figure 7.2: the received-practice path in gray, the design in coral */
+  .model-card::before { background: #6E6E73; }
+  .model-card.m2::before { background: #6E6E73; }
+  .model-card.m3::before { background: var(--coral); }
+  .model-card .role-tag { color: var(--muted); }
+  /* ---- Book colophon ---- */
+  .colophon {
+    margin-top: 34px; padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 13.5px; color: var(--muted); line-height: 1.55;
+  }
+  .colophon a { color: var(--coral); }
+  .colophon strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="brand">
+    <div class="eyebrow"><span class="dot"></span> A method-agnostic contribution-architecture tool</div>
+    <h1>Contribution Architecture</h1>
+    <p class="subtitle">Replicate. Diverge. Reconcile.</p>
+  </div>
+  <div class="header-actions">
+    <button class="btn ghost" id="btn-save" title="Saves automatically; click to confirm">Save</button>
+    <button class="btn" id="btn-export" title="Download as Markdown">Export</button>
+    <button class="btn ghost" id="btn-print" title="Print as PDF">Print</button>
+    <button class="btn ghost" id="btn-reset" title="Clear all fields">Reset</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="nav-title">Sections</div>
+    <nav class="steps" id="nav"></nav>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+    </div>
+  </aside>
+
+  <main id="main"></main>
+</div>
+
+<footer class="fnav">
+  <div class="left"><button class="btn" id="btn-prev">← Previous</button></div>
+  <div class="center" id="step-indicator">—</div>
+  <div class="right"><button class="btn primary" id="btn-next">Next →</button></div>
+</footer>
+
+<div class="toast" id="toast">Saved</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Reset everything?</h3>
+    <p id="modal-body">This will clear every field and start fresh. This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn ghost" id="modal-cancel">Cancel</button>
+      <button class="btn primary" id="modal-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — sections, fields, examples
+   ============================================================ */
+
+const SECTIONS = [
+  {
+    id: "intro",
+    nav: "Welcome",
+    title: "Welcome",
+    eyebrow: "How this template works",
+    custom: "intro"
+  },
+  {
+    id: "phenomenon",
+    nav: "Phenomenon & the prior",
+    title: "Phenomenon and the prior",
+    eyebrow: "Section 1 of 8",
+    lede: "Before there is a difference, there must be a prior. Name the pattern your readers will recognize, and the study that taught them to expect it. Specific enough that 'I reproduced it in this case' is verifiable.",
+    fields: [
+      { id: "focal_phenomenon", label: "Focal phenomenon",
+        prompt: "What real-world process or pattern are you trying to explain?",
+        example: {
+          q: "Why women earn less than men with equivalent observable credentials in the same occupations.",
+          p: "How a single executive's flight from the country was triggered in the 48 hours preceding the coup.",
+          c: "Why some post-colonial states consolidated democratic institutions and others reverted to authoritarianism.",
+          i: "How welfare caseworkers reconcile bureaucratic rule-application with discretionary judgment in the service encounter."
+        } },
+      { id: "outcome_y", label: "Phenomenon or outcome of interest",
+        prompt: "Operational definition. What, exactly, are you accounting for? At what unit, over what horizon?",
+        example: {
+          q: "Hourly wage residual after controlling for education, experience, hours, and occupation.",
+          p: "The decision to evacuate, narrowed to a 48-hour window with documentary and interview evidence.",
+          c: "Regime outcome circa 2000, coded across the 31 cases that experienced a post-1960 transition.",
+          i: "The interactional accomplishment of legitimacy in the caseworker–client encounter."
+        } },
+      { id: "predictor_x", label: "Construct or condition the prior account proposes",
+        prompt: "What does the prior account treat as the explanation? Name it in actor-not-variable terms wherever possible.",
+        example: {
+          q: "Worker gender, treated as the focal predictor in human-capital wage models.",
+          p: "External-actor pressure on the executive — the prior account's primary causal driver.",
+          c: "Strength of pre-transition civil society — the prior account's positive predictor of consolidation.",
+          i: "Bureaucratic role-script — the construct prior work treats as the binding constraint on caseworker behavior."
+        } },
+      { id: "anchor_study", label: "The prior Move 1 reproduces",
+        prompt: "Cite by author and year. Why does this study define the prior the field holds?",
+        example: {
+          q: "Blau & Kahn (2017) on the gender wage gap; the canonical decomposition the field has internalized.",
+          p: "Westad (2005) on superpower intervention as the primary driver of Cold War regime change.",
+          c: "Linz & Stepan (1996) on civil society as a precondition for democratic consolidation.",
+          i: "Lipsky (1980) on street-level bureaucracy and the discretion–constraint tension."
+        } },
+      { id: "headline_result", label: "Pattern your readers must recognize",
+        prompt: "The substantive shape of the prior finding — magnitude, direction, scope conditions, or the qualitative pattern as a reader of that work would describe it. Establishing that you can reproduce this is the credibility deposit; without it, the divergence does not land.",
+        example: {
+          q: "Women earn 15–20% less than men with equivalent observable credentials, with the gap widest in occupations with long-hours demands.",
+          p: "External pressure precedes major regime decisions in the canonical cases by days or weeks; the temporal sequence is the trace.",
+          c: "Strong pre-transition civil society correlates with subsequent democratic consolidation across the canonical sample.",
+          i: "Caseworkers describe their work as rule-bound, and observed encounters appear to confirm the primacy of the role-script."
+        } }
+    ]
+  },
+  {
+    id: "three_model",
+    nav: "Three-evidence architecture",
+    title: "The three-evidence architecture",
+    eyebrow: "Section 2 of 8",
+    lede: "Affirm priors, generate a difference, reconcile. Three evidence moves — whether they are regression models, within-case tests, case comparisons, or analytic readings of field material. The unit varies; the architecture is constant. The name echoes difference-in-differences on purpose: there the object that changes is a gap between groups over time; here it is a reader's inference, moved from what one body of evidence licenses to what the next one does. The moves are logical positions in the contribution, not necessarily the order in which you discover them in the work.",
+    custom: "three_model"
+  },
+  {
+    id: "triangle",
+    nav: "Rival accounts",
+    title: "Rival accounts — the causal triangle",
+    eyebrow: "Section 3 of 8",
+    lede: "Many studies try to rule out reverse causation, reciprocal dynamics, and confounding. The Differences-in-Inferences move is to ask whether each is a nuisance worth handling by design, a moderator, or an alternative explanation worthy of theoretical engagement — and to design around the answer. An alternative worth taking seriously belongs in the Elster diagram; a nuisance is handled by case selection, comparison structure, or controls.",
+    fields: [
+      { id: "preferred_xy", label: "Preferred:  X → Y",
+        prompt: "Articulate the mechanism in actor-not-variable terms. Whose decision, under what constraints, produces the outcome?",
+        example: {
+          q: "Employers underweight women's productivity signals at hire and promotion, generating a wage residual that compounds over the career.",
+          p: "External pressure binds the executive's options; flight follows when the pressure crosses a threshold the actor recognizes as terminal.",
+          c: "Civil-society density supplies the coalitional infrastructure that sustains democratic bargaining through transition stress.",
+          i: "Caseworkers improvise within the role-script, treating discretion as a resource for legitimating decisions to clients."
+        } },
+      { id: "reverse_yx", label: "Reverse:  Y → X",
+        prompt: "Could the outcome drive what the prior account treats as the cause? Nuisance to handle by design, or alternative worth theorizing?",
+        example: {
+          q: "Anticipated wage trajectories shape pre-market human-capital choices; the same wage gap reflects investment differences, not employer behavior.",
+          p: "The executive's prior decisions may have invited the external pressure; the timeline must distinguish initiating from reactive moves.",
+          c: "Anticipated transition success may have catalyzed civil-society formation; pre-transition density is partly endogenous to expected outcomes.",
+          i: "Client characteristics shape the role-script the caseworker invokes; structure adapts to the encounter rather than constraining it."
+        } },
+      { id: "reciprocal_xy", label: "Reciprocal:  X ↔ Y",
+        prompt: "Plausible? In what regime? Bound the dynamic, or theorize it as a feature of the process.",
+        example: {
+          q: "Wage gaps and human-capital choices co-evolve: each cohort's gap shapes the next cohort's investments, which shape its gap.",
+          p: "Pressure and resistance escalate jointly across the 48 hours; the trace must specify which beat triggers which.",
+          c: "Civil society and regime quality reinforce each other across decades; cross-sectional snapshots conceal the dynamic.",
+          i: "Role-script and improvisation co-produce one another in repeated encounters; structure is sedimented practice."
+        } },
+      { id: "omitted_z", label: "Omitted:  Z → Y, Z ↔ X",
+        prompt: "Name Z. If you cannot, the threat is too vague to address.",
+        example: {
+          q: "Unobserved job preferences correlated with both gender and wages; address via within-firm or within-task designs.",
+          p: "A third actor, absent from the documentary record, may have communicated with both the executive and the external party.",
+          c: "Colonial-era institutional inheritance may shape both civil society and regime trajectory; address via case selection on shared inheritance.",
+          i: "Organizational reform underway during fieldwork may shape both observed scripts and observed improvisation."
+        } }
+    ]
+  },
+  {
+    id: "supports",
+    nav: "Three supports · nine answers",
+    title: "Three supports — above, below, laterally",
+    eyebrow: "Section 4 of 8",
+    lede: "The three supports are not three regions of the diagram belonging to different accounts; they are <strong>three questions you ask of each account in turn</strong>, so a finished diagram with three stories has answered nine. <em>Above</em> asks what accepted account the story is a special case of. <em>Below</em> asks what the story would leave in the evidence if it were the one running — its <em>signature</em>. <em>Laterally</em> asks which of those signatures separates the story from its rivals. Following Elster (2015).",
+    fields: [
+      { id: "support_above", label: "M1 · preferred — support from above",
+        prompt: "What accepted body of work is M1 a special case of? Your own account is not the higher-level theory that supports it: name the roof it stands under, so a reader who has not yet granted your contribution can still grant its premise.",
+        example: {
+          q: "The wage-gap argument is a specific case of statistical-discrimination theory: noisy productivity signals plus group-level priors produce systematic mispricing.",
+          p: "The flight-decision account is a specific case of audience-cost theory: leaders update on signals that commit other actors to costly punishment.",
+          c: "The civil-society argument is a specific case of the social-capital account of collective action.",
+          i: "The discretion-improvisation reading is a specific case of practice theory: rules are resources that practitioners deploy to accomplish situated work."
+        } },
+      { id: "support_below", label: "M1 · preferred — signature (support from below)",
+        prompt: "If M1 were the story running, what would it leave in the evidence? Derive the signature in one step from what the process spends. Prefer the signature that is the shortest move from the account — each step of interpretive distance is a step a skeptic can refuse to take.",
+        example: {
+          q: "The process spends information: so the gap should attenuate where productivity is well measured (piece-rate work) and widen where signals are noisy.",
+          p: "The process spends audience commitment: so the executive should reference audience-credible commitments in the trace material — and does, in three documented exchanges.",
+          c: "The process spends associational capacity: so consolidation should be most robust where dense pre-transition associational life predates the transition by a generation.",
+          i: "The process spends legitimacy: so caseworkers should invoke role-scripts more elaborately when client trust is contested — and they do, observably."
+        } },
+      { id: "support_lateral", label: "M1 · preferred — lateral",
+        prompt: "Which of M1's signatures a rival forbids. An observation one story predicts and another rules out is the sharpest discriminator; a signature every story predicts equally does not move anyone.",
+        example: {
+          q: "A pure preferences account predicts no within-firm gap once preferences are held constant; observed within-firm gaps are predicted by M1 and forbidden by preferences.",
+          p: "A pure domestic-coup account predicts no external referencing; the trace shows extensive external referencing — predicted by M1, forbidden by the domestic account.",
+          c: "A pure development account predicts that wealthier transitions consolidate regardless of civil society; the deviant cases are forbidden by it and predicted by M1.",
+          i: "A pure rule-following account predicts uniform script invocation; the observed variation tracks contested trust — predicted by M1, forbidden by rule-following."
+        } },
+
+      { id: "m2_above", label: "M2 · rival — support from above",
+        prompt: "Same question, asked of the rival, and asked in good faith: what accepted account is M2 a special case of? A rival with no roof is a rival you have weakened.",
+        example: {
+          q: "The preferences account is a specific case of compensating-differentials theory: workers trade wages for amenities they value differently.",
+          p: "The domestic-coup account is a specific case of selectorate theory: leaders act on the incentives of the coalition that keeps them in power.",
+          c: "The development account is a specific case of modernization theory: material conditions carry institutional durability.",
+          i: "The rule-following account is a specific case of classical bureaucratic theory: procedure, not situated judgment, produces the observed conduct."
+        } },
+      { id: "m2_below", label: "M2 · rival — signature (support from below)",
+        prompt: "If M2 were the story running, what would the evidence show? Derive it from what M2's process spends, not from what would be convenient for you.",
+        example: {
+          q: "The process spends preferences: so the gap should be flat within occupation-and-hours cells and concentrated between them.",
+          p: "The process spends coalition risk: so the trace should show domestic security referencing and no timing dependence on external signals.",
+          c: "The process spends resources: so consolidation should track income at transition and be indifferent to associational density.",
+          i: "The process spends procedure: so script invocation should be uniform across encounters and track case type, not client trust."
+        } },
+      { id: "m2_lateral", label: "M2 · rival — lateral",
+        prompt: "What does M2 predict that M1 forbids? State it in the form its strongest proponent would accept.",
+        example: {
+          q: "M2 predicts the gap disappears within narrowly defined jobs; M1 predicts it persists where signals stay noisy. Opposite predictions on the same cell.",
+          p: "M2 predicts decision timing tracks domestic threat indicators; M1 predicts it tracks external commitment events. The timing separates them.",
+          c: "M2 predicts the poorest consolidators fail; M1 predicts the thinnest-civil-society consolidators fail. The deviant cases separate them.",
+          i: "M2 predicts variation is explained by case type; M1 predicts it is explained by contested trust. The residual pattern separates them."
+        } },
+
+      { id: "m3_above", label: "M3 · rival — support from above",
+        prompt: "And of the third story: what accepted account is it a special case of?",
+        example: {
+          q: "Unobserved skill is a specific case of sorting: the able are matched to the better-paying opportunities.",
+          p: "Bureaucratic momentum is a specific case of organizational-routine theory: the decision follows the standing plan.",
+          c: "Elite pact-making is a specific case of the strategic-transitions account: outcomes are set by bargains among elites.",
+          i: "Client self-selection is a specific case of sorting: who arrives at the desk, not what happens at it, produces the pattern."
+        } },
+      { id: "m3_below", label: "M3 · rival — signature (support from below)",
+        prompt: "If M3 were the story running, what would the evidence show?",
+        example: {
+          q: "The process runs on skill: hold measured skill fixed and the gap should shrink toward zero in every cell.",
+          p: "The process runs on routine: the decision should track the standing plan's calendar rather than any external or domestic signal.",
+          c: "The process runs on elite bargains: consolidation should track pact inclusiveness and be indifferent to both wealth and associations.",
+          i: "The process runs on selection: the pattern should appear at intake and not vary with what the caseworker does."
+        } },
+      { id: "m3_lateral", label: "M3 · rival — lateral",
+        prompt: "What does M3 predict that the other two forbid — or what do they predict that M3 rules out?",
+        example: {
+          q: "M3 predicts uniform attenuation once skill is held fixed; M1 predicts attenuation concentrated where signals are precise. The pattern of attenuation, not its presence, separates them.",
+          p: "M3 predicts calendar-driven timing; both rivals predict signal-driven timing. The calendar is the discriminator.",
+          c: "M3 predicts pact inclusiveness explains the deviant cases; M1 predicts associational density does. The deviant cases adjudicate.",
+          i: "M3 predicts the pattern is fixed at intake; M1 predicts it is produced in the encounter. Observing the encounter separates them."
+        } }
+    ]
+  },
+  {
+    id: "diagram",
+    nav: "Diagram of the argument",
+    title: "The argument as a diagram",
+    eyebrow: "Section 5 of 8",
+    lede: "Your <em>Elster diagram</em>, after Elster (2015). The picture holds three live stories in view at once. Down one side sits the <em>explanandum</em>, what is to be explained; feeding into it are the candidate mechanisms — M1, the one you prefer, and M2 and M3, the rivals, <strong>drawn at the same size and with the same weight</strong>. Every story carries an arrow to the explanandum, because every story would produce it: that is equifinality, and it is the whole difficulty. The diagram earns its keep by making three kinds of support explicit for each mechanism in turn, and by putting the three <em>signatures</em> side by side — because a design that can observe one signature but not the others is a design that can adjudicate.",
+    custom: "diagram"
+  },
+  {
+    id: "endogeneity",
+    nav: "Nuisance or mechanism",
+    title: "When a rival account is the mechanism",
+    eyebrow: "Section 6 of 8  (optional)",
+    lede: "Two stances toward rival accounts, two design responses. If a rival account is an <strong>empirical nuisance</strong>, you handle it by design — through case selection, comparison structure, instrumental variation, scope conditions, or sampling that breaks the rival's purchase on your evidence. If the rival is a <strong>viable theoretical mechanism</strong>, you engage it: model the process, derive its distinct predictions, and adjudicate. The same conceptual move recurs across traditions: in quantitative work as the choice between instrumenting and modeling; in process tracing as treating selection-into-the-case as a theoretical claim; in case-comparative work as treating the deviant case as evidence; in interpretive work as treating reflexivity as constitutive of the encounter rather than as bias.",
+    optional: true,
+    fields: [
+      { id: "endog_process", label: "Rival account worth theorizing",
+        prompt: "Which alternative explanation (Y→X, X↔Y, Z→Y) is plausible enough that engaging it directly would inform readers more than handling it away?",
+        example: {
+          q: "Selection of women into long-hours occupations is endogenous to anticipated penalties; the selection process is the theoretical claim, not a confound.",
+          p: "The case was selected because of its outcome; that selection is a feature of the inference, not a bug — the case is most-likely or least-likely on the rival account.",
+          c: "Cases were selected on the dependent variable to maximize variation on the proposed mechanism; selection is part of the design logic.",
+          i: "The researcher's presence shapes the encounter; reflexivity is treated as constitutive of the field relationship rather than as contamination."
+        } },
+      { id: "empirical_handle", label: "Evidence handle",
+        prompt: "What variation, comparison, or evidence move lets you separate the rival mechanism from your preferred one?",
+        example: {
+          q: "Within-firm wage variation, holding job task constant, separates statistical-discrimination from preferences.",
+          p: "The trace identifies a window in which audience signals were absent; outcomes in that window adjudicate audience-cost against domestic-only accounts.",
+          c: "Pairing matched cases differing only on civil-society density yields the contrast that adjudicates against economic development.",
+          i: "Comparison of caseworkers with similar backgrounds but different field tenures separates role-script from accumulated practice."
+        } },
+      { id: "inference_holds", label: "Inference if the mechanism holds",
+        prompt: "How does treating the rival as a mechanism (rather than a nuisance) change what readers should believe?",
+        example: {
+          q: "If selection itself is the mechanism, the gap is a feature of the labor-market institution, not a residual; policy attention shifts upstream.",
+          p: "If audience binding is the mechanism, the executive's flight is a rational response to credible commitments; agency is preserved within structure.",
+          c: "If civil society is the mechanism, consolidation has a constructible foundation; intervention has a target.",
+          i: "If discretion is a legitimacy resource, reform that strips discretion will degrade legitimacy; the trade-off is real."
+        } },
+      { id: "inference_fails", label: "Inference if the mechanism fails",
+        prompt: "Does failure strengthen the preferred account (lateral support) or open a new question?",
+        example: {
+          q: "Failure to find within-firm gaps strengthens the preferences account and rules out the pure-discrimination alternative.",
+          p: "Failure to find audience referencing in the trace would resurrect the domestic-coup explanation; the absence would itself be informative.",
+          c: "Failure of the matched-pair contrast would resurrect the economic account; the comparison is informative either way.",
+          i: "Failure to find variation across tenure would weaken the practice-theoretic reading and elevate the structural-script alternative."
+        } }
+    ]
+  },
+  {
+    id: "robustness",
+    nav: "Credibility moves",
+    title: "Credibility as construction, not preservation",
+    eyebrow: "Section 7 of 8",
+    lede: "Credibility sections that exist to demonstrate the conditions under which the headline result survives are unsatisfying. Treat credibility as construction — moves that sharpen the theoretical mechanism and the identifying assumptions, not moves that defend a coefficient. Pre-commit to your credibility moves before the analysis is complete. The vocabulary varies across traditions; the spirit is constant.",
+    fields: [
+      { id: "breakdown_specs", label: "Two conditions under which your account should attenuate or break down",
+        prompt: "State them now. If they don't behave that way, that's information.",
+        example: {
+          q: "(1) In piece-rate occupations the gap should attenuate. (2) Where bidding is anonymized the gap should disappear.",
+          p: "(1) In a comparable case where audience signals are absent the trace should not reproduce. (2) Where the executive faces low audience costs flight should not follow pressure.",
+          c: "(1) In cases without civil-society pre-density the consolidation pattern should not appear. (2) In cases with civil society but acute economic shock consolidation should be unstable.",
+          i: "(1) Where caseworker-client trust is uncontested the script-elaboration pattern should attenuate. (2) Where rules are formally suspended the discretion-as-legitimacy reading should not recur."
+        } },
+      { id: "aux_predictions", label: "Two auxiliary predictions",
+        prompt: "Empirical implications of the mechanism, not of the headline result (Elster's support-from-below).",
+        example: {
+          q: "(1) Gap widens with signal noise. (2) Gap is mediated by hours-flexibility availability.",
+          p: "(1) Audience-credible language appears in the executive's trace material. (2) Trace timing aligns with audience-signal timing.",
+          c: "(1) Consolidation is most robust where civil society predates the transition by a generation. (2) Civil-society effects are mediated by post-transition party formation.",
+          i: "(1) Script elaboration tracks contested-trust conditions. (2) Improvisation is concentrated in encounters where role expectations diverge."
+        } },
+      { id: "sensitivity_analysis", label: "Sensitivity move tied to a named identifying assumption",
+        prompt: "<a href=\"https://doi.org/10.1111/rssb.12348\" target=\"_blank\" rel=\"noopener\">Cinelli–Hazlett</a> for selection-on-observables; <a href=\"https://doi.org/10.1093/restud/rdad018\" target=\"_blank\" rel=\"noopener\">Rambachan–Roth</a> or pre-trend examination for DiD; first-stage F and exclusion-restriction sensitivity for IV; deviant-case analysis for case-comparative; structured analytic memos and member-checking for interpretive; transparent process-tracing test priors for within-case work.",
+        example: {
+          q: "Cinelli–Hazlett benchmark: confounders would need to explain ~12% of both treatment and outcome residual variance to overturn the result.",
+          p: "Posterior on the smoking-gun test is reported; the test would have to be wrong with probability above 0.4 to reverse the inference.",
+          c: "Two deviant cases analyzed in depth; both were misclassified on the moderating variable — re-coding strengthens the comparison.",
+          i: "Analytic memos shared with three field informants; one substantive correction adopted, documented in the appendix."
+        } },
+      { id: "ols_iv_direction", label: "Expected direction of bias if the identifying assumption fails",
+        prompt: "In what direction does bias run if your identifying assumption fails? Your case selection, sampling, comparison logic, instrument, or research design each carry assumptions that, if wrong, push your evidence in a particular direction. Name the direction; check whether your other evidence moves run with the bias or against it. (Quantitative work reporting OLS alongside an IV: state the expected direction of OLS bias before looking at the comparison, per <a href=\"https://doi.org/10.1002/smj.2995\" target=\"_blank\" rel=\"noopener\">Wolfolds &amp; Siegel</a>.)",
+        example: {
+          q: "Affirmative bias expected — preferences-on-the-job correlate with gender, so OLS overstates the discrimination coefficient. IV should yield a smaller estimate.",
+          p: "If the smoking-gun test is biased, the bias runs toward confirming the audience-cost mechanism; failure to find the trace remains informative.",
+          c: "If case selection is biased toward consolidation cases, the civil-society effect is overstated; deviant-case inclusion runs against the bias.",
+          i: "If reflexivity has shaped the encounters in the direction of the preferred reading, the script-elaboration finding is overstated; the cross-tenure comparison runs against this."
+        } }
+    ]
+  },
+  {
+    id: "questions",
+    nav: "Five questions",
+    title: "Five questions before you write",
+    eyebrow: "Section 8 of 8",
+    lede: "Candor time. If any answer below is 'I don't know yet,' then work more on your answer before committing the contribution claim to writing.",
+    fields: [
+      { id: "q1", label: "1. Whose prior am I affirming in Move 1?",
+        prompt: "Is the replication target precise enough to be falsified?",
+        example: {
+          q: "Blau & Kahn (2017): the within-occupation wage gap, operationalized as the residual after standard controls. Falsifiable: my point estimate must lie within 25% of theirs.",
+          p: "Westad (2005): the temporal precedence of external pressure over major regime decisions. Falsifiable: the documented sequence in my case must show the same precedence.",
+          c: "Linz & Stepan (1996): pre-transition civil-society density predicts post-transition consolidation. Falsifiable: in my matched sample the correlation must reproduce.",
+          i: "Lipsky (1980): caseworkers describe their work as rule-bound and constraints feel binding. Falsifiable: I must find this self-description in my interviews."
+        } },
+      { id: "q2", label: "2. What single inference does Move 2 license that Move 1 does not?",
+        prompt: "One sentence.",
+        example: {
+          q: "That the gap is a mixture of statistical-discrimination and preferences components, not a pure discrimination effect.",
+          p: "That the executive's flight responds to audience-credible commitments, not to raw external pressure alone.",
+          c: "That civil-society effects depend on associational density predating the transition by a generation, not on contemporaneous mobilization.",
+          i: "That the role-script is invoked as a legitimacy resource by the caseworker, not merely as a constraint imposed on them."
+        } },
+      { id: "q3", label: "3. How does Move 3 reconcile the two?",
+        prompt: "One sentence, and name the form: a boundary (the prior holds in one regime, yours in another) or a bias (the design isolates the surviving mechanism). Without becoming a fishing expedition.",
+        example: {
+          q: "By interacting gender with signal noise: the gap is concentrated where productivity signals are noisy; preferences and discrimination both operate, in different regimes.",
+          p: "By tracing the audience-signal–pressure–decision sequence beat by beat in the documented record; both pressure and audience binding are active, the latter is decisive.",
+          c: "By comparing matched cases that differ on civil-society density: density is the difference-maker, holding economic development constant.",
+          i: "By contrasting tenure cohorts: the role-script and improvisation co-produce one another, with new caseworkers reading the script as constraint and senior ones as resource."
+        } },
+      { id: "q4", label: "4. Which alternative am I treating as theory, and which am I ruling out? On what basis?",
+        prompt: "One sentence.",
+        example: {
+          q: "Statistical discrimination is treated as theory; pure preferences is ruled out by within-firm variation. Selection into hours is bracketed by design.",
+          p: "Audience-cost binding is treated as theory; pure domestic-coup is ruled out by external referencing in the documentary record.",
+          c: "Civil-society density is the theorized mechanism; pure economic development is ruled out by matched-pair contrast.",
+          i: "Practice-theoretic improvisation is the theorized mechanism; pure rule-following is ruled out by tenure-cohort variation."
+        } },
+      { id: "q5", label: "5. What result, if I observed it, would force me to abandon the preferred account?",
+        prompt: "One sentence. If you cannot answer this, the account is not yet falsifiable.",
+        example: {
+          q: "If within-firm wage variation between equivalent men and women is null in well-measured tasks, the discrimination account collapses to preferences.",
+          p: "If the documented record contains no audience referencing in the 48-hour window, the audience-cost account collapses to domestic-only.",
+          c: "If matched cases on civil-society density show no consolidation difference, the civil-society account collapses to economic development.",
+          i: "If senior and junior caseworkers invoke the role-script identically, the practice-theoretic reading collapses to structural script."
+        } }
+    ]
+  },
+  {
+    id: "review",
+    nav: "Review & export",
+    title: "Review and export",
+    eyebrow: "Final step",
+    custom: "review"
+  }
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const STORAGE_KEY = "dii_template_v1";
+const STORAGE_STEP = "dii_template_step";
+const STORAGE_EX = "dii_template_examples";
+
+let state = loadState();
+let currentStep = parseInt(localStorage.getItem(STORAGE_STEP) || "0");
+let examplesShown = JSON.parse(localStorage.getItem(STORAGE_EX) || "{}"); // { sectionId: bool }
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return {};
+}
+function saveState(silent) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(STORAGE_STEP, String(currentStep));
+    localStorage.setItem(STORAGE_EX, JSON.stringify(examplesShown));
+  } catch (e) {}
+  if (!silent) toast("Saved");
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+
+function renderNav() {
+  const nav = document.getElementById("nav");
+  nav.innerHTML = SECTIONS.map((s, i) => {
+    const status = sectionStatus(s);
+    const cls = i === currentStep ? "step active" : "step";
+    return `
+      <button class="${cls}" data-step="${i}">
+        <span class="num">${i === 0 ? "•" : (i === SECTIONS.length - 1 ? "✓" : i.toString().padStart(2, "0"))}</span>
+        <span class="lab">${s.nav}<span class="marker ${status}"></span></span>
+      </button>`;
+  }).join("");
+  nav.querySelectorAll("button.step").forEach(b => {
+    b.addEventListener("click", () => goTo(parseInt(b.dataset.step)));
+  });
+  updateProgress();
+}
+
+function sectionStatus(s) {
+  if (!s.fields && s.custom !== "three_model") return "";
+  let fields = s.fields || [];
+  if (s.custom === "three_model") {
+    fields = [
+      {id:"m1_spec"},{id:"m1_inf"},
+      {id:"m2_spec"},{id:"m2_inf"},
+      {id:"m3_spec"},{id:"m3_inf"}
+    ];
+  }
+  const total = fields.length;
+  const filled = fields.filter(f => state[f.id] && state[f.id].trim()).length;
+  if (filled === 0) return "";
+  if (filled === total) return "full";
+  return "partial";
+}
+
+function updateProgress() {
+  const sections = SECTIONS.filter(s => s.fields || s.custom === "three_model");
+  let total = 0, filled = 0;
+  sections.forEach(s => {
+    let fields = s.fields || [];
+    if (s.custom === "three_model") {
+      fields = [{id:"m1_spec"},{id:"m1_inf"},{id:"m2_spec"},{id:"m2_inf"},{id:"m3_spec"},{id:"m3_inf"}];
+    }
+    total += fields.length;
+    filled += fields.filter(f => state[f.id] && state[f.id].trim()).length;
+  });
+  const pct = total ? Math.round((filled / total) * 100) : 0;
+  document.getElementById("progress-pct").textContent = pct + "%";
+  document.getElementById("progress-fill").style.width = pct + "%";
+}
+
+function renderMain() {
+  const s = SECTIONS[currentStep];
+  const main = document.getElementById("main");
+  let body = "";
+
+  if (s.custom === "intro") {
+    body = renderIntro();
+  } else if (s.custom === "review") {
+    body = renderReview();
+  } else if (s.custom === "three_model") {
+    body = renderThreeModel(s);
+  } else if (s.custom === "diagram") {
+    body = renderDiagram(s);
+  } else {
+    body = renderStandard(s);
+  }
+
+  main.innerHTML = body;
+  attachFieldHandlers();
+  attachExampleToggle(s);
+
+  // Update step indicator
+  document.getElementById("step-indicator").textContent =
+    "Step " + (currentStep + 1) + " of " + SECTIONS.length;
+  document.getElementById("btn-prev").disabled = currentStep === 0;
+  const nextBtn = document.getElementById("btn-next");
+  nextBtn.disabled = currentStep === SECTIONS.length - 1;
+  nextBtn.textContent = currentStep === SECTIONS.length - 2 ? "Review →" : "Next →";
+
+  // Scroll to top
+  main.scrollIntoView({behavior: "instant", block: "start"});
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+
+function renderIntro() {
+  return `
+    <div class="step-eyebrow">A companion tool to <em>Yeah, Yeah, But… and Therefore</em> <span class="pipe">•</span> Christopher I. Rider</div>
+    <h2 class="step-title">Articulate the contribution.</h2>
+    <p class="step-lede"><em>Yeah, yeah, yeah… but… and therefore.</em> The yeahs honor your reader's priors by reproducing what they already believe. The <em>but</em> shows why those priors need to be updated. The <em>and therefore</em> reconciles the two findings — and the reconciliation is the contribution.</p>
+
+
+    <div class="arc-strip">
+      <div class="arc-col">
+        <div class="arc-stage">I &middot; Possible</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">&ldquo;Yeah.&rdquo;</div>
+        <div class="arc-note">The phenomenon is real and worth explaining.</div>
+        <div class="arc-move">the phenomenon&hellip;</div>
+      </div>
+      <div class="arc-col">
+        <div class="arc-stage">II &middot; Plausible</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">&ldquo;Yeah, yeah.&rdquo;</div>
+        <div class="arc-note">More than one mechanism could have produced it.</div>
+        <div class="arc-move">&hellip;then its rivals</div>
+      </div>
+      <div class="arc-col">
+        <div class="arc-stage">III &middot; Probable</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">&ldquo;&hellip;but&hellip;&rdquo;</div>
+        <div class="arc-note">The evidence favours one of them.</div>
+        <div class="arc-move">Replicate &middot; Diverge</div>
+      </div>
+      <div class="arc-col">
+        <div class="arc-stage">IV &middot; Therefore</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">&ldquo;&hellip;and therefore.&rdquo;</div>
+        <div class="arc-note">The framed contribution that follows.</div>
+        <div class="arc-move">Reconcile</div>
+      </div>
+    </div>
+    <p class="arc-caption">One shape, four parts: affirm what the reader believes, unsettle it, then earn the belief you want them to leave with. The arc as rhetoric is <em>yeah, yeah&hellip; but&hellip; and therefore</em>; the same arc as evidence is <em>replicate, diverge, reconcile</em>. They are one object, and the three cards below are the evidence half of it.</p>
+    <div class="commitment-grid">
+      <div class="commitment">
+        <div class="num">01</div>
+        <h4>Replicate</h4>
+        <div class="argbeat">"Yeah, yeah, yeah."</div>
+        <p>Affirm the field's prior. Move 1 shows the result the field already trusts, recovered in your own material — coefficient, trace, comparison, or analytic reading. It is the first check a skeptic runs, and the place construct and measurement validity are shown rather than asserted.</p>
+      </div>
+      <div class="commitment">
+        <div class="num">02</div>
+        <h4>Diverge</h4>
+        <div class="argbeat">"…but."</div>
+        <p>Generate a difference. Move 2 is the reader's best honest attempt under received practice — what the field would conclude with the constructs and comparisons it already trusts — so the divergence is one they cannot dismiss as sloppiness. Diverge is a step in the argument, not a concession to obtainable evidence.</p>
+      </div>
+      <div class="commitment">
+        <div class="num">03</div>
+        <h4>Reconcile</h4>
+        <div class="argbeat">"…and therefore."</div>
+        <p>Show why the two findings differ and coexist. The reconciliation takes one of two forms: a <em>boundary</em>, where the prior holds in one regime and your result in another, or a <em>bias</em>, where a design or comparison isolates the surviving mechanism. Chosen by design, before the analysis is complete.</p>
+      </div>
+    </div>
+
+    <div class="intro-card">
+      <h3>How to use this template</h3>
+      <p>You will move through eight sections. Each prompts you to articulate one part of the contribution. Sections you cannot answer honestly are the ones most worth working on.</p>
+      <p>The sections build the two artifacts the book asks for at this stage: the <strong>Elster diagram</strong> and its design brief (Chapter 3), and the <strong>three-move architecture</strong> — replicate, diverge, reconcile (Chapter 4). The book carries the argument; this tool makes you write it down.</p>
+      <p>Each section has an <strong>Illustrations across traditions</strong> toggle. Each illustration shows what the section's move looks like in a different methodological idiom — quantitative, process-tracing, case-comparative, interpretive — so researchers across traditions can locate themselves in the architecture. The illustrations are examples, not canonical statements; if your work sits closer to organization studies, strategy, history, or another tradition not directly named, read the closest illustration as a translation prompt rather than a template.</p>
+      <p>Your responses are <strong>saved to this browser automatically</strong>. When you are done, export to Markdown or print as PDF.</p>
+
+      <div class="references-block">
+        <h4>References cited in illustrations and prompts</h4>
+        <p>Blau, F. D., &amp; Kahn, L. M. (2017). <em>The Gender Wage Gap: Extent, Trends, and Explanations</em>. <a href="https://www.aeaweb.org/articles?id=10.1257/jel.20160995" target="_blank" rel="noopener">Journal of Economic Literature 55(3)</a>.</p>
+        <p>Cinelli, C., &amp; Hazlett, C. (2020). <em>Making Sense of Sensitivity: Extending Omitted Variable Bias</em>. <a href="https://doi.org/10.1111/rssb.12348" target="_blank" rel="noopener">JRSS-B 82(1)</a>.</p>
+        <p>Elster, J. (1989). <em>Nuts and Bolts for the Social Sciences</em>. Cambridge University Press.</p>
+        <p>Elster, J. (2015). <em>Explaining Social Behavior: More Nuts and Bolts for the Social Sciences</em> (2nd ed.). Cambridge University Press.</p>
+        <p>Linz, J. J., &amp; Stepan, A. (1996). <em>Problems of Democratic Transition and Consolidation</em>. <a href="https://www.press.jhu.edu/books/title/2194/problems-democratic-transition-and-consolidation" target="_blank" rel="noopener">Johns Hopkins UP</a>.</p>
+        <p>Lipsky, M. (1980). <em>Street-Level Bureaucracy: Dilemmas of the Individual in Public Services</em>. <a href="https://www.russellsage.org/publications/book/street-level-bureaucracy" target="_blank" rel="noopener">Russell Sage Foundation</a>.</p>
+        <p>Rambachan, A., &amp; Roth, J. (2023). <em>A More Credible Approach to Parallel Trends</em>. <a href="https://doi.org/10.1093/restud/rdad018" target="_blank" rel="noopener">Review of Economic Studies 90(5)</a>.</p>
+        <p>Westad, O. A. (2005). <em>The Global Cold War: Third World Interventions and the Making of Our Times</em>. <a href="https://www.cambridge.org/9780521853644" target="_blank" rel="noopener">Cambridge UP</a>.</p>
+        <p>Wolfolds, S. E., &amp; Siegel, J. (2019). <em>Misaccounting for Endogeneity</em>. <a href="https://doi.org/10.1002/smj.2995" target="_blank" rel="noopener">Strategic Management Journal 40(3)</a>.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      Three intellectual burdens: replicate to affirm, diverge to update, reconcile to contribute.
+      <cite>— Christopher I. Rider</cite>
+    </div>
+
+    <div class="colophon">
+      <strong>Yeah, Yeah, But&hellip; and Therefore: How to Frame, Design, and Defend a Contribution in the Social Sciences</strong> &mdash; Christopher I. Rider, Ross School of Business, University of Michigan. This tool is a companion asset to the book. The vocabulary here &mdash; <em>explanandum</em>, <em>signature</em>, the three supports, <em>replicate, diverge, reconcile</em> &mdash; is the book&rsquo;s, and the glossary in its back matter is authoritative. Companion site: yeahyeahbut.org.
+    </div>
+  `;
+}
+
+/* ============================================================
+   ELSTER DIAGRAM
+   ============================================================ */
+
+const DIAGRAM_LABELS = [
+  { key: "dia_explanandum", label: "Explanandum",                from: "focal_phenomenon", fallback: "What is to be explained" },
+  { key: "dia_m1",          label: "M1 · preferred",             from: "preferred_xy",     fallback: "Preferred mechanism: X → Y" },
+  { key: "dia_m2",          label: "M2 · rival",                 from: "reverse_yx",       fallback: "Rival mechanism: Y → X" },
+  { key: "dia_m3",          label: "M3 · rival",                 from: "omitted_z",        fallback: "Rival mechanism: Z → Y, Z ↔ X" },
+  { key: "dia_above1",      label: "M1 — support from above",    from: "support_above",    fallback: "The accepted account M1 is a special case of" },
+  { key: "dia_above2",      label: "M2 — support from above",    from: "m2_above",         fallback: "The accepted account M2 is a special case of" },
+  { key: "dia_above3",      label: "M3 — support from above",    from: "m3_above",         fallback: "The accepted account M3 is a special case of" },
+  { key: "dia_sig1",        label: "M1 — signature",             from: "support_below",    fallback: "What M1 would leave in the data if it were the one running" },
+  { key: "dia_sig2",        label: "M2 — signature",             from: "m2_below",         fallback: "What M2 would leave in the data if it were the one running" },
+  { key: "dia_sig3",        label: "M3 — signature",             from: "m3_below",         fallback: "What M3 would leave in the data if it were the one running" },
+  { key: "dia_lateral",     label: "Lateral — the discriminating observation", from: "support_lateral", fallback: "The observation one story predicts and another forbids" }
+];
+
+function shortenForDiagram(text, maxLen) {
+  if (!text) return "";
+  maxLen = maxLen || 92;
+  text = text.trim();
+  if (text.length <= maxLen) return text;
+  const clauseCut = text.slice(0, maxLen).match(/^.*[,;:—–-]\s/);
+  if (clauseCut && clauseCut[0].length >= 30) return clauseCut[0].trim().replace(/[,;:—–-]\s*$/, "") + "…";
+  const m = text.match(/^[^.!?]+[.!?]/);
+  if (m && m[0].length <= maxLen) return m[0].trim();
+  return text.slice(0, maxLen - 1).trim() + "…";
+}
+
+// Full, untruncated source text for a diagram key.
+function diagramFullText(key) {
+  const def = DIAGRAM_LABELS.find(d => d.key === key);
+  if (!def) return "";
+  if (state[key] && state[key].trim()) return state[key].trim();
+  const prose = def.from ? state[def.from] : "";
+  if (prose && prose.trim()) {
+    if (typeof def.sentenceIdx === "number") {
+      const s = nthSentence(prose, def.sentenceIdx);
+      if (s) return s;
+      if (def.sentenceIdx > 0) return def.fallback;
+      return prose.trim();
+    }
+    return prose.trim();
+  }
+  return def.fallback;
+}
+
+function nthSentence(text, idx) {
+  if (!text) return "";
+  const parts = text.trim().match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g);
+  if (!parts) return idx === 0 ? text : "";
+  const trimmed = parts.map(p => p.trim()).filter(Boolean);
+  if (idx >= trimmed.length) return "";
+  return trimmed[idx];
+}
+
+function diagramLabel(key) {
+  const def = DIAGRAM_LABELS.find(d => d.key === key);
+  if (!def) return "";
+  if (state[key] && state[key].trim()) return state[key].trim();
+  const prose = def.from ? state[def.from] : "";
+  if (prose && prose.trim()) {
+    if (typeof def.sentenceIdx === "number") {
+      const s = nthSentence(prose, def.sentenceIdx);
+      if (s) return shortenForDiagram(s);
+      if (def.sentenceIdx > 0) return def.fallback;
+      return shortenForDiagram(prose);
+    }
+    return shortenForDiagram(prose);
+  }
+  return def.fallback;
+}
+
+/* Layout after Figure 3.1 of the manuscript: the three mechanisms stand in one
+   column at the same size and the same weight, the explanandum sits to the
+   right, and each mechanism carries its own italic signature beneath it.
+   The three supports are drawn as three QUESTIONS asked of each mechanism in
+   turn, not as three regions of the picture (§3.2). */
+function buildDiagramSvg() {
+  const L = {};
+  DIAGRAM_LABELS.forEach(d => { L[d.key] = diagramLabel(d.key); });
+
+  const rows = [
+    { top: 100, mech: "dia_m1", above: "dia_above1", sig: "dia_sig1", tag: "M1 · PREFERRED", pref: true },
+    { top: 272, mech: "dia_m2", above: "dia_above2", sig: "dia_sig2", tag: "M2 · RIVAL",     pref: false },
+    { top: 444, mech: "dia_m3", above: "dia_above3", sig: "dia_sig3", tag: "M3 · RIVAL",     pref: false }
+  ];
+
+  const out = [
+    '<svg viewBox="0 0 980 730" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elster diagram: three mechanisms on equal footing, each with a higher-level theory above it and its signature beneath it">',
+    '<defs>',
+      '<marker id="arr-coral" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#C9472F"/></marker>',
+      '<marker id="arr-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1A1A1A"/></marker>',
+    '</defs>',
+
+    // Header band — the correction §3.2 was rewritten to make
+    '<text x="490" y="26" text-anchor="middle" fill="#C9472F" font-family="Gelasio, Georgia, serif" font-weight="700" font-size="13" letter-spacing="2.6">THREE QUESTIONS, ASKED OF EACH MECHANISM IN TURN</text>',
+    '<text x="490" y="46" text-anchor="middle" fill="#6E6E73" font-family="Gelasio, Georgia, serif" font-style="italic" font-size="12.5">Three mechanisms, nine answers — above, below, and laterally, for each story in the column.</text>',
+    '<line x1="20" y1="62" x2="960" y2="62" stroke="#D9D7DE" stroke-width="1"/>',
+    '<text x="125" y="84" text-anchor="middle" fill="#6E6E73" font-family="Gelasio, Georgia, serif" font-weight="700" font-size="10.5" letter-spacing="2.2">SUPPORT FROM ABOVE</text>',
+    '<text x="410" y="84" text-anchor="middle" fill="#6E6E73" font-family="Gelasio, Georgia, serif" font-weight="700" font-size="10.5" letter-spacing="2.2">THE MECHANISM, AND ITS SIGNATURE BELOW</text>',
+    '<text x="830" y="84" text-anchor="middle" fill="#6E6E73" font-family="Gelasio, Georgia, serif" font-weight="700" font-size="10.5" letter-spacing="2.2">EXPLANANDUM</text>'
+  ];
+
+  rows.forEach(r => {
+    const mechY = r.top;
+    const sigY  = r.top + 84;
+    // support from above
+    out.push(diagramBox(20, mechY + 6, 200, 66, "dia-theory", r.tag.split(" ")[0] + " stands under", L[r.above]));
+    out.push('<path d="M 220 ' + (mechY + 39) + ' L 254 ' + (mechY + 39) + '" fill="none" stroke="#6E6E73" stroke-width="1.6" marker-end="url(#arr-ink)"/>');
+    // the mechanism — identical geometry and weight for all three
+    out.push(diagramBox(260, mechY, 300, 78, "dia-mech" + (r.pref ? " dia-preferred" : ""), r.tag, L[r.mech]));
+    // its signature, beneath, in italic (support from below)
+    out.push(diagramBox(260, sigY, 300, 62, "dia-sig", "Signature in the data", L[r.sig]));
+    // to the explanandum — same stroke weight for every story; M1's arrow is coral
+    const stroke = r.pref ? "#C9472F" : "#6E6E73";
+    const marker = r.pref ? "url(#arr-coral)" : "url(#arr-ink)";
+    out.push('<path d="M 560 ' + (mechY + 39) + ' C 640 ' + (mechY + 39) + ' 640 355 694 355" fill="none" stroke="' + stroke + '" stroke-width="2" marker-end="' + marker + '"/>');
+  });
+
+  // explanandum
+  out.push(diagramBox(700, 300, 260, 110, "dia-expl", "Explanandum", L.dia_explanandum));
+
+  // lateral band
+  out.push('<line x1="20" y1="600" x2="960" y2="600" stroke="#D9D7DE" stroke-width="1"/>');
+  out.push(diagramBox(20, 618, 940, 76, "dia-lat", "Lateral — which signature separates the stories?", L.dia_lateral));
+
+  out.push('<text x="960" y="722" text-anchor="end" fill="#6E6E73" font-family="Gelasio, Georgia, serif" font-style="italic" font-size="11">After Elster (2015), the three supports</text>');
+  out.push('</svg>');
+  return out.join("");
+}
+
+function diagramBox(x, y, w, h, cls, label, text) {
+  return '<foreignObject x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '">'
+    + '<div xmlns="http://www.w3.org/1999/xhtml" class="dia-box ' + cls + '">'
+    + '<div class="dia-label">' + escapeHtml(label) + '</div>'
+    + '<div class="dia-text">' + escapeHtml(text || "—") + '</div>'
+    + '</div></foreignObject>';
+}
+
+function renderDiagram(s) {
+  return [
+    '<div class="step-eyebrow">' + s.eyebrow + '</div>',
+    '<h2 class="step-title">' + s.title + '</h2>',
+    '<p class="step-lede">' + s.lede + '</p>',
+
+    '<div class="diagram-wrap" id="diagram-host">',
+      buildDiagramSvg(),
+      '<div class="diagram-legend">',
+        '<span class="key"><span class="swatch sw-pref"></span>M1, the story you prefer — marked by the coral arrow, not by a bigger box</span>',
+        '<span class="key"><span class="swatch sw-mech"></span>M2 and M3, the rivals — same size, same weight, stated at full strength</span>',
+        '<span class="key"><span class="swatch sw-theory"></span>Support from above: the accepted account each story is a special case of</span>',
+        '<span class="key"><span class="swatch sw-sig"></span>Support from below: each story\'s signature in the data</span>',
+        '<span class="key"><span class="swatch sw-expl"></span>The explanandum — what all three stories would produce</span>',
+      '</div>',
+    '</div>',
+
+    
+    '<div class="labels-panel">',
+      '<button class="labels-toggle" id="lab-toggle"><span>Customize diagram labels</span><span class="chev">›</span></button>',
+      '<div class="labels-body" id="lab-body">',
+        labelsBlock("What is to be explained", ["dia_explanandum"]),
+        labelsBlock("M1 — the story you prefer", ["dia_m1", "dia_above1", "dia_sig1"]),
+        labelsBlock("M2 — rival story", ["dia_m2", "dia_above2", "dia_sig2"]),
+        labelsBlock("M3 — rival story", ["dia_m3", "dia_above3", "dia_sig3"]),
+        labelsBlock("Lateral", ["dia_lateral"]),
+      '</div>',
+    '</div>',
+
+    '<div class="stress-panel">',
+      '<h4>How to read the figure</h4>',
+      '<div class="legend-grid">',
+        '<div class="legend-row"><span class="swatch sw-mech"></span><div><strong>The three boxes down the middle</strong> are the three stories, drawn at the same size and the same weight. A rival you have shrunk on the page is a rival you have not stated at full strength.</div></div>',
+        '<div class="legend-row"><span class="swatch sw-pref"></span><div><strong>The coral outline and the coral arrow</strong> mark M1, the story you prefer. Preference is marked, not staged: the picture is an instrument of inference, not an advertisement.</div></div>',
+        '<div class="legend-row"><span class="swatch sw-theory"></span><div><strong>Left of each story, support from above</strong>: the accepted body of work that story is a special case of. Your own mechanism is not its higher-level theory — name the roof it stands under.</div></div>',
+        '<div class="legend-row"><span class="swatch sw-sig"></span><div><strong>Beneath each story, its signature</strong> — support from below. Derive it in one step from what the process spends: influence, ability, timing. Prefer the signature that is the shortest move from the mechanism.</div></div>',
+        '<div class="legend-row"><span class="swatch sw-expl"></span><div><strong>Right, the explanandum</strong>: what all three stories would produce. That every arrow lands there is the difficulty — equifinality — and the reason the signatures have to diverge.</div></div>',
+      '</div>',
+      '<ul>',
+        '<li><strong>Read the three signatures side by side.</strong> If they do not diverge, the diagram cannot adjudicate and the design has nothing to observe. That is the moment to go back to the stories, not forward to the data.</li>',
+        '<li><strong>Nine answers, not three.</strong> Above, below, and laterally are three questions asked of each mechanism in turn. A blank cell is a story you have not yet made testable.</li>',
+      '</ul>',
+    '</div>'
+  ].join("");
+}
+
+function labelsBlock(title, keys) {
+  let html = '<h5>' + escapeHtml(title) + '</h5>';
+  keys.forEach(k => {
+    const def = DIAGRAM_LABELS.find(d => d.key === k);
+    const placeholder = def ? (def.from && state[def.from] ? shortenForDiagram(state[def.from]) : def.fallback) : "";
+    const v = state[k] || "";
+    html += '<div class="lab-field">'
+      + '<label for="lf-' + k + '">' + escapeHtml(def ? def.label : k) + '</label>'
+      + '<input type="text" id="lf-' + k + '" data-label-field="' + k + '" placeholder="' + escapeHtml(placeholder) + '" value="' + escapeHtml(v) + '" />'
+      + '</div>';
+  });
+  return html;
+}
+
+function renderStandard(s) {
+  const optBadge = s.optional ? `<span class="optional-badge">Optional</span>` : "";
+  const exOn = examplesShown[s.id] ? "on" : "";
+  return `
+    <div class="step-eyebrow">${s.eyebrow}</div>
+    <h2 class="step-title">${s.title}</h2>
+    <p class="step-lede">${s.lede}</p>
+    <div class="step-meta">
+      <button class="example-toggle ${exOn}" data-toggle-ex="${s.id}">
+        <span class="swatch"></span>
+        <span>${examplesShown[s.id] ? "Hide" : "Show"} illustrations across traditions</span>
+      </button>
+      ${optBadge}
+    </div>
+    ${s.fields.map(f => fieldHtml(f, s.id)).join("")}
+  `;
+}
+
+function renderThreeModel(s) {
+  const exOn = examplesShown[s.id] ? "on" : "";
+  const fields = [
+    { id: "m1_spec", label: "Evidence move", prompt: "How will the prior pattern be reproduced in your work? What part of your case material, your data, or your analytic apparatus replicates the prior finding?",
+      example: {
+        q: "Same panel and outcome construct as the prior; cross-sectional OLS with industry and year fixed effects.",
+        p: "Within-case identification of the precedence pattern: documentary timeline showing pressure-then-decision, mirroring the prior's sequence.",
+        c: "Re-coding of the prior's cases on the focal construct using my data; correlation reproduces in the same direction.",
+        i: "Field interviews and shadowing identify the role-script self-description that the prior account expects; recurs across informants."
+      } },
+    { id: "m1_inf", label: "What this establishes", prompt: "What does this evidence move establish? What does it commit your reader to believe before the divergence is introduced?",
+      example: {
+        q: "The established gender-wage-gap finding holds in this sample at comparable magnitude.",
+        p: "External pressure precedes major decisions in the case, as the prior account predicts.",
+        c: "Civil-society density correlates with consolidation in the matched sample, reproducing the prior.",
+        i: "Caseworkers describe their work as rule-bound, recognizable as the role-script the prior account specifies."
+      } }
+  ];
+  const fields2 = [
+    { id: "m2_spec", label: "Evidence move", prompt: "Move 2 is the reader's best honest attempt under received practice — what the field would conclude with the constructs and comparisons it already trusts. What conditional, moderator, partition, or construct makes the divergence appear, and where in your case material, data, or comparison structure does it reveal itself?",
+      example: {
+        q: "Decompose the gap by signal noise: high-noise occupations vs low-noise piece-rate occupations, holding observable controls constant.",
+        p: "Identify a 12-hour window in which audience-credible signals are absent; observe whether pressure alone produces the same decision.",
+        c: "Pair matched cases differing on civil-society density but matched on economic development; compare consolidation outcomes.",
+        i: "Compare caseworker tenure cohorts: junior cohort treats the script as constraint; senior cohort treats it as resource."
+      } },
+    { id: "m2_inf", label: "What this establishes", prompt: "What does this evidence move newly establish? What does it commit your reader to update?",
+      example: {
+        q: "The headline gap is a mixture; its weight depends on signal noise in a theoretically predicted way.",
+        p: "Pressure alone is insufficient; audience-credible signals are decisive in the absence-window.",
+        c: "Civil-society density is the difference-maker net of economic development.",
+        i: "The script is invoked differently across tenure; structure is sedimented practice, not a static constraint."
+      } }
+  ];
+  const fields3 = [
+    { id: "m3_spec", label: "Evidence move", prompt: "The reconciliation takes one of two forms. A boundary: a condition or partition under which the prior holds in one regime and your result in the other. Or a bias: a design, comparison, or reading that isolates the surviving mechanism. Say which, and say it before the analysis is complete.",
+      example: {
+        q: "Stratify by signal-noise quantile: low-noise subsample reproduces the prior result attenuated; high-noise subsample reveals the discrimination component.",
+        p: "Trace the audience-signal–pressure–decision sequence beat by beat; both pressure and audience binding are active, the latter is decisive.",
+        c: "Across the matched pairs: civil society dominates where economic development is held constant; both matter, in nested order.",
+        i: "Tenure-cohort contrast as evidence: junior caseworkers read the script as constraint, senior caseworkers as resource. Both readings are correct, in different practice regimes."
+      } },
+    { id: "m3_inf", label: "What this establishes", prompt: "How do the two findings coexist? What is the theoretical mechanism that makes the reconciliation hold?",
+      example: {
+        q: "Statistical discrimination and preferences both operate, in different signal regimes; the prior account holds where signals are clean, the new account binds where signals are noisy.",
+        p: "Pressure and audience-cost binding are jointly necessary; the prior account holds the macro-pattern, the new account specifies the within-case mechanism.",
+        c: "Civil society and economic development are jointly necessary, in nested order; the prior account is right that both matter, the new contribution specifies the priority.",
+        i: "Role-script and improvisation co-produce the legitimacy of the encounter; the prior account holds for the surface description, the new account specifies the practice underneath."
+      } }
+  ];
+
+  return `
+    <div class="step-eyebrow">${s.eyebrow}</div>
+    <h2 class="step-title">${s.title}</h2>
+    <p class="step-lede">${s.lede}</p>
+    <div class="step-meta">
+      <button class="example-toggle ${exOn}" data-toggle-ex="${s.id}">
+        <span class="swatch"></span>
+        <span>${examplesShown[s.id] ? "Hide" : "Show"} illustrations across traditions</span>
+      </button>
+    </div>
+
+    <div class="model-card">
+      <div class="card-header">
+        <h3>Move 1 — Replicate</h3>
+        <span class="role-tag">Reproduce the obvious prior</span>
+      </div>
+      ${fields.map(f => fieldHtml(f, s.id)).join("")}
+    </div>
+
+    <div class="model-card m2">
+      <div class="card-header">
+        <h3>Move 2 — Diverge</h3>
+        <span class="role-tag">Introduce the difference</span>
+      </div>
+      ${fields2.map(f => fieldHtml(f, s.id)).join("")}
+    </div>
+
+    <div class="model-card m3">
+      <div class="card-header">
+        <h3>Move 3 — Reconcile</h3>
+        <span class="role-tag">Reconcile — the surviving effect</span>
+      </div>
+      ${fields3.map(f => fieldHtml(f, s.id)).join("")}
+    </div>
+
+    <div class="stress-panel">
+      <h4>Stress test before writing</h4>
+      <ul>
+        <li>If Move 1 fails to reproduce the prior pattern, the paper changes character. What do you do? (Two honest options: write the paper as a non-replication, or stop and diagnose your evidence.)</li>
+        <li>If Moves 1 and 2 yield the same answer, you have not generated a difference. Revisit Move 2.</li>
+        <li>If Move 3 cannot be specified before the analysis is complete, the reconciliation is post hoc and the contribution is weaker.</li>
+      </ul>
+    </div>
+  `;
+}
+
+function illGrid(ex) {
+  // ex is either a string (legacy) or an object with keys q, p, c, i.
+  if (!ex) return "";
+  if (typeof ex === "string") {
+    return '<div class="ill"><div class="body">' + escapeHtml(ex) + '</div></div>';
+  }
+  const rows = [
+    { tag: "Quantitative",       text: ex.q || "" },
+    { tag: "Process tracing",    text: ex.p || "" },
+    { tag: "Case-comparative",   text: ex.c || "" },
+    { tag: "Interpretive",       text: ex.i || "" }
+  ];
+  return rows.filter(r => r.text).map(r =>
+    '<div class="ill"><span class="tag">' + r.tag + '</span><div class="body">' + escapeHtml(r.text) + '</div></div>'
+  ).join("");
+}
+
+function fieldHtml(f, sectionId) {
+  const v = state[f.id] || "";
+  const exOn = examplesShown[sectionId] ? "on" : "";
+  const isMulti = !f.short;
+  const exHtml = f.example ? illGrid(f.example) : "";
+  return `
+    <div class="field">
+      <label for="f-${f.id}">${f.label}</label>
+      <div class="prompt">${f.prompt}</div>
+      ${isMulti
+        ? `<textarea id="f-${f.id}" data-field="${f.id}" rows="3" placeholder="Your answer…">${escapeHtml(v)}</textarea>`
+        : `<input type="text" id="f-${f.id}" data-field="${f.id}" placeholder="Your answer…" value="${escapeHtml(v)}" />`
+      }
+      ${exHtml ? `
+        <div class="example ${exOn}" data-example="${sectionId}">
+          <span class="ex-label">Illustrations across traditions</span>
+          <div class="ill-grid">${exHtml}</div>
+        </div>` : ""
+      }
+    </div>
+  `;
+}
+
+function renderReview() {
+  let html = `
+    <div class="step-eyebrow">${SECTIONS[currentStep].eyebrow}</div>
+    <h2 class="step-title">${SECTIONS[currentStep].title}</h2>
+    <p class="step-lede">A consolidated read-out of your design. Use the controls in the header to <em>Export</em> to Markdown or <em>Print</em> as PDF. Your work is saved automatically in this browser.</p>
+  `;
+
+  // Diagram up top — the visual summary readers will see first
+  html += '<div class="review-section">';
+  html += '<h3>The argument as a diagram</h3>';
+  html += '<div class="diagram-wrap compact" id="diagram-host">' + buildDiagramSvg();
+  html += '<div class="diagram-legend">';
+  html += '<span class="key"><span class="swatch sw-pref"></span>M1, the story you prefer</span>';
+  html += '<span class="key"><span class="swatch sw-mech"></span>M2 and M3, the rivals — same size, same weight</span>';
+  html += '<span class="key"><span class="swatch sw-theory"></span>Support from above</span>';
+  html += '<span class="key"><span class="swatch sw-sig"></span>Support from below: each story\'s signature</span>';
+  html += '<span class="key"><span class="swatch sw-expl"></span>The explanandum</span>';
+  html += '</div></div></div>';
+
+  SECTIONS.forEach(s => {
+    if (s.custom === "intro" || s.custom === "review" || s.custom === "diagram") return;
+    html += `<div class="review-section"><h3>${s.title}</h3>`;
+    if (s.custom === "three_model") {
+      const triplets = [
+        { name: "Move 1 — Replicate", spec: "m1_spec", inf: "m1_inf" },
+        { name: "Move 2 — Diverge",   spec: "m2_spec", inf: "m2_inf" },
+        { name: "Move 3 — Reconcile", spec: "m3_spec", inf: "m3_inf" }
+      ];
+      triplets.forEach(t => {
+        html += reviewItem(t.name + " — Evidence move", state[t.spec]);
+        html += reviewItem(t.name + " — What this establishes", state[t.inf]);
+      });
+    } else if (s.fields) {
+      s.fields.forEach(f => {
+        html += reviewItem(f.label, state[f.id]);
+      });
+    }
+    html += `</div>`;
+  });
+
+  html += `
+    <div class="pull-quote" style="margin-top: 48px">
+      Yeah, yeah, yeah… but… and therefore. The yeahs honor the reader's priors. The "but" shows why those priors must be updated. The "and therefore" reconciles the two — and the reconciliation <em>is</em> the contribution.
+      <cite>— Christopher I. Rider, <em>Yeah, Yeah, But… and Therefore</em></cite>
+    </div>
+  `;
+  return html;
+}
+
+function reviewItem(k, v) {
+  const empty = !v || !v.trim();
+  return `<div class="review-item">
+    <div class="k">${k}</div>
+    <div class="v ${empty ? 'empty' : ''}">${empty ? "(not yet answered)" : escapeHtml(v)}</div>
+  </div>`;
+}
+
+/* ============================================================
+   HANDLERS
+   ============================================================ */
+
+function attachFieldHandlers() {
+  document.querySelectorAll("[data-field]").forEach(el => {
+    el.addEventListener("input", e => {
+      state[el.dataset.field] = el.value;
+      saveState(true);
+      renderNav(); // update markers
+    });
+  });
+
+  // Diagram label override fields — update SVG live
+  document.querySelectorAll("[data-label-field]").forEach(el => {
+    el.addEventListener("input", e => {
+      state[el.dataset.labelField] = el.value;
+      saveState(true);
+      // Re-render only the diagram host — preserves textarea focus elsewhere
+      const host = document.getElementById("diagram-host");
+      if (host) {
+        const legend = host.querySelector(".diagram-legend");
+        host.innerHTML = buildDiagramSvg() + (legend ? legend.outerHTML : "");
+      }
+      renderNav();
+    });
+  });
+
+  // Customize-labels panel toggle
+  const labToggle = document.getElementById("lab-toggle");
+  const labBody = document.getElementById("lab-body");
+  if (labToggle && labBody) {
+    labToggle.addEventListener("click", () => {
+      const isOn = labBody.classList.toggle("on");
+      labToggle.classList.toggle("on", isOn);
+    });
+  }
+}
+
+function attachExampleToggle(s) {
+  document.querySelectorAll("[data-toggle-ex]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const sid = btn.dataset.toggleEx;
+      examplesShown[sid] = !examplesShown[sid];
+      saveState(true);
+      const isOn = examplesShown[sid];
+      // Update button class and label in place — no re-render, no scroll jump
+      btn.classList.toggle("on", isOn);
+      const textSpan = btn.querySelector("span:last-child");
+      if (textSpan) {
+        textSpan.textContent = (isOn ? "Hide" : "Show") + " illustrations across traditions";
+      }
+      // Reveal or hide example panels for this section
+      document.querySelectorAll('[data-example="' + sid + '"]').forEach(el => {
+        el.classList.toggle("on", isOn);
+      });
+    });
+  });
+}
+
+function goTo(i) {
+  if (i < 0 || i >= SECTIONS.length) return;
+  currentStep = i;
+  saveState(true);
+  renderNav();
+  renderMain();
+}
+
+document.getElementById("btn-prev").addEventListener("click", () => goTo(currentStep - 1));
+document.getElementById("btn-next").addEventListener("click", () => goTo(currentStep + 1));
+document.getElementById("btn-save").addEventListener("click", () => saveState(false));
+document.getElementById("btn-print").addEventListener("click", () => {
+  // For print, jump to review so all content is visible
+  const wasStep = currentStep;
+  currentStep = SECTIONS.length - 1;
+  renderMain();
+  setTimeout(() => {
+    window.print();
+    currentStep = wasStep;
+    renderMain();
+    renderNav();
+  }, 200);
+});
+document.getElementById("btn-reset").addEventListener("click", () => {
+  showModal("Reset everything?", "This will clear every field and start fresh. This cannot be undone.", () => {
+    state = {};
+    examplesShown = {};
+    currentStep = 0;
+    saveState(true);
+    renderNav();
+    renderMain();
+    toast("Cleared");
+  });
+});
+document.getElementById("btn-export").addEventListener("click", exportMarkdown);
+
+/* ============================================================
+   EXPORT — Markdown
+   ============================================================ */
+
+function exportMarkdown() {
+  const lines = [];
+  lines.push("# Contribution Architecture — Design Document");
+  lines.push("");
+  lines.push("_A companion tool to_ Yeah, Yeah, But… and Therefore: How to Frame, Design, and Defend a Contribution in the Social Sciences _— Christopher I. Rider, Ross School of Business, University of Michigan. Companion site: yeahyeahbut.org._");
+  lines.push("");
+
+  SECTIONS.forEach((s, i) => {
+    if (s.custom === "intro" || s.custom === "review") return;
+
+    if (s.custom === "diagram") {
+      lines.push("## " + s.title);
+      lines.push("");
+      lines.push("_The three supports are three questions asked of each mechanism in turn — above, below, laterally — so three stories produce nine answers. After Elster (2015)._");
+      lines.push("");
+      lines.push("```");
+      lines.push("            THREE QUESTIONS, ASKED OF EACH MECHANISM IN TURN                ");
+      lines.push("                                                                            ");
+      lines.push("  [ support from above ]      [ the mechanism ]                             ");
+      lines.push("  ┌───────────────────────┐   ┌────────────────────────────┐                   ");
+      lines.push("  │ " + padOrTrunc(diagramLabel("dia_above1"), 21) + " │──▶│ M1 · " + padOrTrunc(diagramLabel("dia_m1"), 22) + " │──┐                ");
+      lines.push("  └───────────────────────┘   └────────────────────────────┘   │                ");
+      lines.push("                                 signature: " + diagramLabel("dia_sig1"));
+      lines.push("                                                                │                ");
+      lines.push("  ┌───────────────────────┐   ┌────────────────────────────┐   │   ┌─────────────────┐");
+      lines.push("  │ " + padOrTrunc(diagramLabel("dia_above2"), 21) + " │──▶│ M2 · " + padOrTrunc(diagramLabel("dia_m2"), 22) + " │──┼──▶│ EXPLANANDUM     │");
+      lines.push("  └───────────────────────┘   └────────────────────────────┘   │   │ " + padOrTrunc(diagramLabel("dia_explanandum"), 15) + " │");
+      lines.push("                                 signature: " + diagramLabel("dia_sig2"));
+      lines.push("                                                                │   └─────────────────┘");
+      lines.push("  ┌───────────────────────┐   ┌────────────────────────────┐   │                ");
+      lines.push("  │ " + padOrTrunc(diagramLabel("dia_above3"), 21) + " │──▶│ M3 · " + padOrTrunc(diagramLabel("dia_m3"), 22) + " │──┘                ");
+      lines.push("  └───────────────────────┘   └────────────────────────────┘                    ");
+      lines.push("                                 signature: " + diagramLabel("dia_sig3"));
+      lines.push("                                                                            ");
+      lines.push("  LATERAL — which signature separates the stories?                          ");
+      lines.push("  " + diagramFullText("dia_lateral"));
+      lines.push("```");
+      lines.push("");
+      lines.push("**Reading the figure.** The three stories stand in one column at the same size and the same weight; a rival shrunk on the page is a rival that has not been stated at full strength. Preference is marked by the coral arrow, not by a bigger box. Every story carries an arrow to the explanandum — that is equifinality, and it is why the signatures have to diverge. Read the three signatures side by side: if they do not diverge, the diagram cannot adjudicate and the design has nothing to observe.");
+      lines.push("");
+      lines.push("**Full text in each box.** The boxes above are condensed for legibility; the unabridged source text follows.");
+      lines.push("");
+      lines.push("- **Explanandum.** " + diagramFullText("dia_explanandum"));
+      lines.push("- **M1 · preferred.** " + diagramFullText("dia_m1"));
+      lines.push("  - _Support from above._ " + diagramFullText("dia_above1"));
+      lines.push("  - _Signature._ " + diagramFullText("dia_sig1"));
+      lines.push("- **M2 · rival.** " + diagramFullText("dia_m2"));
+      lines.push("  - _Support from above._ " + diagramFullText("dia_above2"));
+      lines.push("  - _Signature._ " + diagramFullText("dia_sig2"));
+      lines.push("- **M3 · rival.** " + diagramFullText("dia_m3"));
+      lines.push("  - _Support from above._ " + diagramFullText("dia_above3"));
+      lines.push("  - _Signature._ " + diagramFullText("dia_sig3"));
+      lines.push("- **Lateral — the discriminating observation.** " + diagramFullText("dia_lateral"));
+      lines.push("");
+      return;
+    }
+    lines.push("## " + s.title);
+    lines.push("");
+    if (s.lede) { lines.push("_" + s.lede.replace(/<[^>]+>/g, "") + "_"); lines.push(""); }
+
+    if (s.custom === "three_model") {
+      const triplets = [
+        { name: "Move 1 — Replicate (reproduce the obvious prior)", spec: "m1_spec", inf: "m1_inf" },
+        { name: "Move 2 — Diverge (introduce the difference)", spec: "m2_spec", inf: "m2_inf" },
+        { name: "Move 3 — Reconcile (the surviving effect: a boundary or a bias)", spec: "m3_spec", inf: "m3_inf" }
+      ];
+      triplets.forEach(t => {
+        lines.push("### " + t.name);
+        lines.push("");
+        lines.push("**Evidence move.** " + (state[t.spec] || "_(not yet answered)_"));
+        lines.push("");
+        lines.push("**What this establishes.** " + (state[t.inf] || "_(not yet answered)_"));
+        lines.push("");
+      });
+    } else if (s.fields) {
+      s.fields.forEach(f => {
+        lines.push("**" + f.label + "**");
+        lines.push("");
+        lines.push(state[f.id] && state[f.id].trim() ? state[f.id] : "_(not yet answered)_");
+        lines.push("");
+      });
+    }
+  });
+
+  lines.push("---");
+  lines.push("");
+  lines.push("> Yeah, yeah, yeah… but… and therefore. The yeahs honor the reader's priors. The \"but\" shows why those priors must be updated. The \"and therefore\" reconciles the two — and the reconciliation _is_ the contribution.");
+  lines.push(">");
+  lines.push("> — Christopher I. Rider, *Yeah, Yeah, But… and Therefore*");
+
+  const blob = new Blob([lines.join("\n")], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  const ts = new Date().toISOString().slice(0, 10);
+  a.download = "contribution-architecture-" + ts + ".md";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast("Exported");
+}
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+
+function escapeHtml(s) {
+  if (!s) return "";
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function padOrTrunc(s, n) {
+  if (!s) return " ".repeat(n);
+  s = String(s).replace(/\s+/g, " ").trim();
+  if (s.length > n) return s.slice(0, n - 1) + "…";
+  return s + " ".repeat(n - s.length);
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove("show"), 1600);
+}
+
+function showModal(title, body, onOk) {
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-body").textContent = body;
+  const m = document.getElementById("modal");
+  m.classList.add("on");
+  const cancel = document.getElementById("modal-cancel");
+  const ok = document.getElementById("modal-ok");
+  function close() {
+    m.classList.remove("on");
+    cancel.removeEventListener("click", close);
+    ok.removeEventListener("click", confirm);
+  }
+  function confirm() { close(); onOk(); }
+  cancel.addEventListener("click", close);
+  ok.addEventListener("click", confirm);
+}
+
+/* ============================================================
+   KEYBOARD
+   ============================================================ */
+
+document.addEventListener("keydown", e => {
+  if (e.target.matches("textarea, input")) return;
+  if (e.key === "ArrowLeft") goTo(currentStep - 1);
+  if (e.key === "ArrowRight") goTo(currentStep + 1);
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+
+renderNav();
+renderMain();
+</script>
+
+</body>
+</html>
