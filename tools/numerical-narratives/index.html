@@ -1,0 +1,2858 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Numerical Narratives — a companion tool to Yeah, Yeah, But… and Therefore</title>
+<meta name="description" content="A companion tool to Yeah, Yeah, But… and Therefore (Christopher I. Rider) for building a numerical narrative: possible, plausible, probable, therefore." />
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAACiUlEQVR4nO2Vu2tUURDGvznnPnY3d/NgYxLXVyNilYCx0co2hWBjpY2FgmApCP4HIv4PNrapFCEItmIRgkQrNWgEQ55m133cx5nPYlfMvcbEJkUgU86Zb36cM48j9XodB2nmQLMfAY4AhwPg/X+oAACYdxrp+5XFo70AVnIaAUSQKATwDZR9J4FmRgIEQyMlEd0XIIAC2xl7mlCEgAJdx/HAKrmaasVIL8wRM7XSVBQ0nM5tdJe6WcUUGbJzFwngAA+YqZXHAju32fncyUpGFLh7IroyXCLwYqPz9HvLFyTk/VOD145VEsICDacPP/1Y+JlUrOiOx8oVWQSJ8t7J6oMzgzcnBh6fHTld8rYyvT5WuTE+EBopG7ldj2ZqpdVULw+FV0fL66k2M93MNLJypx55IsyX4g9AgFRR882loXA91ZXYjfvmYjVIielq0HB0REp0HKerQUaeK/uECGAFnqCtnAjtqG9S9steBBDwBI2My7Gr+WbYNxmw1M0M8C12kZFezctWlrtOgLXUGYEjCDjCg7Qcm06t5NqpOAcOfPK18Wqz+7GdPvrSWGgmw555ttJ610qHfRnx5M12PLvWHvXt6634QysdD4wvMmAlsjK71m5k9CSXUAofjgAJ6QhPJCEHjABIyIoxF6pBRs43k5QIDbrKUd/eOh6dr3ht5fP1zsuNTslIYRqKgB6j1+MicEoCBnBERylA2YoBFDBASiZE1TOJIlZGtpgduw4af48rCc9aYy2AAKjkT/tO1SRzviDwct25F6BnRqQbx9NTk5NTk1kcG5FCgJJeGL5fXHw7v1AKQ+Wum2K3J8rdhuQ/lH29iPzF3mn7LLt99fva4f8PjgBHgEMA+AUUuCwfoeJz0QAAAABJRU5ErkJggg==" />
+<link rel="icon" type="image/png" sizes="256x256" href="data:image/png;base64,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" />
+<link rel="apple-touch-icon" href="data:image/png;base64,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" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Book identity — sampled from the V0.2.2 figures and the core-argument infographic */
+    --coral: #C9472F;
+    --coral-deep: #A93A25;
+    --wash: #FBEAE4;
+    --wash-2: #F6DBD3;
+    --bg: #F7F5F4;
+    --paper: #FFFFFF;
+    --ink: #1A1A1A;
+    --muted: #5A5A5E;
+    --muted-2: #6E6E73;
+    --rule: #D9D7DE;
+    --rule-2: #C5C4CB;
+    --shadow: 0 1px 0 rgba(0,0,0,.03), 0 8px 24px -18px rgba(26,26,26,.22);
+    --display: "Gelasio", Georgia, "Times New Roman", serif;
+    --serif: "Gelasio", Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.55;
+    font-feature-settings: "kern", "liga", "onum";
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  textarea, input { font-family: var(--serif); }
+
+  /* ---- Header ---- */
+  header.site {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 22px 36px 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  header.site::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--coral) 0%, var(--coral) 38%, transparent 38%);
+  }
+  .brand .eyebrow {
+    font-family: var(--display);
+    letter-spacing: .22em;
+    color: var(--coral);
+    font-size: 14px;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand .eyebrow .dot {
+    width: 8px; height: 8px; background: var(--coral); border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(201,71,47,.18);
+  }
+  .brand h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--coral);
+    margin: 0;
+    font-size: clamp(34px, 4.4vw, 52px);
+    letter-spacing: .015em;
+    line-height: .95;
+  }
+  .brand .subtitle {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+    margin: 6px 0 0;
+  }
+  .header-actions {
+    display: flex; gap: 8px; align-items: center;
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    border: 1px solid var(--rule-2);
+    background: var(--paper);
+    color: var(--coral);
+    padding: 9px 14px;
+    font-size: 13px;
+    font-family: var(--display);
+    letter-spacing: .14em;
+    border-radius: 2px;
+    transition: all .15s ease;
+  }
+  .btn:hover { background: var(--wash); border-color: var(--coral); }
+  .btn.primary {
+    background: var(--coral); color: var(--paper); border-color: var(--coral);
+  }
+  .btn.primary:hover { background: var(--coral-deep); }
+  .btn.ghost { border-color: transparent; background: transparent; color: var(--muted); }
+  .btn.ghost:hover { color: var(--coral); background: transparent; }
+  .btn.accent {
+    background: var(--coral); color: var(--paper); border-color: var(--coral);
+  }
+  .btn.accent:hover { background: var(--coral-deep); border-color: var(--coral-deep); }
+  .btn[disabled] { opacity: .35; cursor: not-allowed; }
+
+  /* ---- Layout ---- */
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 95px);
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  aside.sidebar {
+    border-right: 1px solid var(--rule);
+    padding: 32px 0 60px;
+    background: var(--bg);
+    position: sticky;
+    top: 95px;
+    height: calc(100vh - 95px);
+    overflow-y: auto;
+  }
+  .nav-title {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: .22em;
+    color: var(--muted);
+    padding: 0 28px 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 8px;
+  }
+  nav.steps { list-style: none; padding: 0; margin: 0; }
+  nav.steps button.step {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 11px 28px 11px 24px;
+    border-left: 4px solid transparent;
+    color: var(--muted);
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.3;
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  nav.steps button.step:hover { color: var(--coral); background: rgba(201,71,47,.05); }
+  nav.steps button.step.active {
+    color: var(--coral);
+    border-left-color: var(--coral);
+    background: var(--paper);
+    font-weight: 600;
+  }
+  nav.steps button.step .num {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 14px;
+    letter-spacing: .04em;
+    padding-top: 2px;
+  }
+  nav.steps button.step .marker {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--rule);
+    margin-left: 6px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  nav.steps button.step .marker.partial { background: var(--wash); border: 1px solid var(--coral); }
+  nav.steps button.step .marker.full { background: var(--coral); }
+
+  .progress-wrap {
+    padding: 22px 28px 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 16px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 5px; background: var(--rule); border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: var(--coral); transition: width .3s ease; }
+
+  /* ---- Main ---- */
+  main {
+    padding: 56px 64px 120px;
+    max-width: 880px;
+    width: 100%;
+  }
+  .step-eyebrow {
+    font-family: var(--display);
+    letter-spacing: .22em;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .step-eyebrow .pipe { color: var(--coral); margin: 0 10px; }
+  h2.step-title {
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--coral);
+    font-size: clamp(40px, 4.5vw, 56px);
+    line-height: .98;
+    margin: 0 0 18px;
+    letter-spacing: .005em;
+  }
+  .step-lede {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 64ch;
+    margin: 0 0 12px;
+  }
+  .step-lede em { color: var(--coral); font-style: italic; }
+  .step-meta {
+    display: flex; gap: 18px; align-items: center;
+    margin: 22px 0 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .example-toggle {
+    background: var(--paper);
+    border: 1px solid var(--rule-2);
+    color: var(--coral);
+    padding: 7px 12px 7px 10px;
+    font-size: 13px;
+    font-family: var(--serif);
+    border-radius: 2px;
+    display: inline-flex; align-items: center; gap: 8px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .example-toggle:hover { background: var(--wash); }
+  .example-toggle.on { background: var(--coral); color: var(--paper); border-color: var(--coral); }
+  .example-toggle .swatch {
+    display: inline-block; width: 10px; height: 10px; background: var(--coral); border-radius: 1px;
+  }
+  .example-toggle.on .swatch { background: var(--coral); }
+  .optional-badge {
+    font-family: var(--display);
+    letter-spacing: .18em;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--rule-2);
+    padding: 4px 8px;
+    border-radius: 2px;
+  }
+
+  /* ---- Field group ---- */
+  .field {
+    margin: 0 0 26px;
+  }
+  .field label {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--coral);
+    margin-bottom: 6px;
+  }
+  .field .prompt {
+    font-size: 14.5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .field textarea, .field input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.5;
+    transition: border-color .15s, box-shadow .15s;
+    resize: vertical;
+  }
+  .field textarea { min-height: 84px; }
+  .field textarea:focus, .field input[type="text"]:focus {
+    outline: none;
+    border-color: var(--coral);
+    box-shadow: 0 0 0 3px rgba(201,71,47,.16);
+  }
+  .field .example {
+    display: none;
+    margin-top: 10px;
+    padding: 12px 14px 12px 16px;
+    background: var(--wash);
+    border-left: 3px solid var(--coral);
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: #4A2A20;
+    border-radius: 0 2px 2px 0;
+  }
+  .field .example.on { display: block; }
+  .field .example .ex-label {
+    font-family: var(--display);
+    letter-spacing: .18em;
+    font-size: 11px;
+    color: #A93A25;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 800px) { .field-grid { grid-template-columns: 1fr; } }
+
+  /* Three-model card group */
+  .model-card {
+    border: 1px solid var(--rule-2);
+    background: var(--paper);
+    padding: 22px 24px 12px;
+    margin-bottom: 22px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .model-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 4px;
+    background: var(--coral);
+  }
+  .model-card.m2::before { background: var(--coral); }
+  .model-card.m3::before { background: linear-gradient(180deg, var(--coral) 0%, var(--coral) 50%, var(--coral) 50%, var(--coral) 100%); }
+  .model-card .card-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .model-card h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--coral);
+    font-size: 26px;
+    margin: 0;
+    letter-spacing: .02em;
+  }
+  .model-card .role-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* Stress test panel */
+  .stress-panel {
+    background: var(--paper);
+    border: 1px dashed var(--rule-2);
+    padding: 18px 22px 6px;
+    margin-top: 8px;
+    margin-bottom: 28px;
+    border-radius: 2px;
+  }
+  .stress-panel h4 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 18px;
+    letter-spacing: .08em;
+    margin: 0 0 10px;
+  }
+  .stress-panel ul { margin: 0 0 12px 18px; padding: 0; font-size: 15px; color: var(--muted); }
+  .stress-panel li { margin-bottom: 6px; line-height: 1.5; }
+  .stress-panel .legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 26px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 800px) { .stress-panel .legend-grid { grid-template-columns: 1fr; } }
+  .stress-panel .legend-row {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
+    align-items: start;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .stress-panel .legend-row .swatch {
+    width: 18px; height: 18px; border-radius: 2px; margin-top: 2px;
+  }
+  .stress-panel .legend-row .sw-main { background: var(--coral); }
+  .stress-panel .legend-row .sw-aux  { background: var(--coral); }
+  .stress-panel .legend-row .sw-alt  { background: #F2EFEE; border: 1.5px dashed #6E6E73; box-sizing: border-box; }
+  .stress-panel .legend-row .sw-obs  { background: #F4F2F1; border: 1px solid #C5C4CB; box-sizing: border-box; }
+  .stress-panel .legend-row .sw-not  { background: #FBEAE4; border: 1px solid #C9472F; box-sizing: border-box; }
+  .stress-panel .legend-row strong { color: var(--coral); }
+
+  /* Pull quote */
+  .pull-quote {
+    border-left: 5px solid var(--coral);
+    padding: 14px 22px;
+    margin: 32px 0;
+    font-style: italic;
+    color: var(--coral);
+    font-size: 22px;
+    line-height: 1.4;
+    font-family: var(--serif);
+    background: var(--paper);
+  }
+  .pull-quote cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--display);
+    letter-spacing: .18em;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  /* Intro / review specials */
+  .intro-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+  }
+  .intro-card h3 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 22px;
+    letter-spacing: .08em;
+    margin: 0 0 14px;
+  }
+  .commitment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+    margin: 28px 0 8px;
+  }
+  @media (max-width: 800px) { .commitment-grid { grid-template-columns: 1fr; } }
+  .commitment {
+    padding: 18px 20px 20px;
+    border-top: 3px solid var(--coral);
+    background: var(--paper);
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .commitment .num {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .commitment h4 {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 17px;
+    color: var(--coral);
+    margin: 2px 0 4px;
+  }
+  .commitment .argbeat {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14.5px;
+    color: #A93A25;
+    margin-bottom: 8px;
+    letter-spacing: -.005em;
+  }
+  .commitment p { margin: 0; font-size: 15.5px; line-height: 1.5; }
+
+  /* Review screen */
+  .review-section { margin-bottom: 36px; }
+  .review-section h3 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 22px;
+    letter-spacing: .04em;
+    margin: 0 0 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .review-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .review-item .k {
+    font-weight: 600;
+    color: var(--coral);
+    font-size: 14.5px;
+  }
+  .review-item .v {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+  .review-item .v.empty {
+    color: var(--muted-2); font-style: italic;
+  }
+
+  /* ---- Footer nav ---- */
+  footer.fnav {
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 16px 36px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    bottom: 0;
+    z-index: 15;
+  }
+  footer.fnav .center {
+    font-family: var(--display);
+    letter-spacing: .18em;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+  }
+  footer.fnav .right { display: flex; justify-content: flex-end; gap: 8px; }
+  footer.fnav .left  { display: flex; gap: 8px; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 96px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--coral);
+    color: var(--paper);
+    padding: 10px 18px;
+    font-family: var(--display);
+    letter-spacing: .12em;
+    font-size: 13px;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .25s ease;
+    z-index: 50;
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,.3);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Modal */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(26, 26, 26, .48);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-bg.on { display: flex; }
+  .modal {
+    background: var(--paper);
+    border-radius: 2px;
+    max-width: 480px;
+    width: 100%;
+    padding: 28px 32px 24px;
+    box-shadow: 0 20px 60px -10px rgba(0,0,0,.4);
+  }
+  .modal h3 {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 24px;
+    letter-spacing: .04em;
+    margin: 0 0 12px;
+  }
+  .modal p { margin: 0 0 20px; color: var(--muted); }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+  /* ---- Elster diagram ---- */
+  .diagram-wrap {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 28px 24px 22px;
+    margin: 4px 0 28px;
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+  }
+  .diagram-wrap.compact { padding: 18px 16px 14px; }
+  .diagram-wrap svg { width: 100%; height: auto; display: block; }
+  .diagram-legend {
+    display: flex; flex-wrap: wrap; gap: 18px 22px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .diagram-legend .key {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .diagram-legend .swatch {
+    width: 14px; height: 14px; border-radius: 2px; display: inline-block;
+    flex-shrink: 0;
+  }
+  .diagram-legend .sw-main   { background: var(--coral); }
+  .diagram-legend .sw-aux    { background: var(--coral); }
+  .diagram-legend .sw-alt    { background: #F2EFEE; border: 1px dashed #6E6E73; }
+  .diagram-legend .sw-obs    { background: #F4F2F1; border: 1px solid #C5C4CB; }
+  .diagram-legend .sw-not    { background: #FBEAE4; border: 1px solid #C9472F; }
+
+  /* SVG-internal styles via foreignObject HTML */
+  .dia-box {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 12px;
+    padding: 7px 11px;
+    border-radius: 2px;
+    line-height: 1.32;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .dia-box .dia-label {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 9px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    opacity: .82;
+  }
+  .dia-box .dia-text {
+    font-size: 11.5px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .dia-theory, .dia-hyp, .dia-expl {
+    background: var(--coral);
+    color: white;
+    border: 1px solid var(--coral);
+  }
+  .dia-hyp { background: var(--coral-deep); }
+  .dia-expl { background: linear-gradient(90deg, var(--coral) 0%, var(--coral) 88%, var(--coral) 88%, var(--coral) 100%); }
+  .dia-aux {
+    background: var(--coral);
+    color: #3A2018;
+    border: 1px solid #E0B6A7;
+  }
+  .dia-aux .dia-label { color: #A93A25; opacity: 1; }
+  .dia-alt {
+    background: #F2EFEE;
+    color: #4A4A4C;
+    border: 1.5px dashed #6E6E73;
+  }
+  .dia-alt .dia-label { color: #5A5A5E; opacity: 1; }
+  .dia-imp {
+    background: #F4F2F1;
+    border: 1px solid #C5C4CB;
+    color: #2C2C2E;
+  }
+  .dia-imp.dia-not-obs {
+    background: #FBEAE4;
+    border: 1px solid #C9472F;
+    color: #5A2018;
+  }
+  .dia-imp.dia-not-obs .dia-label { color: #A93A25; }
+
+  /* Customize labels panel */
+  .fulltext-panel {
+    margin-top: 22px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    background: var(--paper);
+    padding: 18px 20px 12px;
+  }
+  .fulltext-panel h4 {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 13px;
+    color: var(--coral);
+    margin: 0 0 6px;
+  }
+  .fulltext-panel .fulltext-hint {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 14px;
+  }
+  .ft-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--rule);
+    align-items: start;
+  }
+  .ft-row:first-of-type { border-top: 1px solid var(--rule); }
+  .ft-title {
+    font-family: var(--display);
+    letter-spacing: .12em;
+    font-size: 12px;
+    color: var(--coral);
+    line-height: 1.3;
+  }
+  .ft-text {
+    font-family: var(--serif);
+    color: var(--ink);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  @media (max-width: 800px) {
+    .ft-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  .labels-panel {
+    margin-top: 22px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .labels-toggle {
+    width: 100%;
+    background: var(--paper);
+    border: none;
+    padding: 14px 18px;
+    text-align: left;
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 13px;
+    color: var(--coral);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .labels-toggle:hover { background: var(--wash); }
+  .labels-toggle .chev { font-size: 16px; transition: transform .2s; }
+  .labels-toggle.on .chev { transform: rotate(90deg); }
+  .labels-body {
+    display: none;
+    padding: 18px 20px 6px;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+  .labels-body.on { display: block; }
+  .labels-body h5 {
+    font-family: var(--display);
+    letter-spacing: .14em;
+    font-size: 12px;
+    color: var(--muted);
+    margin: 14px 0 6px;
+  }
+  .labels-body h5:first-child { margin-top: 0; }
+  .labels-body .lab-field { margin-bottom: 10px; }
+  .labels-body .lab-field label {
+    display: block;
+    font-size: 13px;
+    color: var(--coral);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .labels-body .lab-field input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    font-size: 14px;
+    background: var(--paper);
+  }
+  .labels-body .lab-field input:focus {
+    outline: none; border-color: var(--coral);
+    box-shadow: 0 0 0 3px rgba(201,71,47,.16);
+  }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 880px) {
+    header.site { padding: 16px 18px 12px; grid-template-columns: 1fr; gap: 12px; }
+    .header-actions { flex-wrap: wrap; }
+    .layout { grid-template-columns: 1fr; }
+    aside.sidebar { position: static; height: auto; padding: 18px 0; border-right: none; border-bottom: 1px solid var(--rule); }
+    main { padding: 32px 22px 100px; }
+    footer.fnav { padding: 12px 16px; grid-template-columns: 1fr 1fr; }
+    footer.fnav .center { display: none; }
+  }
+
+  /* Print */
+  @media print {
+    header.site, footer.fnav, aside.sidebar, .step-meta, .header-actions, .toast, .modal-bg { display: none !important; }
+    main { padding: 0; max-width: 100%; }
+    body { background: white; }
+    .review-section { page-break-inside: avoid; }
+    .field .example.on { display: block; }
+  }
+
+  /* ============================================================
+     BOOK IDENTITY — aligned to Yeah, Yeah, But... and Therefore V0.2.2
+     Coral #C9472F on #FBEAE4 wash, Gelasio (Georgia-metric) throughout,
+     ink #1A1A1A, rules #D9D7DE. No display sans: the book has none.
+     ============================================================ */
+  h1, h2, h3, h4, h5, .btn, .brand .eyebrow, .nav-title { font-family: var(--serif); }
+
+  .brand h1 {
+    color: var(--ink); font-weight: 700;
+    font-size: clamp(27px, 3.3vw, 39px);
+    letter-spacing: -.012em; line-height: 1.06;
+  }
+  .brand .subtitle { color: var(--coral); font-style: italic; font-size: 15.5px; }
+  h2.step-title {
+    color: var(--ink); font-weight: 700;
+    font-size: clamp(25px, 2.9vw, 35px);
+    letter-spacing: -.01em; line-height: 1.16;
+    margin-bottom: 16px;
+  }
+
+  /* Small letterspaced labels: Gelasio needs explicit caps where the old display face was caps by design */
+  .brand .eyebrow, .nav-title, .progress-label, .step-eyebrow, .btn, .optional-badge,
+  footer.fnav .center, .pull-quote cite, .field .example .ex-label, .toast,
+  .commitment h4, .fulltext-panel h4, .ft-title, .labels-toggle, .labels-body h5,
+  .field .example .ill .tag {
+    text-transform: uppercase; font-weight: 700;
+  }
+  .brand .eyebrow { font-size: 11.5px; letter-spacing: .155em; color: var(--coral); }
+  .nav-title, .progress-label, .step-eyebrow, footer.fnav .center { font-size: 11px; letter-spacing: .155em; }
+  .step-eyebrow { color: var(--muted-2); }
+  .step-eyebrow .pipe { color: var(--coral); }
+  .btn { font-size: 11px; letter-spacing: .12em; }
+  .optional-badge, .pull-quote cite, .field .example .ex-label { font-size: 10.5px; letter-spacing: .155em; }
+  .fulltext-panel h4, .labels-toggle, .ft-title, .labels-body h5 { font-size: 11px; letter-spacing: .14em; }
+
+  nav.steps button.step .num { font-family: var(--serif); font-weight: 700; font-size: 11.5px; color: var(--muted-2); letter-spacing: .05em; }
+  nav.steps button.step.active { color: var(--ink); }
+  nav.steps button.step.active .num { color: var(--coral); }
+
+  .field label { color: var(--ink); }
+  .intro-card h3, .review-section h3, .modal h3, .stress-panel h4, .model-card h3 {
+    font-weight: 700; letter-spacing: -.004em; color: var(--ink);
+  }
+  .intro-card h3, .review-section h3 { font-size: 20px; }
+  .model-card h3 { font-size: 20px; }
+  .stress-panel h4 { font-size: 16px; letter-spacing: 0; }
+  .modal h3 { font-size: 21px; }
+  .review-item .k { color: var(--ink); }
+
+  .commitment { border-top-color: var(--coral); }
+  .commitment .num { font-weight: 700; font-size: 25px; color: var(--coral); letter-spacing: .02em; }
+  .commitment h4 { font-size: 12.5px; letter-spacing: .16em; color: var(--ink); }
+  .commitment .argbeat { color: var(--coral); font-size: 15px; font-style: italic; }
+
+  .pull-quote {
+    background: var(--wash); border-left: 4px solid var(--coral);
+    color: var(--ink); font-size: 19.5px;
+  }
+  .step-lede em { color: var(--coral); font-style: italic; }
+  .field .example { background: var(--wash); border-left-color: var(--coral); }
+  .field .example .ex-label { color: var(--coral); }
+  .field .example .ill .tag { color: var(--coral); }
+  .toast { background: var(--ink); }
+
+  /* ---- The arc strip: the book's core-argument infographic, in miniature ---- */
+  .arc-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 14px; margin: 30px 0 6px;
+    padding: 20px 0 18px;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 800px) { .arc-strip { grid-template-columns: 1fr 1fr; } }
+  .arc-col { text-align: center; }
+  .arc-stage {
+    font-family: var(--serif); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .13em; font-size: 12px; color: var(--coral); margin-bottom: 10px;
+  }
+  .arc-dot-row { position: relative; height: 14px; margin-bottom: 10px; }
+  .arc-rule { position: absolute; left: 0; right: 0; top: 6px; height: 2px; background: var(--coral); }
+  .arc-col:first-child .arc-rule { left: 50%; }
+  .arc-col:last-child .arc-rule { right: 50%; }
+  .arc-dot {
+    position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 13px; height: 13px; border-radius: 50%; background: var(--coral);
+  }
+  .arc-beat {
+    background: var(--wash); border-radius: 6px; padding: 7px 8px;
+    font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 8px;
+  }
+  .arc-note { font-size: 13.5px; color: var(--muted); line-height: 1.4; }
+  .arc-move { font-size: 13px; color: var(--ink); font-style: italic; margin-top: 6px; }
+  .arc-caption {
+    font-size: 14.5px; color: var(--muted); font-style: italic;
+    margin: 12px 0 0; max-width: 74ch; line-height: 1.5;
+  }
+
+  /* ---- Elster diagram, rebuilt to §3.2 ---- */
+  .dia-mech {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+  }
+  .dia-mech .dia-label { color: var(--muted); opacity: 1; }
+  .dia-mech.dia-preferred { border-color: var(--coral); }
+  .dia-mech.dia-preferred .dia-label { color: var(--coral); }
+  .dia-theory {
+    background: var(--wash); border: 1px solid var(--wash-2); color: var(--ink);
+  }
+  .dia-theory .dia-label { color: var(--coral); opacity: 1; }
+  .dia-sig {
+    background: transparent; border: none; border-top: 1px dashed var(--rule-2);
+    color: var(--ink); font-style: italic; padding-top: 5px; border-radius: 0;
+  }
+  .dia-sig .dia-label { color: var(--muted-2); opacity: 1; font-style: normal; }
+  .dia-expl {
+    background: var(--wash); border: 1px solid var(--wash-2);
+    border-left: 4px solid var(--coral); color: var(--ink);
+  }
+  .dia-expl .dia-label { color: var(--coral); opacity: 1; }
+  .dia-lat {
+    background: var(--paper); border: 1px solid var(--rule-2);
+    border-left: 4px solid var(--coral); color: var(--ink);
+  }
+  .dia-lat .dia-label { color: var(--coral); opacity: 1; }
+  .diagram-legend .sw-mech { background: var(--paper); border: 1.5px solid var(--ink); }
+  .diagram-legend .sw-pref { background: var(--paper); border: 1.5px solid var(--coral); }
+  .diagram-legend .sw-theory { background: var(--wash); border: 1px solid var(--wash-2); }
+  .diagram-legend .sw-sig { background: transparent; border-top: 1px dashed var(--rule-2); border-radius: 0; height: 8px; }
+  .diagram-legend .sw-expl { background: var(--wash); border-left: 3px solid var(--coral); }
+  .stress-panel .legend-row .sw-mech { background: var(--paper); border: 1.5px solid var(--ink); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-pref { background: var(--paper); border: 1.5px solid var(--coral); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-theory { background: var(--wash); border: 1px solid var(--wash-2); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-sig { background: var(--wash-2); box-sizing: border-box; }
+  .stress-panel .legend-row .sw-expl { background: var(--wash); border-left: 3px solid var(--coral); box-sizing: border-box; }
+  .stress-panel .legend-row strong { color: var(--ink); }
+
+
+  /* Model rails after Figure 7.2: the received-practice path in gray, the design in coral */
+  .model-card::before { background: #6E6E73; }
+  .model-card.m2::before { background: #6E6E73; }
+  .model-card.m3::before { background: var(--coral); }
+  .model-card .role-tag { color: var(--muted); }
+  /* ---- Book colophon ---- */
+  .colophon {
+    margin-top: 34px; padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 13.5px; color: var(--muted); line-height: 1.55;
+  }
+  .colophon a { color: var(--coral); }
+  .colophon strong { color: var(--ink); }
+
+/* ============================================================
+   NN APP ADDITIONS — belief chart, signature panels, sliders,
+   abstract grid, JSON I/O, simulation stub, checks
+   ============================================================ */
+
+/* ---- Chart containers (belief-update + signature) ---- */
+.chart-wrap {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 24px 24px 18px;
+  margin: 4px 0 28px;
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+}
+.chart-wrap h4 {
+  font-family: var(--serif);
+  font-weight: 700;
+  letter-spacing: .01em;
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+.chart-wrap .chart-sub {
+  font-size: 13.5px; color: var(--muted); font-style: italic; margin: 0 0 14px;
+}
+.chart-wrap svg { width: 100%; height: auto; display: block; }
+.chart-legend {
+  display: flex; flex-wrap: wrap; gap: 16px 22px;
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-size: 12.5px; color: var(--muted);
+}
+.chart-legend .key { display: inline-flex; align-items: center; gap: 7px; }
+.chart-legend .swatch { width: 13px; height: 13px; border-radius: 2px; display: inline-block; flex-shrink: 0; }
+.chart-legend .sw-prior { background: var(--muted-2); }
+.chart-legend .sw-evidence { background: var(--wash-2); border: 1px solid var(--coral-deep); }
+.chart-legend .sw-posterior { background: var(--coral); }
+.chart-legend .sw-target { background: none; border-top: 2px dashed var(--coral-deep); height: 6px; }
+.chart-readout {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  margin-top: 10px; font-size: 13.5px; color: var(--ink);
+}
+.chart-readout b { color: var(--coral); }
+
+/* ---- Evidence controls (weak/moderate/strong + center slider) ---- */
+.evidence-controls {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+  margin: 18px 0 4px;
+}
+@media (max-width: 800px) { .evidence-controls { grid-template-columns: 1fr; } }
+.evidence-stage {
+  border: 1px solid var(--rule); border-radius: 2px; padding: 16px 18px 14px; background: var(--bg);
+}
+.evidence-stage h5 {
+  font-family: var(--serif); font-weight: 700; font-size: 13.5px; letter-spacing: .04em;
+  color: var(--coral); margin: 0 0 10px; text-transform: uppercase;
+}
+.seg-control { display: flex; gap: 6px; margin-bottom: 12px; }
+.seg-btn {
+  flex: 1; text-align: center; padding: 7px 6px; font-size: 12.5px;
+  border: 1px solid var(--rule-2); background: var(--paper); color: var(--muted);
+  border-radius: 2px; cursor: pointer; font-family: var(--serif); font-weight: 600;
+}
+.seg-btn.active { background: var(--coral); color: var(--paper); border-color: var(--coral); }
+.slider-row { display: flex; align-items: center; gap: 10px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--coral); }
+.slider-row .val { font-family: var(--serif); font-weight: 700; color: var(--coral); font-size: 14px; width: 44px; text-align: right; }
+.slider-label { font-size: 12.5px; color: var(--muted); margin: 10px 0 4px; }
+
+/* ---- Signature panels (step 4) ---- */
+.sig-panel {
+  border: 1px solid var(--rule); border-radius: 2px; background: var(--paper);
+  padding: 18px 20px 16px; margin-bottom: 22px;
+}
+.sig-panel h5 {
+  font-family: var(--serif); font-weight: 700; font-size: 15px; color: var(--ink);
+  margin: 0 0 12px; padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+}
+.sig-row {
+  display: grid; grid-template-columns: 200px 1fr 1fr; gap: 12px; align-items: start;
+  padding: 10px 0; border-top: 1px dashed var(--rule);
+}
+.sig-row:first-of-type { border-top: none; }
+@media (max-width: 800px) { .sig-row { grid-template-columns: 1fr; } }
+.sig-row .mech-name { font-weight: 600; font-size: 14.5px; color: var(--ink); padding-top: 8px; }
+.sig-select {
+  width: 100%; padding: 9px 10px; border: 1px solid var(--rule-2); border-radius: 2px;
+  background: var(--paper); font-family: var(--serif); font-size: 14px; color: var(--ink);
+}
+.sig-select:focus { outline: none; border-color: var(--coral); box-shadow: 0 0 0 3px rgba(201,71,47,.16); }
+.sig-badge {
+  display: inline-block; padding: 3px 9px; border-radius: 99px; font-size: 12px;
+  font-weight: 700; letter-spacing: .02em; margin-right: 8px; text-transform: uppercase;
+}
+.sig-badge.attenuates { background: var(--bg); border: 1px solid var(--muted-2); color: var(--muted-2); }
+.sig-badge.persists { background: var(--wash); border: 1px solid var(--coral); color: var(--coral-deep); }
+.sig-badge.accentuates { background: var(--coral); border: 1px solid var(--coral); color: var(--paper); }
+.moderator-name-field { margin-bottom: 14px; }
+.moderator-name-field input {
+  width: 100%; padding: 9px 12px; border: 1px solid var(--rule-2); border-radius: 2px;
+  font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--coral); background: var(--paper);
+}
+.divergence-note {
+  margin-top: 12px; padding: 10px 14px; background: var(--wash); border-left: 3px solid var(--coral);
+  font-size: 13.5px; color: #4A2A20; border-radius: 0 2px 2px 0;
+}
+.divergence-note .dn-label { font-weight: 700; color: var(--coral-deep); margin-right: 6px; text-transform: uppercase; font-size: 11px; letter-spacing: .1em; }
+
+/* ---- Checks (fired flags) ---- */
+.check-flag {
+  display: flex; gap: 10px; align-items: start;
+  margin: 10px 0; padding: 10px 14px; background: var(--wash);
+  border-left: 3px solid var(--coral-deep); border-radius: 0 2px 2px 0; font-size: 13.5px;
+  color: #4A2A20; line-height: 1.45;
+}
+.check-flag .cf-mark { color: var(--coral-deep); font-weight: 700; flex-shrink: 0; }
+.check-flag a { color: var(--coral-deep); font-weight: 600; }
+.checks-wrap { margin: 6px 0 20px; }
+.checks-empty { font-size: 13.5px; color: var(--muted); font-style: italic; }
+
+/* ---- Abstract grid (step 10) ---- */
+.abstract-grid { display: flex; flex-direction: column; gap: 18px; }
+.abstract-row { border: 1px solid var(--rule); border-radius: 2px; padding: 16px 18px 14px; background: var(--paper); }
+.abstract-row .job-tag {
+  display: inline-block; font-family: var(--serif); font-weight: 700; font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--paper); background: var(--coral);
+  padding: 3px 9px; border-radius: 2px; margin-bottom: 8px;
+}
+
+/* ---- Three-model cards (step 8), NN branch tag ---- */
+.branch-picker { display: flex; gap: 8px; margin-top: 10px; }
+.branch-btn {
+  padding: 7px 14px; border: 1px solid var(--rule-2); background: var(--paper); color: var(--muted);
+  border-radius: 2px; font-size: 13px; font-family: var(--serif); font-weight: 600; cursor: pointer;
+}
+.branch-btn.active { background: var(--coral); color: var(--paper); border-color: var(--coral); }
+.exempt-note { margin-top: 12px; font-size: 13px; color: var(--muted); font-style: italic; }
+
+/* ---- JSON I/O + exports ---- */
+.export-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+@media (max-width: 800px) { .export-grid { grid-template-columns: 1fr; } }
+.export-card {
+  border: 1px solid var(--rule); border-radius: 2px; padding: 16px 18px; background: var(--paper);
+}
+.export-card h5 { font-family: var(--serif); font-weight: 700; font-size: 14px; color: var(--ink); margin: 0 0 6px; }
+.export-card p { font-size: 13px; color: var(--muted); margin: 0 0 12px; line-height: 1.45; }
+.prompt-box {
+  width: 100%; min-height: 90px; padding: 10px 12px; border: 1px solid var(--rule-2); border-radius: 2px;
+  font-family: var(--mono); font-size: 12px; background: var(--bg); color: var(--ink); resize: vertical;
+}
+.stub-preview {
+  width: 100%; max-height: 260px; overflow: auto; padding: 12px 14px; border: 1px solid var(--rule-2);
+  border-radius: 2px; font-family: var(--mono); font-size: 12px; background: var(--ink); color: #E8E6E3;
+  white-space: pre; line-height: 1.5;
+}
+
+/* ---- Worked-example banner ---- */
+.example-banner {
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  background: var(--wash); border: 1px solid var(--wash-2); border-left: 4px solid var(--coral);
+  padding: 12px 18px; margin: 0 0 24px; border-radius: 0 2px 2px 0; font-size: 13.5px; color: #4A2A20;
+}
+.example-banner strong { color: var(--coral-deep); }
+
+/* ---- Pending-value fields (worked example gaps) ---- */
+.field.is-pending textarea, .field.is-pending input[type="text"] { border-style: dashed; color: var(--muted); font-style: italic; }
+.abstract-row .field label { display: none; }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="brand">
+    <div class="eyebrow"><span class="dot"></span> A Quantitative Methods Contribution-Architecture tool</div>
+    <h1>Numerical Narratives</h1>
+    <p class="subtitle">Possible. Plausible. Probable. Therefore.</p>
+    <p class="primer-link" style="margin:6px 0 0;font-size:13.5px"><a href="https://chrisrider.info/toolkit/numerical-narratives/" target="_blank" rel="noopener" style="color:var(--coral)">Read the primer on numerical narratives &rarr;</a></p>
+  </div>
+  <div class="header-actions">
+    <button class="btn ghost" id="btn-save" title="Saves automatically; click to confirm">Save</button>
+    <button class="btn ghost" id="btn-load-json" title="Load a .json file">Load JSON</button>
+    <button class="btn ghost" id="btn-save-json" title="Download a .json file">Save JSON</button>
+    <button class="btn" id="btn-export" title="Download as Markdown">Export</button>
+    <button class="btn ghost" id="btn-print" title="Print as PDF">Print</button>
+    <button class="btn ghost" id="btn-example" title="Load the NFL worked example">Load example</button>
+    <button class="btn ghost" id="btn-reset" title="Clear all fields">Reset</button>
+  </div>
+  <input type="file" id="file-input" accept="application/json" style="display:none" />
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="nav-title">Steps</div>
+    <nav class="steps" id="nav"></nav>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+    </div>
+  </aside>
+
+  <main id="main"></main>
+</div>
+
+<footer class="fnav">
+  <div class="left"><button class="btn" id="btn-prev">← Previous</button></div>
+  <div class="center" id="step-indicator">—</div>
+  <div class="right"><button class="btn primary" id="btn-next">Next →</button></div>
+</footer>
+
+<div class="toast" id="toast">Saved</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Reset everything?</h3>
+    <p id="modal-body">This will clear every field and start fresh. This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn ghost" id="modal-cancel">Cancel</button>
+      <button class="btn primary" id="modal-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Numerical Narratives — companion app to Differences-in-Inferences
+   Build spec: "Numerical Narratives App — Build Spec"
+   (Claude Docs, rev 38).
+   Single-file, no-build, static app. Shell and conventions ported
+   from the live DiI app (differences-in-inferences.netlify.app,
+   read 27 Sep 2026).
+   ============================================================ */
+
+/* ============================================================
+   CONFIG — sections, fields, prompts, examples
+   Field-id convention deliberately avoids DiI's m2_ collision
+   (m2_above/below/lateral vs m1/2/3_spec/inf sharing one prefix):
+   mechanisms are mech1_/mech2_/mech3_, models are model1_/model2_/model3_.
+   ============================================================ */
+
+const N_STEPS = 11; // steps 1..11, plus step 0 welcome and a review screen
+
+const SECTIONS = [
+  {
+    id: "welcome",
+    nav: "Welcome",
+    title: "Welcome",
+    eyebrow: "How this app works",
+    custom: "welcome",
+    fields: []
+  },
+  {
+    id: "belief",
+    nav: "Belief update",
+    title: "Write the belief update",
+    eyebrow: "Step 1 of 11",
+    lede: "Before a design, there is a reader and a belief. Say what the reader thinks now, what you want them to think when you're done, and set the update arc you'll spend the rest of this app earning.",
+    custom: "belief",
+    fields: [
+      { id: "belief_current", label: "Reader's current belief, in words",
+        prompt: "What does a reasonably informed reader believe about this phenomenon before your paper?",
+        example: "The head-coach gap reflects where coaches of color are placed in the pipeline — a matter of allocation, not treatment." },
+      { id: "belief_target_words", label: "Reader's target belief, in words",
+        prompt: "What should that same reader believe once your paper is done?",
+        example: "The gap persists after accounting for placement, so valuation also contributes." }
+    ]
+  },
+  {
+    id: "phenomenon",
+    nav: "Phenomenon",
+    title: "Establish the phenomenon statistically",
+    eyebrow: "Step 2 of 11",
+    lede: "A phenomenon is a number, not an impression. State the headline statistic, who it compares, and where it comes from — precisely enough that a skeptical reader could look it up.",
+    fields: [
+      { id: "headline_stat", label: "Headline statistic",
+        prompt: "The number that establishes the phenomenon is real.",
+        example: "The pipeline of coaches of color has diversified; head-coach representation has lagged." },
+      { id: "comparison_group", label: "Comparison group",
+        prompt: "Who or what is being compared to what?",
+        example: "White assistant coaches vs. assistant coaches of color." },
+      { id: "unit", label: "Unit",
+        prompt: "The unit the statistic is measured on.",
+        example: "Coach-season; promotion to head coach." },
+      { id: "source", label: "Source",
+        prompt: "Where the number comes from.",
+        example: "Career histories of over 1,300 coaches, 1985–2015." }
+    ]
+  },
+  {
+    id: "priors",
+    nav: "Priors & rivals",
+    title: "Name the priors and the rival mechanisms",
+    eyebrow: "Step 3 of 11",
+    lede: "The Three-Story Rule: at least three mechanism-specific accounts, each with prima facie support, each stated in actor terms — whose decision, under what constraint, produces the outcome. One preferred, at least two rivals.",
+    custom: "priors",
+    fields: [
+      { id: "mech1_label", label: "Preferred mechanism — short label", prompt: "A short name for the mechanism you favor." },
+      { id: "mech1_text", label: "Preferred mechanism, in actor terms",
+        prompt: "Whose decision, under what constraint, produces the outcome?",
+        example: "Team decision-makers value experience in offensive coordination more than in other pre-head-coach roles, and White assistants are disproportionately routed into those roles." },
+      { id: "mech1_prior", label: "Which prior it honors", prompt: "What existing belief does this account affirm?" },
+      { id: "mech2_label", label: "Rival 1 — short label", prompt: "A short name for the first rival mechanism." },
+      { id: "mech2_text", label: "Rival 1, in actor terms",
+        prompt: "Whose decision, under what constraint, produces the outcome?" },
+      { id: "mech2_prior", label: "Rival 1 — which prior it honors", prompt: "What existing belief does this account affirm?" },
+      { id: "mech3_label", label: "Rival 2 — short label", prompt: "A short name for the second rival mechanism." },
+      { id: "mech3_text", label: "Rival 2, in actor terms",
+        prompt: "Whose decision, under what constraint, produces the outcome?" },
+      { id: "mech3_prior", label: "Rival 2 — which prior it honors", prompt: "What existing belief does this account affirm?" }
+    ]
+  },
+  {
+    id: "signatures",
+    nav: "Signatures",
+    title: "Draw each mechanism's signature",
+    eyebrow: "Step 4 of 11",
+    lede: "Up to two moderators. For each mechanism, on each moderator: does the effect attenuate (move toward zero), persist (stay put), or accentuate (grow)? Add a one-line magnitude note — precision the three words alone can't carry, e.g. \"attenuated toward zero but still non-zero.\"",
+    custom: "signatures",
+    fields: [
+      { id: "mod1_name", label: "Moderator 1", prompt: "The value or subgroup you'll compare across." },
+      { id: "mod1_mech1_note", label: "Moderator 1 — preferred mechanism, magnitude note", prompt: "" },
+      { id: "mod1_mech2_note", label: "Moderator 1 — rival 1, magnitude note", prompt: "" },
+      { id: "mod1_mech3_note", label: "Moderator 1 — rival 2, magnitude note", prompt: "" },
+      { id: "mod2_name", label: "Moderator 2 (optional)", prompt: "A second value or subgroup, if useful." },
+      { id: "mod2_mech1_note", label: "Moderator 2 — preferred mechanism, magnitude note", prompt: "" },
+      { id: "mod2_mech2_note", label: "Moderator 2 — rival 1, magnitude note", prompt: "" },
+      { id: "mod2_mech3_note", label: "Moderator 2 — rival 2, magnitude note", prompt: "" }
+    ]
+  },
+  {
+    id: "pictures",
+    nav: "Three pictures",
+    title: "Hand-sketch three thousand-word pictures",
+    eyebrow: "Step 5 of 11",
+    lede: "One picture per stage. Possible and plausible carry no controls — the book is explicit that controls belong to probable, where the design lives.",
+    custom: "pictures",
+    fields: [
+      { id: "poss_stat", label: "Possible — statistic", prompt: "The raw number, no controls." },
+      { id: "poss_chart", label: "Possible — chart type", prompt: "" },
+      { id: "poss_controls", label: "Possible — controls?", prompt: "" },
+      { id: "poss_design", label: "Possible — design?", prompt: "" },
+      { id: "poss_caption", label: "Possible — one-line caption", prompt: "" },
+      { id: "plaus_stat", label: "Plausible — statistic", prompt: "By moderator, still no controls." },
+      { id: "plaus_chart", label: "Plausible — chart type", prompt: "" },
+      { id: "plaus_controls", label: "Plausible — controls?", prompt: "" },
+      { id: "plaus_design", label: "Plausible — design?", prompt: "" },
+      { id: "plaus_caption", label: "Plausible — one-line caption", prompt: "" },
+      { id: "prob_stat", label: "Probable — statistic", prompt: "The design-based estimate." },
+      { id: "prob_chart", label: "Probable — chart type", prompt: "" },
+      { id: "prob_controls", label: "Probable — controls?", prompt: "" },
+      { id: "prob_design", label: "Probable — design?", prompt: "" },
+      { id: "prob_caption", label: "Probable — one-line caption", prompt: "" }
+    ]
+  },
+  {
+    id: "divergence",
+    nav: "Point of divergence",
+    title: "Find the point of divergence",
+    eyebrow: "Step 6 of 11",
+    lede: "Per moderator, the value or subgroup where the step 4 signatures separate — where a skeptic can no longer treat each mechanism as equally consistent with the data.",
+    fields: [
+      { id: "div_mod1", label: "Moderator 1 — where the signatures separate", prompt: "" },
+      { id: "div_mod2", label: "Moderator 2 — where the signatures separate (if used)", prompt: "" }
+    ]
+  },
+  {
+    id: "narrative",
+    nav: "Four sentences",
+    title: "Write the narrative in four sentences",
+    eyebrow: "Step 7 of 11",
+    lede: "Synthesize steps 1 through 6 in the differences-in-inferences order.",
+    custom: "narrative",
+    fields: [
+      { id: "narr_phenomenon", label: "(1) The phenomenon", prompt: "" },
+      { id: "narr_yeah", label: "(2) The prior affirmed with evidence — “yeah, yeah, yeah…”", prompt: "" },
+      { id: "narr_but", label: "(3) What persists — “…but…”", prompt: "" },
+      { id: "narr_therefore", label: "(4) The inference — “…and therefore…”", prompt: "" }
+    ]
+  },
+  {
+    id: "models",
+    nav: "Three models",
+    title: "Name the three model cells before running them",
+    eyebrow: "Step 8 of 11",
+    lede: "Replicate, diverge, reconcile. Model 1 licenses the prior; Model 2 generates the difference; Model 3 reconciles it — as a boundary (the prior holds in one regime, yours in another) or a bias correction (the design isolates the surviving mechanism).",
+    custom: "models",
+    fields: [
+      { id: "model1_spec", label: "Model 1 — specification", prompt: "" },
+      { id: "model1_inf", label: "Model 1 — inference licensed", prompt: "" },
+      { id: "model2_spec", label: "Model 2 — specification", prompt: "" },
+      { id: "model2_inf", label: "Model 2 — inference licensed", prompt: "" },
+      { id: "model3_spec", label: "Model 3 — specification", prompt: "" },
+      { id: "model3_inf", label: "Model 3 — inference licensed", prompt: "" }
+    ]
+  },
+  {
+    id: "simulate",
+    nav: "Simulate (optional)",
+    title: "Simulate the narrative",
+    eyebrow: "Step 9 of 11 · optional",
+    lede: "A fixed template modelled on the book's Chapter 9 script. Set the parameters, download the .do file, run it, and paste your estimates back for the record — every estimate belongs beside the truth it should recover.",
+    optional: true,
+    custom: "simulate",
+    fields: [
+      { id: "sim_n", label: "N", prompt: "" },
+      { id: "sim_treat_share", label: "Treatment share", prompt: "" },
+      { id: "sim_confound", label: "Confound strength", prompt: "" },
+      { id: "sim_b_true", label: "b_true (the simulated truth)", prompt: "" },
+      { id: "sim_design", label: "Design type", prompt: "" },
+      { id: "sim_results", label: "Results, once you've run the stub (optional)", prompt: "Paste your estimates, e.g. “naive 0.178; design 0.087 (SE 0.011)”." }
+    ]
+  },
+  {
+    id: "abstract",
+    nav: "Aspirational abstract",
+    title: "Write the aspirational abstract",
+    eyebrow: "Step 10 of 11",
+    lede: "Six sentences, six jobs. Draft from your earlier steps, then rewrite each in your own voice — the gate is whether sentence 5 answers sentence 1's puzzle in sentence 3's terms.",
+    custom: "abstract",
+    fields: [
+      { id: "abs_hook", label: "1. Hook", prompt: "" },
+      { id: "abs_gap", label: "2. Gap", prompt: "" },
+      { id: "abs_contribution", label: "3. Contribution", prompt: "" },
+      { id: "abs_test", label: "4. Test", prompt: "" },
+      { id: "abs_finding", label: "5. Finding", prompt: "" },
+      { id: "abs_implication", label: "6. Implication", prompt: "" }
+    ]
+  },
+  {
+    id: "reader_test",
+    nav: "Test on a reader",
+    title: "Test the narrative on a reader",
+    eyebrow: "Step 11 of 11",
+    lede: "A real reader's estimate, at three points, against the target you set in step 1. Absent a real reader, the app shows the illustrative curve instead — label it as such.",
+    custom: "reader_test",
+    fields: [
+      { id: "reader_before", label: "Reader's estimate — before", prompt: "" },
+      { id: "reader_after_plausible", label: "Reader's estimate — after plausible", prompt: "" },
+      { id: "reader_after_probable", label: "Reader's estimate — after probable", prompt: "" },
+      { id: "reader_illustrative", label: "Label as illustrative, not measured", prompt: "" }
+    ]
+  },
+  {
+    id: "review",
+    nav: "Review & export",
+    title: "Review and export",
+    eyebrow: "Final step",
+    custom: "review",
+    fields: []
+  }
+];
+
+const ALL_STEPS = SECTIONS.length; // 13: welcome + 11 + review
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const STORAGE_KEY = "nn_template_v1";
+const STORAGE_STEP = "nn_template_step";
+const STORAGE_EX = "nn_template_examples";
+
+let state = loadState();
+let currentStep = parseInt(localStorage.getItem(STORAGE_STEP) || "0");
+let examplesShown = JSON.parse(localStorage.getItem(STORAGE_EX) || "{}");
+
+function defaultState() {
+  return {
+    prior_preset: "skeptical",
+    target_share: "0.60",
+    evidence_plausible_strength: "weak",
+    evidence_plausible_center: "0.60",
+    evidence_probable_strength: "strong",
+    evidence_probable_center: "0.70",
+    branch: ""
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return Object.assign(defaultState(), JSON.parse(raw));
+  } catch (e) {}
+  return defaultState();
+}
+
+function saveState(silent) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(STORAGE_STEP, String(currentStep));
+    localStorage.setItem(STORAGE_EX, JSON.stringify(examplesShown));
+  } catch (e) {}
+  if (!silent) toast("Saved");
+}
+
+/* ============================================================
+   BELIEF-UPDATE MATH
+   precision-weighted normal-normal update; precision = 1/spread^2
+   ============================================================ */
+
+const PRIOR_PRESETS = {
+  skeptical: { center: 0.05, spread: 0.18 },
+  neutral:   { center: 0.30, spread: 0.18 },
+  receptive: { center: 0.50, spread: 0.18 }
+};
+const EVIDENCE_SPREADS = { weak: 0.24, moderate: 0.14, strong: 0.08 };
+
+function updatePosterior(priorCenter, priorSpread, evCenter, evSpread) {
+  const pPrec = 1 / (priorSpread * priorSpread);
+  const ePrec = 1 / (evSpread * evSpread);
+  const center = (priorCenter * pPrec + evCenter * ePrec) / (pPrec + ePrec);
+  const spread = Math.pow(pPrec + ePrec, -0.5);
+  return { center, spread };
+}
+
+function computeBeliefArc() {
+  const preset = PRIOR_PRESETS[state.prior_preset] || PRIOR_PRESETS.skeptical;
+  const prior = { center: preset.center, spread: preset.spread };
+  const evP = {
+    center: parseFloat(state.evidence_plausible_center) || 0.60,
+    spread: EVIDENCE_SPREADS[state.evidence_plausible_strength] || 0.24,
+    strength: state.evidence_plausible_strength || "weak"
+  };
+  const postPlausible = updatePosterior(prior.center, prior.spread, evP.center, evP.spread);
+  const evQ = {
+    center: parseFloat(state.evidence_probable_center) || 0.70,
+    spread: EVIDENCE_SPREADS[state.evidence_probable_strength] || 0.08,
+    strength: state.evidence_probable_strength || "strong"
+  };
+  const postProbable = updatePosterior(postPlausible.center, postPlausible.spread, evQ.center, evQ.spread);
+  const target = parseFloat(state.target_share);
+  return { prior, evP, postPlausible, evQ, postProbable, target: isNaN(target) ? null : target };
+}
+
+/* ============================================================
+   BELIEF CHART (inline SVG) — prior, evidence, posterior, target
+   ============================================================ */
+
+function normalDensity(x, mean, sd) {
+  return Math.exp(-0.5 * Math.pow((x - mean) / sd, 2)) / (sd * Math.sqrt(2 * Math.PI));
+}
+
+function curvePath(mean, sd, W, H, padL, padT, maxDensity, close) {
+  const N = 80;
+  let pts = [];
+  for (let i = 0; i <= N; i++) {
+    const x = i / N;
+    const d = normalDensity(x, mean, sd);
+    const px = padL + x * W;
+    const py = padT + H - (d / maxDensity) * H * 0.92;
+    pts.push([px, py]);
+  }
+  let d = "M " + pts.map(p => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L ");
+  if (close) {
+    d += ` L ${(padL + W).toFixed(1)} ${(padT + H).toFixed(1)} L ${padL.toFixed(1)} ${(padT + H).toFixed(1)} Z`;
+  }
+  return d;
+}
+
+function buildBeliefChartSvg(arc, opts) {
+  opts = opts || {};
+  const W = 680, H = 190, padL = 40, padT = 14, padB = 34;
+  const totalH = padT + H + padB;
+  const totalW = padL + W + 20;
+
+  // scale all curves to a shared max so relative certainty reads correctly
+  const curves = [
+    { mean: arc.prior.center, sd: arc.prior.spread },
+    { mean: arc.evP.center, sd: arc.evP.spread },
+    { mean: arc.evQ.center, sd: arc.evQ.spread },
+    { mean: arc.postProbable.center, sd: arc.postProbable.spread }
+  ];
+  let maxDensity = 0;
+  curves.forEach(c => { maxDensity = Math.max(maxDensity, normalDensity(c.mean, c.mean, c.sd)); });
+
+  const priorPath = curvePath(arc.prior.center, arc.prior.spread, W, H, padL, padT, maxDensity, false);
+  const evPPath = curvePath(arc.evP.center, arc.evP.spread, W, H, padL, padT, maxDensity, true);
+  const evQPath = curvePath(arc.evQ.center, arc.evQ.spread, W, H, padL, padT, maxDensity, true);
+  const postPath = curvePath(arc.postProbable.center, arc.postProbable.spread, W, H, padL, padT, maxDensity, true);
+
+  const xAxisY = padT + H;
+  const xTicks = [0, 0.25, 0.5, 0.75, 1].map(v => {
+    const px = padL + v * W;
+    return `<line x1="${px}" y1="${xAxisY}" x2="${px}" y2="${xAxisY + 5}" stroke="#C5C4CB" stroke-width="1"/>` +
+           `<text x="${px}" y="${xAxisY + 20}" font-size="11" fill="#6E6E73" text-anchor="middle" font-family="Gelasio, Georgia, serif">${v}</text>`;
+  }).join("");
+
+  let targetLine = "";
+  if (arc.target !== null && !isNaN(arc.target)) {
+    const px = padL + Math.max(0, Math.min(1, arc.target)) * W;
+    targetLine = `<line x1="${px}" y1="${padT - 2}" x2="${px}" y2="${xAxisY}" stroke="#A93A25" stroke-width="2" stroke-dasharray="5,4"/>` +
+      `<text x="${px}" y="${padT - 6}" font-size="11" fill="#A93A25" text-anchor="middle" font-family="Gelasio, Georgia, serif" font-weight="700">target</text>`;
+  }
+
+  return `<svg viewBox="0 0 ${totalW} ${totalH}" xmlns="http://www.w3.org/2000/svg">
+    <line x1="${padL}" y1="${xAxisY}" x2="${padL + W}" y2="${xAxisY}" stroke="#D9D7DE" stroke-width="1"/>
+    ${xTicks}
+    <path d="${evPPath}" fill="#F6DBD3" fill-opacity="0.55" stroke="#A93A25" stroke-width="1.3" stroke-dasharray="3,3"/>
+    <path d="${evQPath}" fill="#F6DBD3" fill-opacity="0.4" stroke="#A93A25" stroke-width="1.3" stroke-dasharray="3,3"/>
+    <path d="${priorPath}" fill="none" stroke="#6E6E73" stroke-width="2"/>
+    <path d="${postPath}" fill="#C9472F" fill-opacity="0.18" stroke="#C9472F" stroke-width="2.6"/>
+    ${targetLine}
+    <text x="${padL}" y="${totalH - 4}" font-size="11" fill="#5A5A5E" font-family="Gelasio, Georgia, serif">reader's belief that the preferred mechanism explains the phenomenon (share, 0–1)</text>
+  </svg>`;
+}
+
+function buildReaderCurveSvg(before, afterPlausible, afterProbable, target, illustrative) {
+  const W = 680, H = 130, padL = 40, padT = 14, padB = 34;
+  const totalH = padT + H + padB;
+  const totalW = padL + W + 20;
+  const xAxisY = padT + H;
+  const pts = [
+    { x: 0.08, y: before, label: "before" },
+    { x: 0.5, y: afterPlausible, label: "after plausible" },
+    { x: 0.92, y: afterProbable, label: "after probable" }
+  ].filter(p => !isNaN(p.y) && p.y !== null);
+  const toPx = (x, y) => [padL + x * W, padT + H - Math.max(0, Math.min(1, y)) * H];
+  const linePts = pts.map(p => toPx(p.x, p.y).join(",")).join(" ");
+  const xTicks = [0, 0.25, 0.5, 0.75, 1].map(v => {
+    const px = padL + v * W;
+    return `<line x1="${px}" y1="${xAxisY}" x2="${px}" y2="${xAxisY + 5}" stroke="#C5C4CB" stroke-width="1"/>` +
+      `<text x="${px}" y="${xAxisY + 20}" font-size="11" fill="#6E6E73" text-anchor="middle" font-family="Gelasio, Georgia, serif">${v}</text>`;
+  }).join("");
+  let targetLine = "";
+  if (target !== null && !isNaN(target)) {
+    const py = padT + H - Math.max(0, Math.min(1, target)) * H;
+    targetLine = `<line x1="${padL}" y1="${py}" x2="${padL + W}" y2="${py}" stroke="#A93A25" stroke-width="2" stroke-dasharray="5,4"/>` +
+      `<text x="${padL + W}" y="${py - 6}" font-size="11" fill="#A93A25" text-anchor="end" font-family="Gelasio, Georgia, serif" font-weight="700">target</text>`;
+  }
+  const dots = pts.map(p => {
+    const [px, py] = toPx(p.x, p.y);
+    return `<circle cx="${px}" cy="${py}" r="5" fill="#C9472F"/>` +
+      `<text x="${px}" y="${py - 12}" font-size="11" fill="#1A1A1A" text-anchor="middle" font-family="Gelasio, Georgia, serif">${(p.y).toFixed(2)}</text>` +
+      `<text x="${px}" y="${xAxisY + 34}" font-size="10.5" fill="#6E6E73" text-anchor="middle" font-family="Gelasio, Georgia, serif">${p.label}</text>`;
+  }).join("");
+  const illustrativeNote = illustrative ?
+    `<text x="${padL}" y="${padT - 2}" font-size="11.5" fill="#6E6E73" font-style="italic" font-family="Gelasio, Georgia, serif">Illustrative values; not a measured reader</text>` : "";
+  return `<svg viewBox="0 0 ${totalW} ${totalH}" xmlns="http://www.w3.org/2000/svg">
+    <line x1="${padL}" y1="${xAxisY}" x2="${padL + W}" y2="${xAxisY}" stroke="#D9D7DE" stroke-width="1"/>
+    ${xTicks}
+    ${targetLine}
+    ${pts.length > 1 ? `<polyline points="${linePts}" fill="none" stroke="#C9472F" stroke-width="2"/>` : ""}
+    ${dots}
+    ${illustrativeNote}
+  </svg>`;
+}
+
+/* ============================================================
+   NAV / PROGRESS
+   ============================================================ */
+
+function renderNav() {
+  const nav = document.getElementById("nav");
+  nav.innerHTML = SECTIONS.map((s, i) => {
+    const status = sectionStatus(s);
+    const cls = i === currentStep ? "step active" : "step";
+    const numLabel = i === 0 ? "•" : (i === SECTIONS.length - 1 ? "✓" : String(i).padStart(2, "0"));
+    return `
+      <button class="${cls}" data-step="${i}">
+        <span class="num">${numLabel}</span>
+        <span class="lab">${s.nav}<span class="marker ${status}"></span></span>
+      </button>`;
+  }).join("");
+  nav.querySelectorAll("button.step").forEach(b => {
+    b.addEventListener("click", () => goTo(parseInt(b.dataset.step)));
+  });
+  updateProgress();
+}
+
+function sectionStatus(s) {
+  const fields = s.fields || [];
+  if (!fields.length) return "";
+  const total = fields.length;
+  const filled = fields.filter(f => state[f.id] && String(state[f.id]).trim()).length;
+  if (filled === 0) return "";
+  if (filled === total) return "full";
+  return "partial";
+}
+
+function updateProgress() {
+  const sections = SECTIONS.filter(s => s.fields && s.fields.length);
+  let total = 0, filled = 0;
+  sections.forEach(s => {
+    total += s.fields.length;
+    filled += s.fields.filter(f => state[f.id] && String(state[f.id]).trim()).length;
+  });
+  const pct = total ? Math.round((filled / total) * 100) : 0;
+  document.getElementById("progress-pct").textContent = pct + "%";
+  document.getElementById("progress-fill").style.width = pct + "%";
+}
+
+/* ============================================================
+   FIELD RENDERING (standard textarea/text fields)
+   ============================================================ */
+
+function fieldHtml(f, sectionId) {
+  const val = state[f.id] || "";
+  const hasExample = !!f.example;
+  const exOn = examplesShown[sectionId] ? "on" : "";
+  const pendingCls = val.trim().indexOf("Pending —") === 0 ? " is-pending" : "";
+  return `
+    <div class="field${pendingCls}" data-field="${f.id}">
+      <label for="f-${f.id}">${f.label}</label>
+      ${f.prompt ? `<div class="prompt">${f.prompt}</div>` : ""}
+      <textarea id="f-${f.id}" data-id="${f.id}">${escapeHtml(val)}</textarea>
+      ${hasExample ? `
+      <div class="example ${exOn}">
+        <span class="ex-label">Example — NFL coaching promotions</span>
+        ${escapeHtml(f.example)}
+      </div>` : ""}
+    </div>`;
+}
+
+function stepHeader(s) {
+  const optBadge = s.optional ? `<span class="optional-badge">Optional</span>` : "";
+  const exOn = examplesShown[s.id] ? "on" : "";
+  const hasExamples = (s.fields || []).some(f => f.example);
+  return `
+    <div class="step-eyebrow">${s.eyebrow}</div>
+    <h2 class="step-title">${s.title}</h2>
+    ${s.lede ? `<p class="step-lede">${s.lede}</p>` : ""}
+    ${(hasExamples || s.optional) ? `<div class="step-meta">
+      ${hasExamples ? `<button class="example-toggle ${exOn}" data-toggle-ex="${s.id}">
+        <span class="swatch"></span>
+        <span>${examplesShown[s.id] ? "Hide" : "Show"} example: NFL coaching promotions</span>
+      </button>` : ""}
+      ${optBadge}
+    </div>` : ""}
+  `;
+}
+
+function renderStandard(s) {
+  let html = stepHeader(s);
+  html += `<div class="fields">`;
+  s.fields.forEach(f => { html += fieldHtml(f, s.id); });
+  html += `</div>`;
+  return html;
+}
+
+function attachFieldHandlers() {
+  const STUB_INPUT_IDS = ["sim_n", "sim_treat_share", "sim_confound", "sim_b_true", "sim_design"];
+  document.querySelectorAll("textarea[data-id], input[type=text][data-id]").forEach(el => {
+    el.addEventListener("input", () => {
+      state[el.dataset.id] = el.value;
+      saveState(true);
+      updateProgress();
+      renderNav_lightUpdate();
+      if (STUB_INPUT_IDS.indexOf(el.dataset.id) >= 0) {
+        const prev = document.getElementById("stub-preview");
+        if (prev) prev.textContent = buildSimulationStub();
+      }
+    });
+  });
+  document.querySelectorAll("input[type=checkbox][data-id]").forEach(el => {
+    el.addEventListener("change", () => {
+      state[el.dataset.id] = el.checked;
+      saveState(true);
+      onFieldChangedCustom(el.dataset.id);
+    });
+  });
+  document.querySelectorAll("select[data-id]").forEach(el => {
+    el.addEventListener("change", () => {
+      state[el.dataset.id] = el.value;
+      saveState(true);
+      onFieldChangedCustom(el.dataset.id);
+    });
+  });
+  document.querySelectorAll("input[type=range][data-id]").forEach(el => {
+    el.addEventListener("input", () => {
+      state[el.dataset.id] = el.value;
+      const out = document.getElementById("val-" + el.dataset.id);
+      if (out) out.textContent = Number(el.value).toFixed(2);
+      saveState(true);
+      onFieldChangedCustom(el.dataset.id);
+    });
+  });
+  document.querySelectorAll("[data-seg]").forEach(el => {
+    el.addEventListener("click", () => {
+      const group = el.dataset.seg, val = el.dataset.val;
+      state[group] = val;
+      saveState(true);
+      renderMain();
+    });
+  });
+  document.querySelectorAll("[data-sig-select]").forEach(el => {
+    el.addEventListener("change", () => {
+      state[el.dataset.sigSelect] = el.value;
+      saveState(true);
+      renderChecksPanel();
+      renderNav_lightUpdate();
+    });
+  });
+  document.querySelectorAll("[data-branch]").forEach(el => {
+    el.addEventListener("click", () => {
+      state.branch = el.dataset.branch;
+      saveState(true);
+      renderMain();
+    });
+  });
+  const toggleBtn = document.querySelector("[data-toggle-ex]");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const id = toggleBtn.dataset.toggleEx;
+      examplesShown[id] = !examplesShown[id];
+      saveState(true);
+      renderMain();
+    });
+  }
+  const draftBtn = document.getElementById("btn-draft-abstract");
+  if (draftBtn) draftBtn.addEventListener("click", draftAbstractFromSteps);
+  const stubBtn = document.getElementById("btn-download-stub");
+  if (stubBtn) stubBtn.addEventListener("click", downloadSimulationStub);
+  const memoBtn = document.getElementById("btn-export-memo");
+  if (memoBtn) memoBtn.addEventListener("click", downloadMemo);
+  const jsonBtn = document.getElementById("btn-export-json");
+  if (jsonBtn) jsonBtn.addEventListener("click", downloadSchemaJSON);
+  const stubBtn2 = document.getElementById("btn-export-stub");
+  if (stubBtn2) stubBtn2.addEventListener("click", downloadSimulationStub);
+  const copyBtn = document.getElementById("btn-copy-prompt");
+  if (copyBtn) copyBtn.addEventListener("click", () => {
+    const box = document.getElementById("populate-prompt");
+    box.select();
+    try { document.execCommand("copy"); toast("Copied"); } catch (e) {
+      if (navigator.clipboard) { navigator.clipboard.writeText(box.value); toast("Copied"); }
+    }
+  });
+}
+
+function onFieldChangedCustom(id) {
+  // re-render chart-bearing panels live when belief-relevant fields change
+  if (["prior_preset","target_share","evidence_plausible_strength","evidence_plausible_center",
+       "evidence_probable_strength","evidence_probable_center"].indexOf(id) >= 0) {
+    const holder = document.getElementById("belief-chart-holder");
+    if (holder) holder.innerHTML = buildBeliefChartSvg(computeBeliefArc());
+    const readout = document.getElementById("belief-chart-readout");
+    if (readout) readout.innerHTML = beliefReadoutHtml(computeBeliefArc());
+  }
+  if (["reader_before","reader_after_plausible","reader_after_probable"].indexOf(id) >= 0) {
+    renderReaderChart();
+  }
+  renderChecksPanel();
+}
+
+function renderNav_lightUpdate() {
+  document.querySelectorAll("nav.steps button.step").forEach((b, i) => {
+    const marker = b.querySelector(".marker");
+    if (marker) marker.className = "marker " + sectionStatus(SECTIONS[i]);
+  });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/* ============================================================
+   MAIN DISPATCH
+   ============================================================ */
+
+function renderMain() {
+  const s = SECTIONS[currentStep];
+  const main = document.getElementById("main");
+  let body = "";
+  switch (s.custom) {
+    case "welcome": body = renderWelcome(s); break;
+    case "belief": body = renderBelief(s); break;
+    case "priors": body = renderPriors(s); break;
+    case "signatures": body = renderSignatures(s); break;
+    case "pictures": body = renderPictures(s); break;
+    case "narrative": body = renderNarrative(s); break;
+    case "models": body = renderModels(s); break;
+    case "simulate": body = renderSimulate(s); break;
+    case "abstract": body = renderAbstract(s); break;
+    case "reader_test": body = renderReaderTest(s); break;
+    case "review": body = renderReview(s); break;
+    default: body = renderStandard(s);
+  }
+  main.innerHTML = body;
+  attachFieldHandlers();
+
+  document.getElementById("step-indicator").textContent = s.nav;
+  document.getElementById("btn-prev").disabled = currentStep === 0;
+  const nextBtn = document.getElementById("btn-next");
+  nextBtn.disabled = currentStep === SECTIONS.length - 1;
+  nextBtn.textContent = currentStep === SECTIONS.length - 2 ? "Review →" : "Next →";
+
+  main.scrollIntoView({ behavior: "instant", block: "start" });
+  window.scrollTo({ top: 0, behavior: "instant" });
+
+  if (s.id !== "welcome" && s.id !== "review" && !document.getElementById("checks-panel")) {
+    main.insertAdjacentHTML("beforeend", '<div class="checks-wrap" id="checks-panel"></div>');
+  }
+  if (typeof renderChecksPanel === "function") renderChecksPanel();
+}
+
+function goTo(i) {
+  currentStep = Math.max(0, Math.min(SECTIONS.length - 1, i));
+  saveState(true);
+  renderNav();
+  renderMain();
+}
+
+/* ============================================================
+   CUSTOM RENDERERS
+   ============================================================ */
+
+function renderWelcome(s) {
+  return `
+    <div class="step-eyebrow">A companion tool to <em>Yeah, Yeah, But… and Therefore</em> <span class="pipe">•</span> Christopher I. Rider</div>
+    <h2 class="step-title">Build a numerical narrative.</h2>
+    <p class="step-lede">Possible, plausible, probable, therefore — the book's arc, worked one step at a time. This app walks you from a phenomenon to a design that adjudicates between its rival explanations, and ends with a belief-update chart, a three-model table, and a memo you can hand to a co-author.</p>
+    <div class="arc-strip">
+      <div class="arc-col">
+        <div class="arc-stage">I · Possible</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">The phenomenon is real.</div>
+        <div class="arc-note">A number, a comparison group, a source — no controls yet.</div>
+      </div>
+      <div class="arc-col">
+        <div class="arc-stage">II · Plausible</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">At least two accounts.</div>
+        <div class="arc-note">Each with prima facie support, each with a signature.</div>
+      </div>
+      <div class="arc-col">
+        <div class="arc-stage">III · Probable</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">The design breaks the tie.</div>
+        <div class="arc-note">Controls, and a design, arrive here — not before.</div>
+      </div>
+      <div class="arc-col">
+        <div class="arc-stage">IV · Therefore</div>
+        <div class="arc-dot-row"><span class="arc-rule"></span><span class="arc-dot"></span></div>
+        <div class="arc-beat">The framed contribution.</div>
+        <div class="arc-note">What the reader should now believe, and why.</div>
+      </div>
+    </div>
+    <p class="arc-caption">Book definitions (Chapter 4, The Hinge): Possible — the phenomenon is established, no controls. Plausible — at least two mechanism-specific accounts, each with prima facie support. Probable — the design that breaks the tie. Controls and a design belong to Probable, not to Possible or Plausible.</p>
+    <p class="arc-caption">Scope: this app is built for a quantitative empirical strategy — a headline statistic, descriptive evidence for each account, and a model that adjudicates between them. Working in a qualitative or interpretive design? Build the argument architecture in Differences-in-Inferences or Contribution Architecture instead; this app's belief sliders and model table assume a statistical estimate to report.</p>
+    <div class="commitment-grid">
+      <div class="commitment">
+        <div class="num">01</div>
+        <h4>11 steps</h4>
+        <p>Each one of the primer's "Build your own" steps, in order, cross-referenced by number.</p>
+      </div>
+      <div class="commitment">
+        <div class="num">02</div>
+        <h4>One worked example</h4>
+        <p>Rider, Wade, Swaminathan &amp; Schwab (2023, AJS) on NFL coaching promotions — load it any time from the header.</p>
+      </div>
+      <div class="commitment">
+        <div class="num">03</div>
+        <h4>Two exports</h4>
+        <p>A Markdown memo and a Stata simulation stub, plus JSON save/load to move between machines.</p>
+      </div>
+    </div>
+    <div class="colophon">
+      Companion to <strong>Yeah, Yeah, But… and Therefore</strong> (Christopher I. Rider, Ross School of Business, University of Michigan), Chapter 4, "The Hinge." See also the <a href="https://chrisrider.info/toolkit/numerical-narratives/" target="_blank" rel="noopener" id="link-primer">Numerical Narratives primer</a>. Companion site: <a href="https://yeahyeahbut.org" target="_blank" rel="noopener">yeahyeahbut.org</a>. Companion tools: <a href="https://differences-in-inferences.netlify.app" target="_blank" rel="noopener">Differences-in-Inferences</a> &middot; <a href="https://numerical-narratives.netlify.app" target="_blank" rel="noopener">Numerical Narratives</a> &middot; <a href="https://contributing.netlify.app" target="_blank" rel="noopener">Contribution Architecture</a>.
+    </div>
+  `;
+}
+
+function beliefReadoutHtml(arc) {
+  const t = arc.target !== null ? arc.target.toFixed(2) : "—";
+  return `Prior <b>${arc.prior.center.toFixed(2)}</b> → after plausible evidence <b>${arc.postPlausible.center.toFixed(2)}</b> (spread ${arc.postPlausible.spread.toFixed(3)}) → after probable evidence <b>${arc.postProbable.center.toFixed(2)}</b> (spread ${arc.postProbable.spread.toFixed(3)}) · target <b>${t}</b>`;
+}
+
+function segControl(group, options, current) {
+  return `<div class="seg-control">` + options.map(o =>
+    `<button type="button" class="seg-btn${current === o.val ? " active" : ""}" data-seg="${group}" data-val="${o.val}">${o.label}</button>`
+  ).join("") + `</div>`;
+}
+
+function rangeRow(id, min, max, step, val) {
+  return `<div class="slider-row">
+    <input type="range" id="f-${id}" data-id="${id}" min="${min}" max="${max}" step="${step}" value="${val}"/>
+    <span class="val" id="val-${id}">${Number(val).toFixed(2)}</span>
+  </div>`;
+}
+
+function renderBelief(s) {
+  const arc = computeBeliefArc();
+  let html = stepHeader(s);
+  html += `<div class="fields">`;
+  s.fields.forEach(f => { html += fieldHtml(f, s.id); });
+  html += `</div>`;
+
+  html += `<div class="field">
+    <label>Prior preset</label>
+    ${segControl("prior_preset", [
+      { val: "skeptical", label: "Skeptical (0.05)" },
+      { val: "neutral", label: "Neutral (0.30)" },
+      { val: "receptive", label: "Receptive (0.50)" }
+    ], state.prior_preset)}
+  </div>`;
+  html += `<div class="field">
+    <label>Target share (0–1)</label>
+    ${rangeRow("target_share", 0, 1, 0.01, state.target_share)}
+  </div>`;
+
+  html += `<div class="chart-wrap">
+    <h4>Belief–update chart</h4>
+    <p class="chart-sub">Reuses the primer's normal–normal updating. Defaults reproduce the primer's figure exactly.</p>
+    <div id="belief-chart-holder">${buildBeliefChartSvg(arc)}</div>
+    <div class="chart-legend">
+      <span class="key"><span class="swatch sw-prior"></span>Prior</span>
+      <span class="key"><span class="swatch sw-evidence"></span>Evidence (plausible, then probable)</span>
+      <span class="key"><span class="swatch sw-posterior"></span>Posterior</span>
+      <span class="key"><span class="swatch sw-target"></span>Target</span>
+    </div>
+    <div class="chart-readout" id="belief-chart-readout">${beliefReadoutHtml(arc)}</div>
+  </div>`;
+
+  html += `<div class="evidence-controls">
+    <div class="evidence-stage">
+      <h5>Evidence — at plausible</h5>
+      ${segControl("evidence_plausible_strength", [
+        { val: "weak", label: "Weak" }, { val: "moderate", label: "Moderate" }, { val: "strong", label: "Strong" }
+      ], state.evidence_plausible_strength)}
+      <div class="slider-label">Center</div>
+      ${rangeRow("evidence_plausible_center", 0, 1, 0.01, state.evidence_plausible_center)}
+    </div>
+    <div class="evidence-stage">
+      <h5>Evidence — at probable</h5>
+      ${segControl("evidence_probable_strength", [
+        { val: "weak", label: "Weak" }, { val: "moderate", label: "Moderate" }, { val: "strong", label: "Strong" }
+      ], state.evidence_probable_strength)}
+      <div class="slider-label">Center</div>
+      ${rangeRow("evidence_probable_center", 0, 1, 0.01, state.evidence_probable_center)}
+    </div>
+  </div>`;
+
+  return html;
+}
+
+function renderPriors(s) {
+  let html = stepHeader(s);
+  const groups = [
+    { title: "Preferred mechanism", ids: ["mech1_label", "mech1_text", "mech1_prior"], cls: "" },
+    { title: "Rival 1", ids: ["mech2_label", "mech2_text", "mech2_prior"], cls: "m2" },
+    { title: "Rival 2", ids: ["mech3_label", "mech3_text", "mech3_prior"], cls: "m3" }
+  ];
+  groups.forEach(g => {
+    html += `<div class="model-card ${g.cls}"><div class="card-header"><h3>${g.title}</h3></div>`;
+    g.ids.forEach(id => {
+      const f = s.fields.find(x => x.id === id);
+      html += fieldHtml(f, s.id);
+    });
+    html += `</div>`;
+  });
+  return html;
+}
+
+function mechLabel(n) {
+  const l = state["mech" + n + "_label"];
+  return l && l.trim() ? l : (n === 1 ? "Preferred mechanism" : "Rival " + (n - 1));
+}
+
+function renderSignatures(s) {
+  let html = stepHeader(s);
+
+  function moderatorPanel(modId, nameId) {
+    let panel = `<div class="sig-panel">
+      <div class="moderator-name-field">
+        <input type="text" data-id="${nameId}" value="${escapeHtml(state[nameId] || "")}" placeholder="${modId === "mod1" ? "Moderator 1 name (e.g. position)" : "Moderator 2 name (optional)"}"/>
+      </div>`;
+    [1, 2, 3].forEach(n => {
+      const sigId = modId + "_mech" + n + "_sig";
+      const noteId = modId + "_mech" + n + "_note";
+      const sigVal = state[sigId] || "";
+      panel += `<div class="sig-row">
+        <div class="mech-name">${escapeHtml(mechLabel(n))}</div>
+        <select class="sig-select" data-sig-select="${sigId}">
+          <option value="" ${sigVal === "" ? "selected" : ""}>— choose —</option>
+          <option value="attenuates" ${sigVal === "attenuates" ? "selected" : ""}>Attenuates</option>
+          <option value="persists" ${sigVal === "persists" ? "selected" : ""}>Persists</option>
+          <option value="accentuates" ${sigVal === "accentuates" ? "selected" : ""}>Accentuates</option>
+        </select>
+        <input type="text" data-id="${noteId}" value="${escapeHtml(state[noteId] || "")}" placeholder="Magnitude note, e.g. “attenuated toward zero but still non-zero”"/>
+      </div>`;
+    });
+    return panel + `</div>`;
+  }
+
+  html += moderatorPanel("mod1", "mod1_name");
+  html += moderatorPanel("mod2", "mod2_name");
+  return html;
+}
+
+function renderPictures(s) {
+  let html = stepHeader(s);
+  const stages = [
+    { key: "poss", title: "Possible", note: "No controls." },
+    { key: "plaus", title: "Plausible", note: "By moderator, still no controls." },
+    { key: "prob", title: "Probable", note: "Controls and a design belong here." }
+  ];
+  stages.forEach(st => {
+    html += `<div class="model-card"><div class="card-header"><h3>${st.title}</h3><span class="role-tag">${st.note}</span></div>`;
+    const ids = [st.key + "_stat", st.key + "_chart", st.key + "_controls", st.key + "_design", st.key + "_caption"];
+    ids.forEach(id => {
+      const f = s.fields.find(x => x.id === id);
+      if (id.endsWith("_controls") || id.endsWith("_design")) {
+        const label = id.endsWith("_controls") ? "Controls?" : "Design?";
+        const val = state[id] || "";
+        html += `<div class="field">
+          <label>${label}</label>
+          ${segControl(id, [{ val: "yes", label: "Yes" }, { val: "no", label: "No" }], val)}
+        </div>`;
+      } else {
+        html += fieldHtml(f, s.id);
+      }
+    });
+    html += `</div>`;
+  });
+  return html;
+}
+
+function renderNarrative(s) {
+  let html = stepHeader(s);
+  html += `<div class="fields">`;
+  s.fields.forEach(f => { html += fieldHtml(f, s.id); });
+  html += `</div>`;
+  const parts = [state.narr_phenomenon, state.narr_yeah, state.narr_but, state.narr_therefore].filter(x => x && x.trim());
+  html += `<div class="pull-quote">
+    ${parts.length ? parts.join(" ") : "<em>Your assembled paragraph will appear here as you fill in the four sentences above.</em>"}
+    <cite>Assembled from steps 1–6</cite>
+  </div>`;
+  return html;
+}
+
+function renderModels(s) {
+  let html = stepHeader(s);
+  const triplets = [
+    { name: "Model 1 · Replicate", spec: "model1_spec", inf: "model1_inf", cls: "" },
+    { name: "Model 2 · Diverge", spec: "model2_spec", inf: "model2_inf", cls: "m2" },
+    { name: "Model 3 · Reconcile", spec: "model3_spec", inf: "model3_inf", cls: "m3" }
+  ];
+  triplets.forEach(t => {
+    html += `<div class="model-card ${t.cls}"><div class="card-header"><h3>${t.name}</h3></div>`;
+    [t.spec, t.inf].forEach(id => {
+      const f = s.fields.find(x => x.id === id);
+      html += fieldHtml(f, s.id);
+    });
+    html += `</div>`;
+  });
+  html += `<div class="field">
+    <label>Branch</label>
+    <div class="branch-picker">
+      <button type="button" class="branch-btn ${state.branch === "A" ? "active" : ""}" data-branch="A">A · Boundary (interaction)</button>
+      <button type="button" class="branch-btn ${state.branch === "B" ? "active" : ""}" data-branch="B">B · Bias (re-estimation)</button>
+    </div>
+  </div>`;
+  if (state.models_exempt) {
+    html += `<div class="exempt-note">${escapeHtml(state.models_exempt_note || "This example is exempt from the branch and attenuation checks.")}</div>`;
+  }
+  return html;
+}
+
+function renderSimulate(s) {
+  let html = stepHeader(s);
+  html += `<div class="fields">`;
+  ["sim_n", "sim_treat_share", "sim_confound", "sim_b_true", "sim_design"].forEach(id => {
+    const f = s.fields.find(x => x.id === id);
+    html += fieldHtml(f, s.id);
+  });
+  html += `</div>`;
+  html += `<div class="export-card">
+    <h5>Simulation stub</h5>
+    <p>A Stata .do file with an embedded python: block, seed 20260527, modelled on the book's Chapter 9 script. Step 3 mechanisms and step 8 models appear as comments.</p>
+    <div class="stub-preview" id="stub-preview">${escapeHtml(buildSimulationStub())}</div>
+    <div style="margin-top:12px"><button class="btn primary" id="btn-download-stub">Download .do</button></div>
+  </div>`;
+  const resultsField = s.fields.find(x => x.id === "sim_results");
+  html += `<div class="fields">${fieldHtml(resultsField, s.id)}</div>`;
+  return html;
+}
+
+const ABSTRACT_JOBS = [
+  { id: "abs_hook", job: "Hook" },
+  { id: "abs_gap", job: "Gap" },
+  { id: "abs_contribution", job: "Contribution" },
+  { id: "abs_test", job: "Test" },
+  { id: "abs_finding", job: "Finding" },
+  { id: "abs_implication", job: "Implication" }
+];
+
+function draftAbstractFromSteps() {
+  const drafts = {
+    abs_hook: state.headline_stat || "",
+    abs_gap: [state.mech2_text, state.mech3_text].filter(Boolean).join(" "),
+    abs_contribution: state.mech1_text || "",
+    abs_test: state.model3_spec || "",
+    abs_finding: state.sim_results || state.model3_inf || "",
+    abs_implication: state.belief_target_words || ""
+  };
+  Object.keys(drafts).forEach(id => {
+    if (!state[id] || !state[id].trim()) state[id] = drafts[id];
+  });
+  saveState(true);
+  renderMain();
+}
+
+function renderAbstract(s) {
+  let html = stepHeader(s);
+  html += `<div style="margin-bottom:18px"><button class="btn" id="btn-draft-abstract">Draft from earlier steps</button>
+    <span style="font-size:13px;color:var(--muted);margin-left:10px">Fills empty sentences only — always rewrite in your own voice.</span></div>`;
+  html += `<div class="abstract-grid">`;
+  ABSTRACT_JOBS.forEach((j, i) => {
+    const f = s.fields.find(x => x.id === j.id);
+    html += `<div class="abstract-row"><span class="job-tag">${i + 1}. ${j.job}</span>`;
+    html += fieldHtml(f, s.id);
+    html += `</div>`;
+  });
+  html += `</div>`;
+  html += `<div class="check-flag" style="margin-top:18px"><span class="cf-mark">—</span><div>Self-check (not automated): does sentence 5 answer sentence 1's puzzle in sentence 3's terms? Does sentence 3 name one mechanism, not two? Does sentence 4 name the design behind the data?</div></div>`;
+  return html;
+}
+
+function renderReaderTest(s) {
+  let html = stepHeader(s);
+  html += `<div class="fields">`;
+  ["reader_before", "reader_after_plausible", "reader_after_probable"].forEach(id => {
+    const f = s.fields.find(x => x.id === id);
+    const val = state[id] !== undefined && state[id] !== "" ? state[id] : "";
+    html += `<div class="field"><label>${f.label}</label>${rangeRow(id, 0, 1, 0.01, val || 0)}</div>`;
+  });
+  html += `</div>`;
+  html += `<div class="field">
+    <label><input type="checkbox" id="f-reader_illustrative" data-id="reader_illustrative" ${state.reader_illustrative ? "checked" : ""}/> Label as illustrative, not measured</label>
+  </div>`;
+
+  const before = parseFloat(state.reader_before);
+  const afterP = parseFloat(state.reader_after_plausible);
+  const afterQ = parseFloat(state.reader_after_probable);
+  const target = parseFloat(state.target_share);
+  const illustrative = !!state.reader_illustrative;
+  html += `<div class="chart-wrap">
+    <h4>Reader's curve</h4>
+    <p class="chart-sub">Reader's estimate at three points, against the step 1 target.</p>
+    <div id="reader-chart-holder">${buildReaderCurveSvg(before, afterP, afterQ, isNaN(target) ? null : target, illustrative)}</div>
+  </div>`;
+  if (!isNaN(afterQ) && !isNaN(target)) {
+    const shortfall = target - afterQ;
+    html += `<div class="chart-readout">Shortfall from target: <b>${shortfall.toFixed(2)}</b></div>`;
+  }
+  return html;
+}
+
+function renderReaderChart() {
+  const holder = document.getElementById("reader-chart-holder");
+  if (!holder) return;
+  const before = parseFloat(state.reader_before);
+  const afterP = parseFloat(state.reader_after_plausible);
+  const afterQ = parseFloat(state.reader_after_probable);
+  const target = parseFloat(state.target_share);
+  holder.innerHTML = buildReaderCurveSvg(before, afterP, afterQ, isNaN(target) ? null : target, !!state.reader_illustrative);
+}
+
+/* ============================================================
+   CHECKS — warn, never block
+   ============================================================ */
+
+const ACTOR_HINTS = ["prefer", "decide", "decision", "choose", "chose", "allocate", "assign",
+  "believe", "avoid", "favor", "favour", "select", "value", "promote", "hire", "reward",
+  "penalize", "route", "sort", "match", "trust", "screen", "evaluate", "discriminat"];
+
+function looksLikeActorTerms(text) {
+  if (!text) return true; // don't flag empty fields here; emptiness is its own signal elsewhere
+  const t = text.toLowerCase();
+  return ACTOR_HINTS.some(w => t.indexOf(w) >= 0);
+}
+
+function evaluateChecks() {
+  const fired = [];
+  const push = (step, label, rule, href) => fired.push({ step, label, rule, href });
+
+  // Three-Story Rule
+  const mechTexts = [state.mech1_text, state.mech2_text, state.mech3_text].filter(x => x && x.trim());
+  if (mechTexts.length < 3) {
+    push("priors", "Three-Story Rule: fewer than three mechanism-specific accounts are filled in yet.", "three-story-rule skill", "#");
+  }
+  // Actor terms
+  [1, 2, 3].forEach(n => {
+    const t = state["mech" + n + "_text"];
+    if (t && t.trim() && !looksLikeActorTerms(t)) {
+      push("priors", mechLabel(n) + " doesn't yet name an actor or a decision.", "DiI “actor-not-variable” prompt", "#");
+    }
+  });
+  // Duplicate signatures
+  const sig = n => [state["mod1_mech" + n + "_sig"], state["mod2_mech" + n + "_sig"]];
+  const s1 = sig(1), s2 = sig(2), s3 = sig(3);
+  const allFilled = a => a.every(x => x);
+  function sameSig(a, b) { return allFilled(a) && allFilled(b) && a[0] === b[0] && a[1] === b[1]; }
+  if (sameSig(s1, s2) || sameSig(s1, s3) || sameSig(s2, s3)) {
+    push("signatures", "Two mechanisms carry the same signature on every moderator — give each mechanism its own signature.", "Primer principle 5", "#");
+  }
+  // No divergence (soft heuristic on moderator 1)
+  if (state.div_mod1 && state.div_mod1.trim() && state.mod1_mech1_sig && state.mod1_mech2_sig && state.mod1_mech3_sig &&
+      state.mod1_mech1_sig === state.mod1_mech2_sig && state.mod1_mech2_sig === state.mod1_mech3_sig) {
+    push("divergence", "Moderator 1's point of divergence falls where all three step 4 signatures coincide.", "Primer step 6", "#");
+  }
+  // Stage discipline
+  if (state.poss_controls === "yes") push("pictures", "The Possible picture is marked “controls: yes.” Possible carries no controls.", "Book §4.2", "#");
+  if (state.plaus_controls === "yes") push("pictures", "The Plausible picture is marked “controls: yes.” Plausible carries no controls.", "Book §4.2", "#");
+  // No design at probable
+  if (state.prob_stat && state.prob_stat.trim() && state.prob_controls !== "yes" && state.prob_design !== "yes") {
+    push("pictures", "The Probable picture has neither controls nor a design. Probable is where the design belongs.", "Book §4.2", "#");
+  }
+  // No attenuation (heuristic)
+  if (state.model1_inf && state.model2_inf && state.model1_inf.trim() &&
+      state.model1_inf.trim().toLowerCase() === state.model2_inf.trim().toLowerCase()) {
+    if (!state.models_exempt) push("models", "Model 2's inference reads identically to Model 1's — check that Model 2 actually moves the focal coefficient.", "DiI skill: covariate, not divergence", "#");
+  }
+  // Branch undecided
+  if (!state.branch) {
+    if (!state.models_exempt) push("models", "Branch (A or B) hasn't been chosen for how Model 3 reconciles.", "DiI skill decision rule", "#");
+  }
+  // Evidence moves backward
+  const arc = computeBeliefArc();
+  if (arc.evP.center < arc.prior.center) {
+    push("belief", "The plausible-stage evidence is centered below the prior — it would move the reader backward.", "Updating arithmetic", "#");
+  }
+  if (arc.evQ.center < arc.postPlausible.center) {
+    push("belief", "The probable-stage evidence is centered below the current posterior — it would move the reader backward.", "Updating arithmetic", "#");
+  }
+  // Target unreachable
+  if (arc.target !== null && arc.evQ.center < arc.target) {
+    push("belief", "Probable-stage evidence is centered below the step 1 target — the posterior can't reach it.", "Updating arithmetic", "#");
+  }
+  // Missing b_true
+  if (state.sim_results && state.sim_results.trim() && !(state.sim_b_true && String(state.sim_b_true).trim())) {
+    push("simulate", "A step 9 result is recorded with no simulated b_true beside it.", "Simulation convention", "#");
+  }
+  return fired;
+}
+
+function renderChecksPanel() {
+  const panel = document.getElementById("checks-panel");
+  if (!panel) return;
+  const s = SECTIONS[currentStep];
+  const all = evaluateChecks();
+  const relevant = all.filter(c => c.step === s.id);
+  if (!relevant.length) {
+    panel.innerHTML = "";
+    return;
+  }
+  panel.innerHTML = relevant.map(c =>
+    `<div class="check-flag"><span class="cf-mark">▲</span><div>${escapeHtml(c.label)} <em style="color:#8A6A5E">(${escapeHtml(c.rule)})</em></div></div>`
+  ).join("");
+}
+
+/* ============================================================
+   REVIEW SCREEN
+   ============================================================ */
+
+function reviewItem(k, v) {
+  const empty = !v || !String(v).trim();
+  return `<div class="review-item">
+    <div class="k">${k}</div>
+    <div class="v ${empty ? "empty" : ""}">${empty ? "(not yet answered)" : escapeHtml(String(v))}</div>
+  </div>`;
+}
+
+function renderReview(s) {
+  const arc = computeBeliefArc();
+  let html = `
+    <div class="step-eyebrow">${s.eyebrow}</div>
+    <h2 class="step-title">${s.title}</h2>
+    <p class="step-lede">A consolidated read-out of your numerical narrative. Use the header controls to save, export, or load the NFL example.</p>
+  `;
+
+  html += `<div class="review-section"><h3>Belief–update chart</h3>
+    <div class="chart-wrap">${buildBeliefChartSvg(arc)}
+      <div class="chart-legend">
+        <span class="key"><span class="swatch sw-prior"></span>Prior</span>
+        <span class="key"><span class="swatch sw-evidence"></span>Evidence</span>
+        <span class="key"><span class="swatch sw-posterior"></span>Posterior</span>
+        <span class="key"><span class="swatch sw-target"></span>Target</span>
+      </div>
+      <div class="chart-readout">${beliefReadoutHtml(arc)}</div>
+    </div>
+  </div>`;
+
+  const allChecks = evaluateChecks();
+  html += `<div class="review-section"><h3>Checks</h3>`;
+  if (!allChecks.length) {
+    html += `<p class="checks-empty">No checks are currently firing.</p>`;
+  } else {
+    html += allChecks.map(c =>
+      `<div class="check-flag"><span class="cf-mark">▲</span><div><strong>${c.step}</strong> — ${escapeHtml(c.label)} <em style="color:#8A6A5E">(${escapeHtml(c.rule)})</em></div></div>`
+    ).join("");
+  }
+  html += `</div>`;
+
+  SECTIONS.forEach(sec => {
+    if (sec.id === "welcome" || sec.id === "review") return;
+    if (!sec.fields || !sec.fields.length) return;
+    html += `<div class="review-section"><h3>${sec.title}</h3>`;
+    sec.fields.forEach(f => { html += reviewItem(f.label, state[f.id]); });
+    html += `</div>`;
+  });
+
+  html += `<div class="review-section"><h3>Exports</h3>
+    <div class="export-grid">
+      <div class="export-card">
+        <h5>Markdown memo</h5>
+        <p>Every step's answers, the four sentences, the six-sentence abstract, the three-model table, and open checks.</p>
+        <button class="btn primary" id="btn-export-memo">Download memo (.md)</button>
+      </div>
+      <div class="export-card">
+        <h5>JSON save / load</h5>
+        <p>All fields, in the shared schema (v1) also used by the Differences-in-Inferences app.</p>
+        <button class="btn" id="btn-export-json">Download .json</button>
+      </div>
+      <div class="export-card">
+        <h5>Simulation stub</h5>
+        <p>The book's Chapter 9 template, filled from step 9.</p>
+        <button class="btn" id="btn-export-stub">Download .do</button>
+      </div>
+      <div class="export-card">
+        <h5>Populate from a draft</h5>
+        <p>Copy this prompt, paste your draft after it in Claude, and paste the JSON reply into Load.</p>
+        <textarea class="prompt-box" readonly id="populate-prompt">${escapeHtml(buildPopulatePrompt())}</textarea>
+        <div style="margin-top:8px"><button class="btn" id="btn-copy-prompt">Copy prompt</button></div>
+      </div>
+    </div>
+  </div>`;
+
+  html += `
+    <div class="pull-quote" style="margin-top:32px">
+      Yeah, yeah, yeah… but… and therefore. The yeahs honor the reader's priors. The "but" shows why those priors must be updated. The "and therefore" reconciles the two — and the reconciliation <em>is</em> the contribution.
+      <cite>— Christopher I. Rider, <em>Yeah, Yeah, But… and Therefore</em></cite>
+    </div>
+  `;
+  return html;
+}
+
+/* ============================================================
+   EXPORTS — simulation stub, memo, shared JSON schema, populate prompt
+   ============================================================ */
+
+function num(v, fallback) {
+  const n = parseFloat(v);
+  return isNaN(n) ? fallback : n;
+}
+
+function buildSimulationStub() {
+  const N = num(state.sim_n, 8000);
+  const treatShare = num(state.sim_treat_share, 0.30);
+  const confound = num(state.sim_confound, 0.40);
+  const bTrue = num(state.sim_b_true, 0.08);
+  const design = (state.sim_design || "observed proxy").trim();
+  const isRandomized = /random/i.test(design);
+
+  const mechComments = [1, 2, 3].map(n => {
+    const label = mechLabel(n);
+    const text = state["mech" + n + "_text"] || "(not yet filled in — step 3)";
+    return `* Mechanism ${n} (${label}): ${text}`;
+  }).join("\n");
+  const modelComments = [1, 2, 3].map(n => {
+    const spec = state["model" + n + "_spec"] || "(not yet filled in — step 8)";
+    return `* Model ${n} specification: ${spec}`;
+  }).join("\n");
+
+  return `* ============================================================
+* Numerical Narratives — simulation stub
+* Modelled on "Yeah, Yeah, But… and Therefore," Chapter 9
+* (the whole project in one script). Seed 20260527.
+*
+* Step 3 mechanisms and step 8 models are recorded below as
+* comments only — this stub does not generate code from them.
+* ============================================================
+
+${mechComments}
+
+${modelComments}
+
+clear all
+set more off
+local N = ${N}
+local treat_share = ${treatShare}
+local confound_strength = ${confound}
+local b_true = ${bTrue}
+local design = "${design}"
+
+python:
+import numpy as np
+from sfi import Macro
+
+rng = np.random.default_rng(20260527)
+N = int(Macro.getLocal("N"))
+treat_share = float(Macro.getLocal("treat_share"))
+confound_strength = float(Macro.getLocal("confound_strength"))
+b_true = float(Macro.getLocal("b_true"))
+
+# confound Z affects both treatment assignment and the outcome
+z = rng.normal(0, 1, N)
+p_treat = 1 / (1 + np.exp(-(confound_strength * z + (treat_share - 0.5))))
+treat = (rng.uniform(0, 1, N) < p_treat).astype(float)
+noise = rng.normal(0, 1, N)
+y = b_true * treat + confound_strength * z + noise
+
+import pandas as pd
+df = pd.DataFrame({"y": y, "treat": treat, "z": z})
+sfi_df = df
+end
+
+* naive estimate: treatment only, confound omitted
+regress y treat
+display "naive estimate: " _b[treat] "  |  b_true: \`b_true'"
+
+* design-based estimate
+if "\`design'" == "observed proxy" | strpos(lower("\`design'"), "proxy") {
+  regress y treat z
+  display "design-based estimate (observed proxy): " _b[treat] "  |  b_true: \`b_true'"
+}
+else {
+  * randomized-assignment design: restrict to the exogenous-treatment subsample
+  * (placeholder split; replace with your actual randomization indicator)
+  gen rand_ok = 1
+  regress y treat if rand_ok == 1
+  display "design-based estimate (randomized assignment): " _b[treat] "  |  b_true: \`b_true'"
+}
+
+* Record both estimates and b_true together — step 9's "b_true beside
+* each estimate" convention. Paste the results back into the app's
+* step 9 "Results" field.
+`;
+}
+
+function downloadSimulationStub() {
+  downloadFile("numerical-narrative-sim.do", buildSimulationStub(), "text/plain");
+}
+
+function downloadFile(filename, content, mime) {
+  const blob = new Blob([content], { type: mime || "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  toast("Downloaded");
+}
+
+function buildMemoMarkdown() {
+  const lines = [];
+  lines.push("# Numerical narrative — memo");
+  lines.push("");
+  lines.push("Companion to *Yeah, Yeah, But… and Therefore* (Christopher I. Rider, Ross School of Business, University of Michigan), Chapter 4. Companion site: [yeahyeahbut.org](https://yeahyeahbut.org).");
+  lines.push("");
+  SECTIONS.forEach(s => {
+    if (s.id === "welcome" || s.id === "review") return;
+    if (!s.fields || !s.fields.length) return;
+    lines.push("## " + s.title);
+    lines.push("");
+    s.fields.forEach(f => {
+      const v = state[f.id];
+      lines.push("**" + f.label + "**  ");
+      lines.push(v && String(v).trim() ? String(v) : "*(not yet answered)*");
+      lines.push("");
+    });
+  });
+
+  lines.push("## The narrative, in four sentences");
+  lines.push("");
+  [["1. The phenomenon", state.narr_phenomenon], ["2. “Yeah, yeah, yeah…”", state.narr_yeah],
+   ["3. “…but…”", state.narr_but], ["4. “…and therefore…”", state.narr_therefore]
+  ].forEach(([k, v]) => { lines.push("**" + k + "**  "); lines.push(v || "*(not yet answered)*"); lines.push(""); });
+
+  lines.push("## The three-model table");
+  lines.push("");
+  lines.push("| Model | Specification | Inference licensed |");
+  lines.push("| --- | --- | --- |");
+  [1, 2, 3].forEach(n => {
+    lines.push(`| Model ${n} | ${state["model" + n + "_spec"] || "—"} | ${state["model" + n + "_inf"] || "—"} |`);
+  });
+  lines.push("");
+  lines.push("Branch: " + (state.branch ? (state.branch === "A" ? "A · boundary (interaction)" : "B · bias (re-estimation)") : "*(not yet chosen)*"));
+  lines.push("");
+
+  lines.push("## Six-sentence abstract");
+  lines.push("");
+  ABSTRACT_JOBS.forEach((j, i) => {
+    lines.push(`**${i + 1}. ${j.job}**  `);
+    lines.push(state[j.id] || "*(not yet answered)*");
+    lines.push("");
+  });
+
+  lines.push("## Open checks");
+  lines.push("");
+  const checks = evaluateChecks();
+  if (!checks.length) {
+    lines.push("None currently firing.");
+  } else {
+    checks.forEach(c => lines.push(`- **${c.step}** — ${c.label} (${c.rule})`));
+  }
+  lines.push("");
+  return lines.join("\n");
+}
+
+function downloadMemo() {
+  downloadFile("numerical-narrative-memo.md", buildMemoMarkdown(), "text/markdown");
+}
+
+/* ---- Shared JSON schema (v1) ---- */
+
+function buildSchemaJSON() {
+  return {
+    schema: "numerical-narrative-shared",
+    version: 1,
+    source_app: "nn",
+    exported_at: new Date().toISOString(),
+    phenomenon: { text: [state.headline_stat, state.comparison_group, state.unit, state.source].filter(Boolean).join(" — ") },
+    mechanisms: [1, 2, 3].map(n => ({
+      id: "mech_" + n,
+      label: state["mech" + n + "_label"] || "",
+      account_text: state["mech" + n + "_text"] || ""
+    })),
+    models: [1, 2, 3].map(n => ({
+      id: "model_" + n,
+      spec: state["model" + n + "_spec"] || "",
+      inf: state["model" + n + "_inf"] || "",
+      branch: n === 3 ? (state.branch || null) : null
+    })),
+    belief: {
+      prior_preset: state.prior_preset,
+      target_share: num(state.target_share, null),
+      evidence_plausible_strength: state.evidence_plausible_strength,
+      evidence_plausible_center: num(state.evidence_plausible_center, null),
+      evidence_probable_strength: state.evidence_probable_strength,
+      evidence_probable_center: num(state.evidence_probable_center, null)
+    },
+    abstract: ABSTRACT_JOBS.map(j => state[j.id] || ""),
+    app_state: { dii: null, nn: state }
+  };
+}
+
+function downloadSchemaJSON() {
+  downloadFile("numerical-narrative.json", JSON.stringify(buildSchemaJSON(), null, 2), "application/json");
+}
+
+function applySchemaJSON(obj) {
+  if (!obj || obj.schema !== "numerical-narrative-shared") {
+    toast("Not a recognized file");
+    return false;
+  }
+  if (obj.source_app === "nn" && obj.app_state && obj.app_state.nn) {
+    state = Object.assign(defaultState(), obj.app_state.nn);
+  } else {
+    // loading a DiI-authored file: shared fields from the file,
+    // NN-only fields reset to their defaults (per the shared-schema spec)
+    state = defaultState();
+    if (obj.phenomenon && obj.phenomenon.text) state.headline_stat = obj.phenomenon.text;
+    (obj.mechanisms || []).slice(0, 3).forEach((m, i) => {
+      const n = i + 1;
+      state["mech" + n + "_label"] = m.label || "";
+      state["mech" + n + "_text"] = m.account_text || "";
+    });
+    (obj.models || []).slice(0, 3).forEach((m, i) => {
+      const n = i + 1;
+      state["model" + n + "_spec"] = m.spec || "";
+      state["model" + n + "_inf"] = m.inf || "";
+      if (m.branch) state.branch = m.branch;
+    });
+    // NN supports all three mechanism slots, so nothing is dropped on this
+    // side; the 2-mechanism cap and its warning belong to the DiI app.
+  }
+  saveState(true);
+  currentStep = 0;
+  renderNav();
+  renderMain();
+  toast("Loaded");
+  return true;
+}
+
+function buildPopulatePrompt() {
+  return `You are filling in the Numerical Narratives app's save file for me. Read the research draft I paste after this prompt and return ONLY a JSON object matching this schema (fill every field you can infer from the draft; leave the rest as empty strings; use exactly this shape — no prose, no markdown fencing):
+
+{
+  "schema": "numerical-narrative-shared",
+  "version": 1,
+  "source_app": "nn",
+  "phenomenon": { "text": "" },
+  "mechanisms": [
+    { "id": "mech_1", "label": "", "account_text": "" },
+    { "id": "mech_2", "label": "", "account_text": "" },
+    { "id": "mech_3", "label": "", "account_text": "" }
+  ],
+  "models": [
+    { "id": "model_1", "spec": "", "inf": "" },
+    { "id": "model_2", "spec": "", "inf": "" },
+    { "id": "model_3", "spec": "", "inf": "", "branch": null }
+  ],
+  "belief": { "prior_preset": "skeptical", "target_share": null,
+    "evidence_plausible_strength": "weak", "evidence_plausible_center": null,
+    "evidence_probable_strength": "strong", "evidence_probable_center": null },
+  "abstract": ["", "", "", "", "", ""],
+  "app_state": { "nn": {} }
+}
+
+Paste the reply into this app's Load button. — Draft follows below —`;
+}
+
+/* ============================================================
+   WORKED EXAMPLE — NFL coaching promotions
+   Rider, Wade, Swaminathan & Schwab (2023), AJS 129(1): 227–275
+   ============================================================ */
+
+const NFL_EXAMPLE = {
+  belief_current: "The head-coach gap reflects where coaches of color are placed in the pipeline — a matter of allocation, not treatment.",
+  belief_target_words: "The gap persists after accounting for placement, so valuation also contributes.",
+  prior_preset: "skeptical",
+  target_share: "0.60",
+  evidence_plausible_strength: "weak",
+  evidence_plausible_center: "0.60",
+  evidence_probable_strength: "strong",
+  evidence_probable_center: "0.70",
+
+  headline_stat: "The pipeline of coaches of color has diversified; head-coach representation has lagged.",
+  comparison_group: "White assistant coaches vs. assistant coaches of color",
+  unit: "Promotion to head coach (HC)",
+  source: "Rider, Wade, Swaminathan & Schwab (2023), American Journal of Sociology 129(1): 227–275",
+
+  mech1_label: "Differential valuation",
+  mech1_text: "Team decision-makers value White assistants more than assistants of color in the same position with equivalent performance — bias or discrimination.",
+  mech1_prior: "",
+  mech2_label: "Disparate valuation",
+  mech2_text: "A race-neutral preference — for example, for offensive coaches — that happens to favor White assistants.",
+  mech2_prior: "",
+  mech3_label: "Positional allocation",
+  mech3_text: "Differential or disparate allocation to positions, at hire or after.",
+  mech3_prior: "",
+
+  mod1_name: "Position (role held before promotion)",
+  mod2_name: "Before / after the league-wide intervention",
+  mod1_mech1_sig: "accentuates", mod1_mech1_note: "Accentuates at the coordinator step: about 91% White-coach advantage in promotion to coordinator vs. about 60–70% for all promotions pooled, falling to an imprecisely estimated 1.36× at head-coach-given-position (few transitions).",
+  mod1_mech2_sig: "", mod1_mech2_note: "Indeterminate — not separately estimated. The offense/defense split entangles two offsetting trends: allocation disparity by offense/defense is diminishing over time while the preference for offensive-experience coaches is increasing over time, so a position-specific read would likely be inconclusive.",
+  mod1_mech3_sig: "attenuates", mod1_mech3_note: "Attenuates some by current position but stays well above parity: White-coach advantage is 4.19× measured at initial position vs. 3.05× at current position.",
+  mod2_mech1_sig: "persists", mod2_mech1_note: "Persists, precisely: the advantage in promotion to coordinator is not noticeably different before and after the Rooney Rule. No evidence of a disparity in the coordinator-to-head-coach step specifically before the Rooney Rule.",
+  mod2_mech2_sig: "", mod2_mech2_note: "Indeterminate — not separately estimated. Allocation disparity by offense/defense is diminishing over time while the preference for offensive-experience coaches is increasing over time; the two trends offset, so an isolated before/after estimate would likely be inconclusive.",
+  mod2_mech3_sig: "", mod2_mech3_note: "Pending — your signature call per account",
+
+  poss_stat: "Raw P(HC): 0.168 (White coaches) vs. 0.040 (coaches of color) — 4.2×",
+  poss_chart: "Bar chart",
+  poss_controls: "no", poss_design: "no",
+  poss_caption: "White coaches are about four times as likely as coaches of color to reach head coach.",
+  plaus_stat: "P(HC) by initial position, no controls",
+  plaus_chart: "Grouped bars with overlaid probability dots, by position",
+  plaus_controls: "no", plaus_design: "no",
+  plaus_caption: "At most positions, White coaches are more likely to reach head coach — sorting by position doesn't close the gap.",
+  prob_stat: "Regression multipliers: all promotions 1.68×; head coach given current position 1.45× (n.s.); coordinator 1.91×",
+  prob_chart: "Forest plot of multipliers",
+  prob_controls: "yes", prob_design: "yes",
+  prob_caption: "The disparity holds as controls accumulate and concentrates in promotion to coordinator.",
+
+  div_mod1: "Promotion to coordinator — mechanism 1's valuative gap concentrates there (about 91% vs. about 60–70% pooled) in a way pure positional sorting alone doesn't explain.",
+  div_mod2: "The stability of the promotion-to-coordinator gap across the Rooney Rule: if the allocative account were sufficient on its own, that gap should have narrowed after the rule's 2016/2019 extension to coordinator hiring. It didn't.",
+
+  narr_phenomenon: "The racial gap among NFL head coaches persists despite a diversifying pipeline of assistant coaches.",
+  narr_yeah: "Many attribute the gap to sorting and stacking, and the data show that coaches of color are more often allocated to less favorable positions than White coaches are.",
+  narr_but: "But the gap persists after we account for these positional differences.",
+  narr_therefore: "Therefore, an allocative account is insufficient on its own, and valuative bias (lesser rewards for equivalent performance) warrants investigation.",
+
+  model1_spec: "", model1_inf: "", model2_spec: "", model2_inf: "", model3_spec: "", model3_inf: "",
+  branch: "",
+  models_exempt: true,
+  models_exempt_note: "Published Panel C multipliers — all promotions 1.68×; head coach given current position 1.45× (n.s.); coordinator 1.91×. These are three different outcomes, not three specifications of one relationship, so they are not assigned to Model 1/2/3. Exempt from the branch and attenuation checks.",
+
+  sim_n: "8000", sim_treat_share: "", sim_confound: "", sim_b_true: "0.08",
+  sim_design: "Simulation example: the book's mentorship world (Chapter 9), not a reconstruction of this paper's own data.",
+  sim_results: "Mentored 0.432 vs. unmentored 0.254; naive OLS 0.178; design-based estimate 0.087 (SE 0.011); b_true 0.08",
+
+  abs_hook: "In the National Football League, the pipeline of coaches of color has diversified, yet representation among head coaches has lagged.",
+  abs_gap: "Prior research attributes such disparity to allocative bias, the matching of individuals to positions with different advancement prospects, or to valuative bias, the provision of differential rewards within those positions, and separating the two requires comparing individuals in the same position with equivalent performance.",
+  abs_contribution: "We argue that racial disparity in leadership representation will persist until valuative bias favoring White men ceases to influence advancement from the lower-level positions where most careers begin.",
+  abs_test: "Career histories of over 1,300 coaches from 1985 to 2015 let us compare White assistant coaches and assistant coaches of color in the same positions, holding constant unit and individual performance among other factors, before and after a league-wide intervention explicitly implemented to close the racial gap in leadership representation.",
+  abs_finding: "White assistant coaches were promoted at higher rates than assistant coaches of color in both periods, an advantage specific to the position typically occupied before promotion to head coach, and simulations show that the disparity persists even absent bias in positional allocations.",
+  abs_implication: "Eliminating valuative bias at early career stages is, thus, necessary to achieve racial parity in leadership representation.",
+
+  reader_before: "0.05", reader_after_plausible: "0.248", reader_after_probable: "0.593",
+  reader_illustrative: true
+};
+
+function loadNFLExample() {
+  state = Object.assign(defaultState(), NFL_EXAMPLE);
+  saveState(true);
+  currentStep = 0;
+  renderNav();
+  renderMain();
+  toast("NFL example loaded");
+}
+
+/* ============================================================
+   TOAST / MODAL
+   ============================================================ */
+
+let toastTimer = null;
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+function showModal(title, body, onOk) {
+  const modal = document.getElementById("modal");
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-body").textContent = body;
+  modal.classList.add("on");
+  function close() { modal.classList.remove("on"); cleanup(); }
+  function confirm() { close(); onOk(); }
+  function cleanup() {
+    document.getElementById("modal-cancel").removeEventListener("click", close);
+    document.getElementById("modal-ok").removeEventListener("click", confirm);
+  }
+  document.getElementById("modal-cancel").addEventListener("click", close);
+  document.getElementById("modal-ok").addEventListener("click", confirm);
+}
+
+/* ============================================================
+   INIT / HEADER WIRING
+   ============================================================ */
+
+function init() {
+  renderNav();
+  renderMain();
+
+  document.getElementById("btn-prev").addEventListener("click", () => goTo(currentStep - 1));
+  document.getElementById("btn-next").addEventListener("click", () => goTo(currentStep + 1));
+
+  document.getElementById("btn-save").addEventListener("click", () => saveState(false));
+
+  document.getElementById("btn-export").addEventListener("click", downloadMemo);
+  document.getElementById("btn-print").addEventListener("click", () => window.print());
+
+  document.getElementById("btn-example").addEventListener("click", () => {
+    showModal("Load the NFL example?", "This replaces every field with the worked example. Your current work is not saved separately.", loadNFLExample);
+  });
+
+  document.getElementById("btn-reset").addEventListener("click", () => {
+    showModal("Reset everything?", "This will clear every field and start fresh. This cannot be undone.", () => {
+      state = defaultState();
+      examplesShown = {};
+      currentStep = 0;
+      saveState(true);
+      renderNav();
+      renderMain();
+      toast("Reset");
+    });
+  });
+
+  document.getElementById("btn-save-json").addEventListener("click", downloadSchemaJSON);
+
+  const fileInput = document.getElementById("file-input");
+  document.getElementById("btn-load-json").addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const obj = JSON.parse(reader.result);
+        applySchemaJSON(obj);
+      } catch (e) {
+        toast("Couldn't read that file");
+      }
+      fileInput.value = "";
+    };
+    reader.readAsText(file);
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
+</script>
+<p style="text-align:center;font-size:14px;margin-top:40px">More from <a href="https://chrisrider.info">Christopher I. Rider &rarr;</a> &middot; <a href="https://chrisrider.info/toolkit/numerical-narratives/" target="_blank" rel="noopener">Numerical narratives primer &rarr;</a></p>
+</body>
+</html>

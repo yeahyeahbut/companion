@@ -8,8 +8,12 @@ Canonical site: [yeahyeahbut.org](https://yeahyeahbut.org)
 
 - `tools/differences-in-inferences/` — interactive quantitative companion tool ([live](https://differences-in-inferences.netlify.app))
 - `tools/contributing/` — interactive method-agnostic contribution-architecture tool ([live](https://contributing.netlify.app))
+- `tools/numerical-narratives/` — interactive tool for building the Chapter 4 three-model table ([live](https://numerical-narratives.netlify.app))
+- `site/` — the companion landing page ([live](https://yeahyeahbut.org))
 
-Each tool is a single self-contained `index.html`: all CSS and JS inline, diagrams drawn in SVG at runtime, no local assets beyond Google Fonts (Gelasio).
+Each tool is a single self-contained `index.html` (all CSS and JS inline, diagrams drawn in SVG at runtime, no local assets beyond Google Fonts) plus its `favicon.ico`. The files here match the deployed sites; each folder deploys as-is.
+
+For more on numerical narratives, see the [primer](https://chrisrider.info/toolkit/numerical-narratives/).
 
 ## License
 
