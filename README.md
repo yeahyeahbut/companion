@@ -17,4 +17,4 @@ For more on numerical narratives, see the [primer](https://chrisrider.info/toolk
 
 ## License
 
-Code in this repository is MIT licensed. Site prose and web-resolution figures, including the images embedded in `site/index.html`, are licensed [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Manuscript text and print-resolution figures are not included here and remain reserved.
+Code in this repository is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE): it may be used, changed and shared for any noncommercial purpose, including teaching and research at educational institutions, and not for commercial purposes. Text and figures, including the instructional text in the three tools and the images embedded in `site/index.html`, are licensed [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Manuscript text and print-resolution figures are not included here and remain reserved. Versions of this repository published before this change were released under the MIT License.
